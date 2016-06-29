@@ -22,7 +22,7 @@ public:
 
 	void readConfigParameters();
 	void setOdometryData(double newAngle, double newTranslation);
-	void setRotation(double newRotation);
+	void setIMUData(double accelerationX, double accelerationY, double newRotation, timeval t);
 	void dribbleControl();
 	void setBallHandling(int32_t left, int32_t right);
 	void ping();
@@ -42,8 +42,8 @@ private:
 
 	const int minSpeed = 1800;
 	const int maxSpeed = 10000;
-	double speedX = 0;
-	double speedY = 0;
+	double calculatedIMUSpeedX = 0;
+	double calculatedIMUSpeedY = 0;
 
 	int timeout = 1000;
 	double handlerSpeedSummand = 0;

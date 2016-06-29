@@ -58,9 +58,14 @@ void BallHandle::readConfigParameters() {
 void BallHandle::setOdometryData(double newAngle, double newTranslation) {
 	angle = newAngle;
 	translation = newTranslation;
+
+	calculatedIMUSpeedX = 0;
+	calculatedIMUSpeedY = 0;
 }
 
-void BallHandle::setRotation(double newRotation) {
+void BallHandle::setIMUData(double accelerationX, double accelerationY, double newRotation, timeval timeDifferenz) {
+	calculatedIMUSpeedX += accelerationX * ((double) timeDifferenz.tv_sec + (double) timeDifferenz.tv_usec / 1000000);
+	calculatedIMUSpeedY += accelerationY * ((double) timeDifferenz.tv_sec + (double) timeDifferenz.tv_usec / 1000000);
 	rotation = newRotation;
 }
 
@@ -70,8 +75,8 @@ void BallHandle::dribbleControl() {
 	double orthoL = 0;
 	double orthoR = 0;
 	double speedDC = 0;
-	double speedX = cos(angle) * translation;
-	double speedY = sin(angle) * translation;
+	double speedX = cos(angle) * translation + calculatedIMUSpeedX;
+	double speedY = sin(angle) * translation + calculatedIMUSpeedY;
 	int speedL = 0;
 	int speedR = 0;
 
@@ -137,8 +142,8 @@ void BallHandle::dribbleControl() {
 	speedL = speedDC + l + orthoL;
 	speedR = speedDC + r + orthoR;
 
-	//leftMotor->setSpeed(speedL);
-	//rightMotor->setSpeed(speedR);
+	leftMotor->setSpeed(speedL);
+	rightMotor->setSpeed(speedR);
 
 	printf("DribbleControl:  Left: %i  -  Right: %i\n", speedL, speedR);
 }
@@ -146,7 +151,7 @@ void BallHandle::dribbleControl() {
 void BallHandle::setBallHandling(int32_t speedL, int32_t speedR) {
 	leftMotor->setSpeed(speedL);
 	rightMotor->setSpeed(speedR);
-	printf("REMOTE:  Left: %i  -  Right: %i\n", speedL, speedR);
+	//printf("REMOTE:  Left: %i  -  Right: %i\n", speedL, speedR);
 }
 
 void BallHandle::ping() {
