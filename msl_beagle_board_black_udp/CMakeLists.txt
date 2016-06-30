@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   msl_actuator_msgs
   msl_bbb_api
   msl_black_lib
+  rt_imu_lib_test
   system_config
   process_manager
   cnc_geometry

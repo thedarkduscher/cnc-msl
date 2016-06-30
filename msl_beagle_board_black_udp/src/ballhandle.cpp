@@ -63,10 +63,10 @@ void BallHandle::setOdometryData(double newAngle, double newTranslation) {
 	calculatedIMUSpeedY = 0;
 }
 
-void BallHandle::setIMUData(double accelerationX, double accelerationY, double newRotation, timeval timeDifferenz) {
-	calculatedIMUSpeedX += accelerationX * ((double) timeDifferenz.tv_sec + (double) timeDifferenz.tv_usec / 1000000);
-	calculatedIMUSpeedY += accelerationY * ((double) timeDifferenz.tv_sec + (double) timeDifferenz.tv_usec / 1000000);
-	rotation = newRotation;
+void BallHandle::setIMUData(msl_msgs::Point3dInfo acceleration, msl_msgs::Point3dInfo newRotation, uint64_t timeDifference_us) {
+	calculatedIMUSpeedX += acceleration.x * ((double) timeDifference_us / 1000000);
+	calculatedIMUSpeedY += acceleration.y * ((double) timeDifference_us / 1000000);
+	rotation = newRotation.z;
 }
 
 void BallHandle::dribbleControl() {

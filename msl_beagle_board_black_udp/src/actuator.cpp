@@ -18,6 +18,7 @@
 #include <ros/transport_hints.h>
 #include <stdio.h>
 
+#include "rtimubbb.h"
 
 #include <SystemConfig.h>
 #include <Configuration.h>
@@ -68,6 +69,7 @@ uint8_t		th_count;
 bool		th_activ = true;
 
 BallHandle	ballHandle;
+RTIMUBBB	imu;
 
 
 void handleBallHandleControl(const msl_actuator_msgs::BallHandleCmd msg) {
@@ -609,9 +611,18 @@ void getIMU() {
 
 		msl_actuator_msgs::IMUData msg;
 		try {
-			lsm9ds0.getData(time_now);
-			msg = lsm9ds0.sendData(time_now);
+			imu.getNewData();
+			msg.accelSens = 1;
+			msg.gyroSens = 1;
+			msg.magnetSens = 1;
+			msg.temperature = -1;
+			msg.acceleration = imu.getAcceleration();
+			msg.gyro = imu.getRotation();
+			msg.magnet = imu.getMagnetfield();
+			msg.time = imu.getDataTime();
 			onRosIMUData3455796956(msg);
+
+			ballHandle.setIMUData(msg.acceleration, msg.gyro, imu.getTimeDifference());
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
 		}
@@ -662,9 +673,9 @@ int main(int argc, char** argv) {
 	thread th_imu(getIMU);
 
 	// I2C
-	bool i2c = myI2C.open(ReadWrite);
-	bool spi = mySpi.open(ReadWrite);
-	bool imu = lsm9ds0.init();
+	//bool i2c = myI2C.open(ReadWrite);
+	//bool spi = mySpi.open(ReadWrite);
+	//bool imu = lsm9ds0.init();
 
 
 	supplementary::Configuration *proxyconf = (*sc)["msl_bbb_proxy"];
