@@ -12,6 +12,7 @@
 
 #include "motor.h"
 #include "Spline.h"
+#include <msl_msgs/Point3dInfo.h>
 
 
 class BallHandle
@@ -22,7 +23,7 @@ public:
 
 	void readConfigParameters();
 	void setOdometryData(double newAngle, double newTranslation);
-	void setIMUData(double accelerationX, double accelerationY, double newRotation, timeval t);
+	void setIMUData(msl_msgs::Point3dInfo acceleration, msl_msgs::Point3dInfo newRotation, uint64_t timeDifference_us);
 	void dribbleControl();
 	void setBallHandling(int32_t left, int32_t right);
 	void ping();
