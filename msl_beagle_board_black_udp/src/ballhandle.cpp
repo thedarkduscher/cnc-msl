@@ -75,8 +75,8 @@ void BallHandle::dribbleControl() {
 	double orthoL = 0;
 	double orthoR = 0;
 	double speedDC = 0;
-	double speedX = cos(angle) * translation + calculatedIMUSpeedX;
-	double speedY = sin(angle) * translation + calculatedIMUSpeedY;
+	double speedX = cos(angle) * translation + calculatedIMUSpeedX * 1000;
+	double speedY = sin(angle) * translation + calculatedIMUSpeedY * 1000;
 	int speedL = 0;
 	int speedR = 0;
 
@@ -142,8 +142,8 @@ void BallHandle::dribbleControl() {
 	speedL = speedDC + l + orthoL;
 	speedR = speedDC + r + orthoR;
 
-	leftMotor->setSpeed(speedL);
-	rightMotor->setSpeed(speedR);
+	leftMotor->setSpeed(-speedL);
+	rightMotor->setSpeed(-speedR);
 
 	printf("DribbleControl:  Left: %i  -  Right: %i\n", speedL, speedR);
 }
