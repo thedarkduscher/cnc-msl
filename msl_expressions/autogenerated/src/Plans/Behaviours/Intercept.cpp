@@ -103,6 +103,8 @@ namespace alica
 
         shared_ptr < geometry::CNPoint2D > predBall = make_shared < geometry::CNPoint2D
                 > (egoBallPos->x, egoBallPos->y);
+//		if (egoBallVel->length() > 4000.0)
+//		{
         shared_ptr < geometry::CNPosition > predPos = make_shared < geometry::CNPosition > (0.0, 0.0, 0.0);
         double timestep = 33;
         double rot = od->motion.rotation * timestep / 1000.0;
@@ -126,12 +128,13 @@ namespace alica
         }
 
         predBall->alloToEgo(*predPos);
+//		}
         // PID controller for minimizing the distance between ball and me
-        double distErr = predBall->length();
+        double distErr = max(predBall->length(), 1000.0);
         double controlDist = distErr * pdist + distIntErr * pidist + (distErr - lastDistErr) * pddist;
 
         distIntErr += distErr;
-        distIntErr = max(-1000.0, min(1000.0, distIntErr));
+        distIntErr = max(-1500.0, min(1500.0, distIntErr));
         lastDistErr = distErr;
 
         shared_ptr < geometry::CNPoint2D > egoVelocity;
@@ -144,8 +147,10 @@ namespace alica
         {
             egoVelocity = egoBallVel->getPoint();
         }
+//		cout << "Intercept: egoVelocity: " << egoVelocity->toString() << endl;
         egoVelocity->x += controlDist * cos(predBall->angleTo());
         egoVelocity->y += controlDist * sin(predBall->angleTo());
+//		cout << "Intercept: egoVelocity: " << egoVelocity->toString() << endl;
 
         auto pathPlanningPoint = egoVelocity->normalize() * min(egoVelocity->length(), predBall->length());
         auto alloDest = pathPlanningPoint->egoToAllo(*ownPos);
@@ -166,14 +171,7 @@ namespace alica
             mc.motion.angle = pathPlanningResult->angleTo();
         }
 
-        if (pathPlanningResult->distanceTo(pathPlanningPoint) > 10.0)
-        {
-            mc.motion.translation = min(this->maxVel, max(pathPlanningResult->length(), egoVelocity->length()));
-        }
-        else
-        {
-            mc.motion.translation = min(this->maxVel, pathPlanningPoint->length());
-        }
+        mc.motion.translation = min(this->maxVel, max(pathPlanningResult->length(), egoVelocity->length()));
 
 // PID controller for minimizing the kicker angle to ball
         double angleGoal = msl::Kicker::kickerAngle;
@@ -204,10 +202,12 @@ namespace alica
         if (!std::isnan(tmpMC.motion.translation))
         {
             send(tmpMC);
+            cout << "Intercept: RuleAction: " << tmpMC.motion.translation << endl;
         }
         else
         {
             send(mc);
+            cout << "Intercept: Normal: " << mc.motion.translation << endl;
         }
 
         if (this->wm->ball->haveBallDribble(false))

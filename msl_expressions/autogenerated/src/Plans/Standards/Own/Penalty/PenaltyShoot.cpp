@@ -19,22 +19,10 @@ namespace alica
             DomainBehaviour("PenaltyShoot")
     {
         /*PROTECTED REGION ID(con1466940246275) ENABLED START*/ //Add additional options here
-        maxVel = (*this->sc)["Penalty"]->get<double>("Penalty.MaxSpeed", NULL);
-        // Aiming/Rotation Stuff
-        angleTolerance = (*this->sc)["Penalty"]->get<double>("Penalty.AngleTolerance", NULL);
-        ballDiameter = (*this->sc)["Rules"]->get<double>("Rules.BallRadius", NULL) * 2;
-        goalLineLength = wm->field->getGoalWidth();
-        robotRadius = (*this->sc)["Rules"]->get<double>("Rules.RobotRadius", NULL);
-        wheelSpeed = (*this->sc)["Penalty"]->get<double>("Penalty.WheelSpeed", NULL);
-        aimOffset = (*this->sc)["Penalty"]->get<double>("Penalty.AimOffset", NULL);
-        kickPower = (*this->sc)["Penalty"]->get<double>("Penalty.KickPower", NULL);
-        timeForPenaltyShot = (*this->sc)["Rules"]->get<double>("Rules.Standards.PenaltyTimeForShot", NULL) * 1000000;
         lastAlignment = 0;
-        waitBeforeBlindKick = timeForPenaltyShot - 1000000000;
-
         // for alignToPointWithBall
         lastRotError = 0;
-        lastRotErrorWithBall = 0;
+//		lastRotErrorWithBall = 0;
         readConfigParameters();
 
         /*PROTECTED REGION END*/
@@ -65,15 +53,15 @@ namespace alica
         shared_ptr < geometry::CNPoint2D > egoTarget = nullptr;
         // Create target point next to left/right opp goal post
         shared_ptr < geometry::CNPoint2D > alloLeftAimPoint = make_shared < geometry::CNPoint2D
-                > (wm->field->getFieldLength() / 2 + ballDiameter, goalLineLength / 2 - aimOffset * ballDiameter);
+                > ((wm->field->getFieldLength() / 2) + ballDiameter, (goalWidth / 2) - (aimOffset * ballDiameter));
         shared_ptr < geometry::CNPoint2D > alloRightAimPoint = make_shared < geometry::CNPoint2D
-                > (wm->field->getFieldLength() / 2 + ballDiameter, -goalLineLength / 2 + aimOffset * ballDiameter);
+                > ((wm->field->getFieldLength() / 2) + ballDiameter, -(goalWidth / 2) + (aimOffset * ballDiameter));
 
         // Create points for rectangle check
         shared_ptr < geometry::CNPoint2D > frontLeft = make_shared < geometry::CNPoint2D
-                > (wm->field->getFieldLength() / 2 - robotRadius, goalLineLength / 2);
+                > ((wm->field->getFieldLength() - (4 * robotRadius)) / 2, goalWidth / 2);
         shared_ptr < geometry::CNPoint2D > frontRight = make_shared < geometry::CNPoint2D
-                > (wm->field->getFieldLength() / 2 - robotRadius, -goalLineLength / 2);
+                > ((wm->field->getFieldLength() - (4 * robotRadius)) / 2, -goalWidth / 2);
 
         // Create back point according to last alignment
         shared_ptr < geometry::CNPoint2D > back = nullptr;
@@ -81,15 +69,15 @@ namespace alica
         // Hysteresis
         if (lastAlignment == 0) // not aligned before (default)
         {
-            back = make_shared < geometry::CNPoint2D > (wm->field->getFieldLength() / 2 + robotRadius, 0);
+            back = make_shared < geometry::CNPoint2D > ((wm->field->getFieldLength() / 2) + robotRadius, 0);
         }
         else if (lastAlignment == 1) // last alignment left
         {
-            back = make_shared < geometry::CNPoint2D > (wm->field->getFieldLength() / 2 + robotRadius, robotRadius);
+            back = make_shared < geometry::CNPoint2D > ((wm->field->getFieldLength() / 2) + robotRadius, robotRadius);
         }
         else // last alignment right
         {
-            back = make_shared < geometry::CNPoint2D > (wm->field->getFieldLength() / 2 + robotRadius, -robotRadius);
+            back = make_shared < geometry::CNPoint2D > ((wm->field->getFieldLength() / 2) + robotRadius, -robotRadius);
         }
 
         int counter = 0;
@@ -107,11 +95,13 @@ namespace alica
                     // if obstacle is inside rectangle, increase counter by inverse age (10 = newest, 1 = oldest)
                     if (geometry::isInsideRectangle(frontLeft, back, alloObs))
                     {
+                        cout << "Found obstacle left" << endl;
                         counter += wm->getRingBufferLength() - i;
                     }
                     // if obstacle is inside rectangle, decrease counter by inverse age (10 = newest, 1 = oldest)
                     if (geometry::isInsideRectangle(frontRight, back, alloObs))
                     {
+                        cout << "Found obstacle right" << endl;
                         counter -= wm->getRingBufferLength() - i;
                     }
                 }
@@ -151,7 +141,6 @@ namespace alica
             kc.power = kickPower;
             send(kc);
             this->setSuccess(true);
-
         }
         // Create Motion Command for aiming
         MotionControl mc = alignToPointWithBall(egoTarget, egoBallPos, this->angleTolerance, this->angleTolerance);
@@ -189,7 +178,8 @@ namespace alica
             mc.motion.rotation = (mc.motion.rotation < 0 ? -1 : 1)
                     * min(alignToPointMaxRotation, max(fabs(mc.motion.rotation), alignToPointMinRotation));
 
-            lastRotErrorWithBall = deltaTargetAngle;
+            //lastRotErrorWithBall = deltaTargetAngle;
+            lastRotError = deltaTargetAngle;
 
             // crate the motion orthogonal to the ball
             shared_ptr < geometry::CNPoint2D > driveTo = egoBallPos->rotate(-M_PI / 2.0);
@@ -211,6 +201,18 @@ namespace alica
         alignToPointMaxRotation = (*sc)["Drive"]->get<double>("Drive", "AlignToPointMaxRotation", NULL);
         alignToPointMinRotation = (*sc)["Drive"]->get<double>("Drive", "AlignToPointMinRotation", NULL);
         alignMaxVel = (*sc)["Drive"]->get<double>("Drive", "MaxSpeed", NULL);
+        maxVel = (*this->sc)["Penalty"]->get<double>("Penalty.MaxSpeed", NULL);
+        // Aiming/Rotation Stuff
+        angleTolerance = (*this->sc)["Penalty"]->get<double>("Penalty.AngleTolerance", NULL);
+        ballDiameter = (*this->sc)["Rules"]->get<double>("Rules.BallRadius", NULL) * 2;
+        goalWidth = wm->field->getGoalWidth();
+        robotRadius = (*this->sc)["Rules"]->get<double>("Rules.RobotRadius", NULL);
+        wheelSpeed = (*this->sc)["Penalty"]->get<double>("Penalty.WheelSpeed", NULL);
+        aimOffset = (*this->sc)["Penalty"]->get<double>("Penalty.AimOffset", NULL);
+        kickPower = (*this->sc)["Penalty"]->get<double>("Penalty.KickPower", NULL);
+        timeForPenaltyShot = (*this->sc)["Rules"]->get<double>("Rules.Standards.InGamePenaltyRimeForShoot", NULL);
+        waitBeforeBlindKick = (*this->sc)["Rules"]->get<double>("Rules.Standards.InGamePenaltyWaitBeforeBlindKick",
+                                                                NULL);
     }
 /*PROTECTED REGION END*/
 } /* namespace alica */
