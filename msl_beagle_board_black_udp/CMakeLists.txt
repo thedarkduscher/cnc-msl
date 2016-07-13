@@ -124,6 +124,7 @@ add_executable(msl_beagle_board_black_udp
 	src/lightbarrier.cpp
 	src/motor.cpp
 	src/opticalflow.cpp
+	src/rtimubbb.cpp
 	src/sensor.cpp
 	src/shovelselect.cpp
 	src/sensor.cpp
