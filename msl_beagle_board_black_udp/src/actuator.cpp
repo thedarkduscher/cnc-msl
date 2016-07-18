@@ -79,14 +79,12 @@ CanHandler canHandler;
 void handleBallHandleControl(const msl_actuator_msgs::BallHandleCmd msg) {
 	const msl_actuator_msgs::BallHandleMode mode;
 
-	ballHandle.ping();
 	if (ballHandle.getMode() == mode.REMOTE_CONTROL) {
 		ballHandle.setBallHandling(msg.leftMotor, msg.rightMotor);
 	}
 }
 
 void handleBallHandleMode(const msl_actuator_msgs::BallHandleMode msg) {
-	ballHandle.ping();
 	ballHandle.setMode(msg.mode);
 }
 

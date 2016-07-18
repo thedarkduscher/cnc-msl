@@ -149,6 +149,7 @@ void BallHandle::dribbleControl() {
 }
 
 void BallHandle::setBallHandling(int32_t speedL, int32_t speedR) {
+	ping();
 	leftMotor->setSpeed(speedL);
 	rightMotor->setSpeed(speedR);
 	//printf("REMOTE:  Left: %i  -  Right: %i\n", speedL, speedR);
@@ -173,5 +174,6 @@ uint8_t BallHandle::getMode() {
 }
 
 void BallHandle::setMode(uint8_t newMode) {
+	ping();
 	mode = newMode;
 }
