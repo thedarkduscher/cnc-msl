@@ -9,7 +9,7 @@
 
 using namespace BlackLib;
 
-OpticalFlow::OpticalFlow(const char *pin_names[], BlackSPI *spi_P) {
+OpticalFlow::OpticalFlow(const char *pin_names[], BlackSPI *spi_P, bool *kill, condition_variable *cv) {
 	spi = spi_P;
 
 	gpio = BeagleGPIO::getInstance();
@@ -23,6 +23,12 @@ OpticalFlow::OpticalFlow(const char *pin_names[], BlackSPI *spi_P) {
 	qos = 0;
 	vQos = 0;
 	debugOF = 0;
+
+	opticalFlowThread(controlOpticalFlow);
+	// CV, Mutex, Notify und Activ ???
+	killThread = kill;
+	notifyThread = false;
+	this->cv = cv;
 }
 
 OpticalFlow::~OpticalFlow() {
@@ -181,6 +187,7 @@ void OpticalFlow::update_motion_burst() {
 msl_actuator_msgs::MotionBurst OpticalFlow::getMotionBurstMsg() {
 	msl_actuator_msgs::MotionBurst msg;
 
+	mtx.lock();
 	int16_t tqos = 0;
 	if( vQos != 0 ) {
 		tqos = qos/vQos;
@@ -195,6 +202,25 @@ msl_actuator_msgs::MotionBurst OpticalFlow::getMotionBurstMsg() {
 	qos = 0;
 	vQos = 0;
 
+	mtx.unlock();
+
 	return msg;
+}
+
+void OpticalFlow::controlOpticalFlow() {
+	unique_lock<mutex> opticalFlowMutex(mtx);
+	while(!killThread) {
+		cv.wait(opticalFlowMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		if (!killThread)
+			break;
+
+		try {
+			update_motion_burst();
+		} catch (exception &e) {
+			cout << "Optical Flow: " << e.what() << endl;
+		}
+
+		notifyThread = false;
+	}
 }
 

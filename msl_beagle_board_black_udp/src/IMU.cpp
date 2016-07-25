@@ -10,7 +10,7 @@
 
 using namespace BlackLib;
 
-IMU::IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P) {
+IMU::IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P, bool kill, condition_variable cv) {
 	i2c = i2c_P;
 
 	gpio = BeagleGPIO::getInstance();
@@ -21,6 +21,12 @@ IMU::IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P) {
 	mag = new Sensor();
 
 	temperature = 0;
+
+	imuThread(controlIMU);
+	// CV, Mutex, Notify und Activ ???
+	killThread = kill;
+	notifyThread = false;
+	this->cv = cv;
 }
 
 IMU::~IMU() {
@@ -314,6 +320,8 @@ msl_actuator_msgs::IMUData IMU::sendData(timeval time_now){
 
 	std::cout << "TEMP: " << temperature << std::endl;
 */
+
+	mtx.lock();
 	msl_actuator_msgs::IMUData msg;
 	msg.acceleration.x = acc->mean->x;
 	msg.acceleration.y = acc->mean->y;
@@ -330,9 +338,25 @@ msl_actuator_msgs::IMUData IMU::sendData(timeval time_now){
 	msg.temperature = temperature;
 	msg.time = (unsigned long long)time_now.tv_sec*1000000 + time_now.tv_usec;
 
+	mtx.unlock();
 	last_sended = time_now;
 
 	return msg;
 }
 
+void IMU::controlIMU() {
+	unique_lock<mutex> imuMutex(mtx);
+	while(!killThread) {
+		cv.wait(imuMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		if (!killThread)
+			break;
 
+		try {
+			getData(time_now);
+		} catch (exception &e) {
+			cout << "IMU: " << e.what() << endl;
+		}
+
+		notifyThread = false;
+	}
+}

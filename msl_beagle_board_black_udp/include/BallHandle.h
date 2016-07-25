@@ -7,17 +7,22 @@
 
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_BALLHANDLE_H_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_BALLHANDLE_H_
-#define TIMEDIFFMS(n,o) (((n).tv_sec-(o).tv_sec)*1000+((n).tv_usec-(o).tv_usec)/1000)
-#define BallHandle_TIMEOUT 1000
 
-#include "motor.h"
+#define TIMEDIFFMS(n,o) (((n).tv_sec-(o).tv_sec)*1000+((n).tv_usec-(o).tv_usec)/1000)
+
+
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+#include "Motor.h"
 #include "Spline.h"
 
 
 class BallHandle
 {
 public:
-	BallHandle();
+	BallHandle(bool kill, mutex mtx, condition_variable cv);
 	~BallHandle();
 
 	void readConfigParameters();
@@ -29,8 +34,17 @@ public:
 	void checkTimeout();
 	uint8_t getMode();
 	void setMode(uint8_t newMode);
+	void controlBallHandle();
+
+
+	bool notifyThread;
 
 private:
+	thread ballHandleThread;
+	std::condition_variable *cv;
+	std::mutex mtx;
+	bool *killThread;
+
 	Motor *rightMotor;
 	Motor *leftMotor;
 

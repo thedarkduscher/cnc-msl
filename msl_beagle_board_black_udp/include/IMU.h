@@ -9,7 +9,7 @@
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 
 #include "includes.h"
-#include "sensor.h"
+#include "Sensor.h"
 
 const uint8_t ADR_G = 0x6B; // LSM9DS0
 const uint8_t ADR_XM = 0x1D; // LSM9DS0
@@ -135,14 +135,22 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P);
+	IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P, bool kill, condition_variable cv);
 	~IMU();
 
 	bool init();
 	void getData(timeval time_now);
 	msl_actuator_msgs::IMUData sendData(timeval time_now);
+	void controlIMU();
+
+	bool notifyThread;
 
 private:
+	thread imuThread;
+	std::condition_variable *cv;
+	std::mutex mtx;
+	bool *killThread;
+
 	BlackLib::BlackI2C *i2c;
 	BeagleGPIO *gpio;
 	BeaglePins *pins;

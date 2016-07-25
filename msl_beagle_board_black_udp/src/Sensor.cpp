@@ -5,7 +5,7 @@
  *      Author: Carpe Noctem
  */
 
-#include "sensor.h"
+#include "../include/Sensor.h"
 
 Sensor::Sensor()
 {

@@ -1,6 +1,5 @@
-#include "motor.h"
-
 #include <stdlib.h>
+#include "../include/Motor.h"
 
 Motor::Motor(BeaglePWM::PwmPin pwm_name, const char *pin_names[], int period)
 {

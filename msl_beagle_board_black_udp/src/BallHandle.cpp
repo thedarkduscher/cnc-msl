@@ -15,7 +15,7 @@
 #include <math.h>
 #include <SystemConfig.h>
 
-BallHandle::BallHandle() {
+BallHandle::BallHandle(bool kill, condition_variable cv) {
 	const char *BH_right_pins[] = { "P8_9", "P8_10", "P8_16", "P8_18" };
 	const char *BH_left_pins[] = { "P8_7", "P8_8", "P8_12", "P8_14" };
 
@@ -23,6 +23,12 @@ BallHandle::BallHandle() {
 	leftMotor = new Motor(BeaglePWM::P8_13, BH_left_pins, maxSpeed);
 	
 	readConfigParameters();
+
+	ballHandleThread(controlBallHandle);
+	// CV, Mutex, Notify und Activ ???
+	killThread = kill;
+	notifyThread = false;
+	this->cv = cv;
 }
 
 BallHandle::~BallHandle() {
@@ -62,6 +68,37 @@ void BallHandle::setOdometryData(double newAngle, double newTranslation) {
 
 void BallHandle::setRotation(double newRotation) {
 	rotation = newRotation;
+}
+
+void BallHandle::controlBallHandle() {
+	const msl_actuator_msgs::BallHandleMode msg;
+	unique_lock<mutex> ballHandleMutex(mtx);
+	while(!killThread) {
+		cv.wait(ballHandleMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		if (!killThread)
+			break;
+
+		try {
+			switch (mode)
+			{
+				case msg.AUTONOMOUS_CONTROL:
+					ballHandle.dribbleControl();
+					break;
+
+				case msg.REMOTE_CONTROL:
+					ballHandle.checkTimeout();
+					break;
+
+				default:
+					ballHandle.checkTimeout();
+					break;
+			}
+		} catch (exception &e) {
+			cout << "BallHanlde: " << e.what() << endl;
+		}
+
+		notifyThread = false;
+	}
 }
 
 void BallHandle::dribbleControl() {
