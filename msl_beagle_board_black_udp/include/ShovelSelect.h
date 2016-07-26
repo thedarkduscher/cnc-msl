@@ -18,7 +18,7 @@
 class ShovelSelect
 {
 public:
-	ShovelSelect(BlackLib::pwmName pwm_P, bool kill, mutex mtx, condition_variable cv);	// Delete if using API
+	ShovelSelect(BlackLib::pwmName pwm_P, bool *kill, condition_variable *cv);	// Delete if using API
 // API Stuff	ShovelSelect(BeaglePWM::PwmPin pwm_name);
 	~ShovelSelect();
 
@@ -31,7 +31,7 @@ public:
 private:
 	thread shovelSelectThread;
 	std::condition_variable *cv;
-	std::mutex *mtx;
+	std::mutex mtx;
 	bool *killThread;
 
 /* API

@@ -15,7 +15,7 @@
 #include <math.h>
 #include <SystemConfig.h>
 
-BallHandle::BallHandle(bool kill, condition_variable cv) {
+BallHandle::BallHandle(bool *killT, condition_variable *cv) {
 	const char *BH_right_pins[] = { "P8_9", "P8_10", "P8_16", "P8_18" };
 	const char *BH_left_pins[] = { "P8_7", "P8_8", "P8_12", "P8_14" };
 
@@ -25,8 +25,7 @@ BallHandle::BallHandle(bool kill, condition_variable cv) {
 	readConfigParameters();
 
 	ballHandleThread(controlBallHandle);
-	// CV, Mutex, Notify und Activ ???
-	killThread = kill;
+	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
 }

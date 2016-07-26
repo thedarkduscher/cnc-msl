@@ -48,7 +48,7 @@ public:
 	void		reset(void);
 	uint8_t		read(uint8_t address);
 
-				OpticalFlow(const char *pin_names[], BlackLib::BlackSPI *spi_P, bool *kill, condition_variable *cv);
+				OpticalFlow(BlackLib::BlackSPI *spi_P, bool *kill, condition_variable *cv);
 				~OpticalFlow();
 
 	void 		adns_init(void);

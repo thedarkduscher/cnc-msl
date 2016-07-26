@@ -135,7 +135,7 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P, bool kill, condition_variable cv);
+	IMU(BlackLib::BlackI2C *i2c_P, bool *kill, condition_variable *cv);
 	~IMU();
 
 	bool init();

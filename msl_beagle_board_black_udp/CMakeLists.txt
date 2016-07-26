@@ -117,16 +117,19 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Declare a cpp executable
 add_executable(msl_beagle_board_black_udp 
-	src/actuator.cpp
-	src/ballhandle.cpp
-	src/imu.cpp
-	src/lightbarrier.cpp
-	src/motor.cpp
-	src/opticalflow.cpp
-	src/sensor.cpp
-	src/shovelselect.cpp
-	src/sensor.cpp
+	src/Actuator.cpp
+	src/Ballhandle.cpp
+	src/CanReceiver.cpp
+	src/IMU.cpp
+	src/LightBarrier.cpp
+	src/Motor.cpp
+	src/OpticalFlow.cpp
+	src/Proxy.cpp
+	src/Sensor.cpp
+	src/ShovelSelect.cpp
+	src/Sensor.cpp
 	src/Spline.cpp
+	src/Switches.cpp
 )
 add_executable(debug_udp src/debug.cpp)
 

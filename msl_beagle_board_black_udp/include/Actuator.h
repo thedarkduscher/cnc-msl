@@ -8,6 +8,17 @@
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_ACTUATOR_H_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_ACTUATOR_H_
 
+#include "includes.h"
+
+#include "BallHandle.h"
+#include "CanHandler.h"
+#include "IMU.h"
+#include "LightBarrier.h"
+#include "OpticalFlow.h"
+#include "Proxy.h"
+#include "ShovelSelect.h"
+#include "Switches.h"
+
 using namespace BlackLib;
 
 class Actuator {
@@ -19,11 +30,7 @@ private:
 	BlackI2C myI2C(I2C_2, ADR_G);
 	BlackSPI mySpi(SPI0_0, 8, SpiMode0, 2000000);
 
-	const char *IMU_pins[] = { "P8_11", "P8_15", "P8_17", "P8_26" };
-	const char *OF_pins[] = { "P9_30", "P9_25", "P9_27", "P9_12" };
 
-	IMU				lsm9ds0(IMU_pins, &myI2C);		/* magnet, accel, temp, gyro Interrupt-Pins */
-	OpticalFlow		adns3080(OF_pins, &mySpi);	/* ncs, npd, rst, led */
 	LightBarrier	lightbarrier(AIN0);
 	ShovelSelect	shovel(P9_14);	// Delete if using API
 	//ShovelSelect	shovel(BeaglePWM::P9_14);
@@ -31,17 +38,24 @@ private:
 	timeval			time_now;
 	timeval			last_ping;
 
+	mutex		mtx;
+	uint8_t		th_count;
+	bool		th_activ = true;
+
+	BallHandle ballHandle;
+	IMU lsm9ds0(&myI2C);
+	OpticalFlow adns3080(&mySpi);
+
+	// Can hack
+	CanHandler canHandler;
+	Proxy proxy;
+
 };
 
 
 
-#include "includes.h"
 
-#include "BallHandle.h"
-#include "IMU.h"
-#include "LightBarrier.h"
-#include "OpticalFlow.h"
-#include "ShovelSelect.h"
+
 
 
 

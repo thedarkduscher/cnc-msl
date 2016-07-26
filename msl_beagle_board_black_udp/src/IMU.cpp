@@ -10,7 +10,8 @@
 
 using namespace BlackLib;
 
-IMU::IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P, bool kill, condition_variable cv) {
+IMU::IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv) {
+	const char *pin_names[] = { "P8_11", "P8_15", "P8_17", "P8_26" };
 	i2c = i2c_P;
 
 	gpio = BeagleGPIO::getInstance();

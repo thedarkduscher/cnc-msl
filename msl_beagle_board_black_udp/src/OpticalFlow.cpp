@@ -9,8 +9,10 @@
 
 using namespace BlackLib;
 
-OpticalFlow::OpticalFlow(const char *pin_names[], BlackSPI *spi_P, bool *kill, condition_variable *cv) {
+OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *kill, condition_variable *cv) {
 	spi = spi_P;
+
+	const char *pin_names[] = { "P9_30", "P9_25", "P9_27", "P9_12" };
 
 	gpio = BeagleGPIO::getInstance();
 	pins = gpio->claim((char**) pin_names, 4);
@@ -203,6 +205,8 @@ msl_actuator_msgs::MotionBurst OpticalFlow::getMotionBurstMsg() {
 	vQos = 0;
 
 	mtx.unlock();
+
+	onRosMotionBurst1028144660(msg);
 
 	return msg;
 }
