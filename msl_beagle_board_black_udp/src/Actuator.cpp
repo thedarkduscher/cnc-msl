@@ -6,17 +6,35 @@
  */
 
 
-#include "actuator.h"
-
-#include <SystemConfig.h>
-#include <Configuration.h>
-#include <exception>
+#include "Actuator.h"
 
 #include <usbcanconnection.h>
-#include "../include/CanHandler.h"
 
-using namespace std;
-using namespace BlackLib;
+
+Actuator::Actuator() {
+	ballHandle = new BallHandle(&killThreads, &cv);
+	imu = new IMU(&myI2C, &killThreads, &cv);
+	lightbarrier = new LightBarrier(BlackLib::AIN0, &killThreads, &cv);
+	opticalflow = new OpticalFlow(&mySpi, &killThreads, &cv);
+	shovel = new ShovelSelect(BlackLib::P9_14, &killThreads, &cv);	// Delete if using API
+		//ShovelSelect	shovel(BeaglePWM::P9_14);
+	switches = new Switches(&killThreads, &cv);
+
+	myI2C.open(BlackLib::ReadWrite);
+	mySpi.open(BlackLib::ReadWrite);
+	imu->init();
+
+	canHandler.Start();
+}
+
+Actuator::~Actuator() {
+	delete ballHandle;
+	delete imu;
+	delete lightbarrier;
+	delete opticalflow;
+	delete shovel;
+	delete switches;
+}
 
 void handleBallHandleControl(const msl_actuator_msgs::BallHandleCmd msg) {
 	const msl_actuator_msgs::BallHandleMode mode;
@@ -58,61 +76,54 @@ void handleCanSub(const msl_actuator_msgs::CanMsg &msg) {
 	canHandler.sendCanMsg(msg);
 }
 
-void exit_program(int sig) {
-	ex = true;
-	th_activ = false;
-	for (int i=0; i<7; i++)
-		threw[i].cv.notify_all();
+void Actuator::exitThreads(int sig) {
+	killThreads = true;
+	cv.notify_all();
 }
-
-
-
 
 int main(int argc, char** argv) {
 	ros::Time::init();
-	ros::Rate loop_rate(30);		// in Hz
+	ros::Rate loop_rate(100);
+
+	// Initialization
+	Actuator actuator;
 
 
+	int counter = 0;
+	(void) signal(SIGINT, actuator.exitThreads);
+	while(1) {
+		counter++;
 
-	thread th_controlBallHandle(controlBallHandle);
-	thread th_controlShovel(contolShovelSelect);
-	thread th_lightbarrier(getLightbarrier);
-	thread th_switches(getSwitches);
-	thread th_imu(getIMU);
-
-	// I2C
-	bool i2c = myI2C.open(ReadWrite);
-	bool spi = mySpi.open(ReadWrite);
-	bool imu = lsm9ds0.init();
-
-
-
-	usleep(50000);
-
-	// CAN hack
-	canHandler.Start();
-
-
-
-	(void) signal(SIGINT, exit_program);
-	while(!ex) {
-		gettimeofday(&time_now, NULL);
-
-		// Thread Notify
-		for (int i=0; i<6; i++) { // TODO remove magic number
-			if (threw[i].notify) {
-				cerr << "Thread " << i << " requires to much time, iteration is skipped" << endl;
-			} else {
-				threw[i].notify = true;
-			}
-			threw[i].cv.notify_all();
+		if (counter % 1 == 0) {
+			// 100Hz
+			actuator.ballHandle->notifyThread = true;
 		}
+
+		if (counter % 2 == 0) {
+			// 50Hz
+			actuator.lightbarrier->notifyThread = true;
+		}
+
+		if (counter % 3 == 0) {
+			// 33Hz
+			actuator.opticalflow->notifyThread = true;
+			actuator.imu->notifyThread = true;
+		}
+
+		if (counter % 4 == 0) {
+			// 25Hz
+			actuator.shovel->notifyThread = true;
+			actuator.switches->notifyThread = true;
+		}
+
+		actuator.cv.notify_all(); // Notify all Threads
 
 		loop_rate.sleep();
 	}
-    io_service.stop();
-    iothread.join();
-    canHandler.Stop();
+
+    actuator.proxy.io_service.stop();
+    actuator.proxy.iothread.join();
+    actuator.canHandler.Stop();
 
 	return 0;
 }

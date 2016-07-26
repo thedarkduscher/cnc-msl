@@ -17,7 +17,7 @@ Proxy::Proxy() {
 	insocket->set_option(boost::asio::ip::multicast::join_group(multiCastAddress));
 	listenForPacket();
 
-	boost::thread iothread(run_udp);
+	iothread = new boost::thread(run_udp);
 	std::cout << "Udp connection active..." << std::endl;
 }
 
@@ -253,6 +253,7 @@ void Proxy::handleUdpPacket(const boost::system::error_code& error,   std::size_
 				case 1334345447ul: {
 				msl_actuator_msgs::BallHandleCmd m1334345447;
 				ros::serialization::Serializer<msl_actuator_msgs::BallHandleCmd>::read(stream, m1334345447);
+
 
 				handleBallHandleControl(m1334345447);
 				break; }

@@ -12,8 +12,6 @@
 #include <sstream>
 #include <iostream>
 #include <unistd.h>
-#include "ros/ros.h"
-#include <ros/transport_hints.h>
 #include <stdio.h>
 
 #include <SystemConfig.h>
@@ -27,6 +25,9 @@
 #include <net/if.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+
+#include "ros/ros.h"
+#include <ros/transport_hints.h>
 
 #include "msl_actuator_msgs/BallHandleCmd.h"
 #include "msl_actuator_msgs/BallHandleMode.h"
@@ -65,6 +66,9 @@ public:
 	void handleUdpPacket(const boost::system::error_code& error,   std::size_t bytes_transferred);
 	void run_udp();
 
+	boost::thread *iothread;
+	boost::asio::io_service io_service;
+
 
 private:
 	std::string ownRosName;
@@ -73,8 +77,6 @@ private:
 	udp::endpoint destEndPoint;
 	boost::array<char,64000> inBuffer;
 	boost::asio::ip::address multiCastAddress;
-	boost::asio::io_service io_service;
-
 };
 
 
