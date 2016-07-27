@@ -24,7 +24,7 @@
 #include "ShovelSelect.h"
 #include "Switches.h"
 
-class Actuator {
+class Actuator : Proxy {
 public:
 	Actuator();
 	~Actuator();
@@ -32,7 +32,6 @@ public:
 	void exitThreads(int sig);
 
 	CanHandler canHandler;
-	Proxy proxy;
 
 	std::condition_variable cv;
 	bool killThreads = false;
