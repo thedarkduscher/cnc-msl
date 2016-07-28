@@ -18,18 +18,17 @@
 class ShovelSelect
 {
 public:
-	ShovelSelect(BlackLib::pwmName pwm_P, bool *kill, condition_variable *cv);	// Delete if using API
+	ShovelSelect(BlackLib::pwmName pwm_P, bool *killT, condition_variable *cv);	// Delete if using API
 // API Stuff	ShovelSelect(BeaglePWM::PwmPin pwm_name);
 	~ShovelSelect();
 
 	bool checkTimeout();
-	bool setShovel(bool passing, timeval time_now);
+	bool setShovel(bool passing);
 	void controlShovelSelect();
 
 	bool notifyThread;
 
 private:
-	thread shovelSelectThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;

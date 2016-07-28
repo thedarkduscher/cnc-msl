@@ -22,7 +22,18 @@ Proxy::Proxy() {
 }
 
 Proxy::~Proxy() {
+	io_service.stop();
+	iothread.join();
+	delete actuator;
+}
 
+Proxy* Proxy::getInstance() {
+	static Proxy instance;
+	return &instance;
+}
+
+void Proxy::setActuator(Actuator* actuator) {
+	this->actuator = actuator;
 }
 
 void Proxy::onRosBallHandleCmd1334345447(msl_actuator_msgs::BallHandleCmd& message) {
@@ -255,7 +266,7 @@ void Proxy::handleUdpPacket(const boost::system::error_code& error,   std::size_
 				ros::serialization::Serializer<msl_actuator_msgs::BallHandleCmd>::read(stream, m1334345447);
 
 
-				handleBallHandleControl(m1334345447);
+				actuator->handleBallHandleControl(m1334345447);
 				break; }
 				case 297244167ul: {
 				msl_actuator_msgs::BallHandleMode m297244167;

@@ -9,7 +9,7 @@ Switches::Switches(bool *killT, std::condition_variable *cv) {
 	int outputIdxs[] = { led_power, led_bundle, led_vision };
 	pins->enableOutput(outputIdxs, 3);
 
-	switchesThread(controlSwitches);
+	std::thread switchesThread(&Switches::controlSwitches, this);
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
@@ -28,7 +28,7 @@ void Switches::controlSwitches() {
 
 	std::unique_lock<std::mutex> switchesMutex(mtx);
 	while(!killThread) {
-		cv.wait(switchesMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv->wait(switchesMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 

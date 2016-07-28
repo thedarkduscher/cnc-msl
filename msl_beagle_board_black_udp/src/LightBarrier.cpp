@@ -7,19 +7,20 @@
 
 
 #include "LightBarrier.h"
+#include "Proxy.h"
 #include <SystemConfig.h>
 
 using namespace BlackLib;
 
-LightBarrier::LightBarrier(adcName adc_P, bool *kill, condition_variable *cv) {
+LightBarrier::LightBarrier(adcName adc_P, bool *killT, condition_variable *cv) {
 	adc = new BlackADC(adc_P);
 
 	auto sc = supplementary::SystemConfig::getInstance();
 	this->threshold = (*sc)["bbb"]->get<int>("BBB.lightbarrierThreshold", NULL);
 
-	lightBarrierThread(controlLightBarrier);
+	std::thread lightBarrierThread(&LightBarrier::controlLightBarrier, this);
 	// CV, Mutex, Notify und Activ ???
-	killThread = kill;
+	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
 }
@@ -37,16 +38,17 @@ bool LightBarrier::checkLightBarrier() {
 }
 
 void LightBarrier::controlLightBarrier() {
+	Proxy *proxy = Proxy::getInstance();
 	std_msgs::Bool msg;
 	unique_lock<mutex> lightBarrierMutex(mtx);
 	while(!killThread) {
-		cv.wait(lightBarrierMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv->wait(lightBarrierMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
 		try {
 			msg.data = checkLightBarrier();
-			onRosBool2802967882(msg);
+			proxy->onRosBool2802967882(msg);
 		} catch (exception &e) {
 			cout << "ADC: " << e.what() << endl;
 		}

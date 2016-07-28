@@ -14,7 +14,7 @@
 
 class LightBarrier {
 public:
-	LightBarrier(BlackLib::adcName adc_P, bool *kill, condition_variable *cv);
+	LightBarrier(BlackLib::adcName adc_P, bool *killT, condition_variable *cv);
 	~LightBarrier();
 
 	bool checkLightBarrier();
@@ -24,7 +24,6 @@ public:
 	bool notifyThread;
 
 private:
-	thread lightBarrierThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;

@@ -22,7 +22,7 @@
 class BallHandle
 {
 public:
-	BallHandle(bool *killT, condition_variable *cv);
+	BallHandle(bool *killT, std::condition_variable *cv);
 	~BallHandle();
 
 	void readConfigParameters();
@@ -40,7 +40,6 @@ public:
 	bool notifyThread;
 
 private:
-	std::thread ballHandleThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;

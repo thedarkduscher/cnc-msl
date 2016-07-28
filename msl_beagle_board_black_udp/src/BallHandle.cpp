@@ -7,7 +7,7 @@
 
 
 
-#include "ballhandle.h"
+#include "BallHandle.h"
 
 #include <BeaglePWM.h>
 #include <stdlib.h>
@@ -15,7 +15,10 @@
 #include <math.h>
 #include <SystemConfig.h>
 
-BallHandle::BallHandle(bool *killT, condition_variable *cv) {
+#include "msl_actuator_msgs/BallHandleCmd.h"
+#include "msl_actuator_msgs/BallHandleMode.h"
+
+BallHandle::BallHandle(bool *killT, std::condition_variable *cv) {
 	const char *BH_right_pins[] = { "P8_9", "P8_10", "P8_16", "P8_18" };
 	const char *BH_left_pins[] = { "P8_7", "P8_8", "P8_12", "P8_14" };
 
@@ -24,14 +27,15 @@ BallHandle::BallHandle(bool *killT, condition_variable *cv) {
 	
 	readConfigParameters();
 
-	ballHandleThread(controlBallHandle);
+	std::thread ballHandleThread(&BallHandle::controlBallHandle, this);
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
 }
 
 BallHandle::~BallHandle() {
-
+	delete rightMotor;
+	delete leftMotor;
 }
 
 void BallHandle::readConfigParameters() {
@@ -70,10 +74,10 @@ void BallHandle::setRotation(double newRotation) {
 }
 
 void BallHandle::controlBallHandle() {
-	const msl_actuator_msgs::BallHandleMode msg;
+	msl_actuator_msgs::BallHandleMode msg;
 	unique_lock<mutex> ballHandleMutex(mtx);
 	while(!killThread) {
-		cv.wait(ballHandleMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv->wait(ballHandleMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
@@ -81,15 +85,15 @@ void BallHandle::controlBallHandle() {
 			switch (mode)
 			{
 				case msg.AUTONOMOUS_CONTROL:
-					ballHandle.dribbleControl();
+					dribbleControl();
 					break;
 
 				case msg.REMOTE_CONTROL:
-					ballHandle.checkTimeout();
+					checkTimeout();
 					break;
 
 				default:
-					ballHandle.checkTimeout();
+					checkTimeout();
 					break;
 			}
 		} catch (exception &e) {

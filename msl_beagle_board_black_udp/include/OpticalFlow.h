@@ -45,17 +45,17 @@ enum Pin
 
 class OpticalFlow {
 public:
-	void		reset(void);
-	uint8_t		read(uint8_t address);
+	void reset(void);
+	uint8_t read(uint8_t address);
 
-				OpticalFlow(BlackLib::BlackSPI *spi_P, bool *kill, condition_variable *cv);
-				~OpticalFlow();
+	OpticalFlow(BlackLib::BlackSPI *spi_P, bool *killT, condition_variable *cv);
+	~OpticalFlow();
 
-	void 		adns_init(void);
-	void		controlLED(bool enabled);
-	void 		update_motion_burst();
-	msl_actuator_msgs::MotionBurst getMotionBurstMsg();
-	void		controlOpticalFlow();
+	void adns_init(void);
+	void controlLED(bool enabled);
+	void update_motion_burst();
+	msl_actuator_msgs::MotionBurst sendMotionBurstMsg();
+	void controlOpticalFlow();
 
 	uint8_t 	getInverseProductId(void);
 	uint8_t 	getProductId(void);
@@ -63,7 +63,6 @@ public:
 	bool notifyThread;
 
 private:
-	thread opticalFlowThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;

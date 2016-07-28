@@ -6,10 +6,11 @@
  */
 
 #include "opticalflow.h"
+#include "Proxy.h"
 
 using namespace BlackLib;
 
-OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *kill, condition_variable *cv) {
+OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, condition_variable *cv) {
 	spi = spi_P;
 
 	const char *pin_names[] = { "P9_30", "P9_25", "P9_27", "P9_12" };
@@ -26,9 +27,9 @@ OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *kill, condition_variable *cv) {
 	vQos = 0;
 	debugOF = 0;
 
-	opticalFlowThread(controlOpticalFlow);
+	std::thread opticalFlowThread(&OpticalFlow::controlOpticalFlow, this);
 	// CV, Mutex, Notify und Activ ???
-	killThread = kill;
+	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
 }
@@ -186,7 +187,8 @@ void OpticalFlow::update_motion_burst() {
 }
 
 
-msl_actuator_msgs::MotionBurst OpticalFlow::getMotionBurstMsg() {
+msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
+	Proxy *proxy = Proxy::getInstance();
 	msl_actuator_msgs::MotionBurst msg;
 
 	mtx.lock();
@@ -203,10 +205,9 @@ msl_actuator_msgs::MotionBurst OpticalFlow::getMotionBurstMsg() {
 	y = 0;
 	qos = 0;
 	vQos = 0;
-
 	mtx.unlock();
 
-	onRosMotionBurst1028144660(msg);
+	proxy->onRosMotionBurst1028144660(msg);
 
 	return msg;
 }
@@ -214,7 +215,7 @@ msl_actuator_msgs::MotionBurst OpticalFlow::getMotionBurstMsg() {
 void OpticalFlow::controlOpticalFlow() {
 	unique_lock<mutex> opticalFlowMutex(mtx);
 	while(!killThread) {
-		cv.wait(opticalFlowMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv->wait(opticalFlowMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 

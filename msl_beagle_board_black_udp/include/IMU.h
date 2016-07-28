@@ -135,18 +135,17 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(BlackLib::BlackI2C *i2c_P, bool *kill, condition_variable *cv);
+	IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv);
 	~IMU();
 
 	bool init();
-	void getData(timeval time_now);
-	msl_actuator_msgs::IMUData sendData(timeval time_now);
+	void getData();
+	msl_actuator_msgs::IMUData sendData();
 	void controlIMU();
 
 	bool notifyThread;
 
 private:
-	thread imuThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;
@@ -156,7 +155,6 @@ private:
 	BeaglePins *pins;
 
 	timeval last_updated;
-	timeval last_sended;
 
 	Sensor* gyr;
 	Sensor* acc;

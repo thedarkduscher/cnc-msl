@@ -6,7 +6,8 @@
  */
 
 
-#include "imu.h"
+#include "IMU.h"
+#include "Proxy.h"
 
 using namespace BlackLib;
 
@@ -23,9 +24,9 @@ IMU::IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv) {
 
 	temperature = 0;
 
-	imuThread(controlIMU);
+	std::thread imuThread(&IMU::controlIMU, this);
 	// CV, Mutex, Notify und Activ ???
-	killThread = kill;
+	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
 }
@@ -292,16 +293,16 @@ void IMU::getTemp() {
 	temperature = (t - 32) / 1.8;
 }
 
-void IMU::getData(timeval time_now) {
+void IMU::getData() {
+	gettimeofday(&last_updated, NULL);
 	this->getAccel();
 	this->getGyro();
 	this->getMagnet();
 	this->getTemp();
-
-	last_updated = time_now;
 }
 
-msl_actuator_msgs::IMUData IMU::sendData(timeval time_now){
+msl_actuator_msgs::IMUData IMU::sendData() {
+	Proxy* proxy = Proxy::getInstance();
 	acc->updateInternalValues();
 	gyr->updateInternalValues();
 	mag->updateInternalValues();
@@ -321,7 +322,8 @@ msl_actuator_msgs::IMUData IMU::sendData(timeval time_now){
 
 	std::cout << "TEMP: " << temperature << std::endl;
 */
-
+	timeval t;
+	gettimeofday(&t, NULL);
 	mtx.lock();
 	msl_actuator_msgs::IMUData msg;
 	msg.acceleration.x = acc->mean->x;
@@ -337,10 +339,10 @@ msl_actuator_msgs::IMUData IMU::sendData(timeval time_now){
 	msg.magnet.z = mag->mean->z;
 	msg.magnetSens = mag->sense;
 	msg.temperature = temperature;
-	msg.time = (unsigned long long)time_now.tv_sec*1000000 + time_now.tv_usec;
-
+	msg.time = (unsigned long long)t.tv_sec*1000000 + t.tv_usec;
 	mtx.unlock();
-	last_sended = time_now;
+
+	proxy->onRosIMUData3455796956(msg);
 
 	return msg;
 }
@@ -348,12 +350,12 @@ msl_actuator_msgs::IMUData IMU::sendData(timeval time_now){
 void IMU::controlIMU() {
 	unique_lock<mutex> imuMutex(mtx);
 	while(!killThread) {
-		cv.wait(imuMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv->wait(imuMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
 		try {
-			getData(time_now);
+			getData();
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
 		}

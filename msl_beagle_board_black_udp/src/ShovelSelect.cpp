@@ -29,7 +29,7 @@ ShovelSelect::ShovelSelect(BeaglePWM::PwmPin pwm_name) {
 }*/
 
 	// Delete Constructor if using API
-	ShovelSelect::ShovelSelect(pwmName pwm_P, bool *kill, condition_variable *cv) {
+	ShovelSelect::ShovelSelect(pwmName pwm_P, bool *killT, condition_variable *cv) {
 			pwm = new BlackPWM(pwm_P);
 
 			pwm->setPeriodTime(period, nanosecond);
@@ -44,9 +44,9 @@ ShovelSelect::ShovelSelect(BeaglePWM::PwmPin pwm_name) {
 			enabled = false;
 			init = false;
 
-			shovelSelectThread(controlShovelSelect);
+			std::thread shovelSelectThread(&ShovelSelect::controlShovelSelect, this);
 			// CV, Mutex, Notify und Activ ???
-			killThread = kill;
+			killThread = killT;
 			notifyThread = false;
 			this->cv = cv;
 	}
@@ -69,13 +69,13 @@ bool ShovelSelect::checkTimeout() {
 	}
 }
 
-bool ShovelSelect::setShovel(bool passing, timeval time_now) {
+bool ShovelSelect::setShovel(bool passing) {
 	if (statePassing == passing && init) {
 		return false;
 	}
 
 	init = true;
-	ping = time_now;
+	gettimeofday(&ping, NULL);
 	statePassing = passing;
 	if (passing) {
 /* API		
@@ -98,7 +98,7 @@ void ShovelSelect::controlShovelSelect() {
 	timeval	t;
 	unique_lock<mutex> shovelSelectMutex(mtx);
 	while(!killThread) {
-		cv.wait(shovelSelectMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv->wait(shovelSelectMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 

@@ -12,14 +12,6 @@
 #include <mutex>
 #include <condition_variable>
 
-enum Pin {
-	sw_vision,
-	sw_bundle,
-	sw_power,
-	led_power,
-	led_bundle,
-	led_vision
-};
 
 class Switches
 {
@@ -31,13 +23,21 @@ public:
 	bool notifyThread;
 
 private:
-	std::thread switchesThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;
 
 	BeagleGPIO *gpio;
 	BeaglePins *pins;
+
+	enum Pin {
+		sw_vision,
+		sw_bundle,
+		sw_power,
+		led_power,
+		led_bundle,
+		led_vision
+	};
 };
 
 

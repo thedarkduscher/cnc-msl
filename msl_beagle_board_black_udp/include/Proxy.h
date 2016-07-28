@@ -44,9 +44,15 @@
 #include "msl_actuator_msgs/CanMsg.h"
 #include "msl_actuator_msgs/IMUData.h"
 
+#include "Actuator.h"
+
 class Proxy
 {
 public:
+
+	~Proxy();
+	static Proxy* getInstance();
+	void setActuator(Actuator* actuator);
 	void onRosBallHandleCmd1334345447(msl_actuator_msgs::BallHandleCmd& message);
 	void onRosBallHandleMode297244167(msl_actuator_msgs::BallHandleMode& message);
 	void onRosShovelSelectCmd1418208429(msl_actuator_msgs::ShovelSelectCmd& message);
@@ -71,12 +77,15 @@ public:
 
 
 private:
+	Proxy();
 	std::string ownRosName;
-	udp::socket* insocket;
-	udp::endpoint otherEndPoint;
-	udp::endpoint destEndPoint;
+	boost::asio::ip::udp::socket* insocket;
+	boost::asio::ip::udp::endpoint otherEndPoint;
+	boost::asio::ip::udp::endpoint destEndPoint;
 	boost::array<char,64000> inBuffer;
 	boost::asio::ip::address multiCastAddress;
+
+	Actuator *actuator;
 };
 
 

@@ -20,25 +20,36 @@
 #include "IMU.h"
 #include "LightBarrier.h"
 #include "OpticalFlow.h"
-#include "Proxy.h"
 #include "ShovelSelect.h"
 #include "Switches.h"
 
-class Actuator : Proxy {
+#include "msl_actuator_msgs/BallHandleCmd.h"
+#include "msl_actuator_msgs/BallHandleMode.h"
+#include "msl_actuator_msgs/ShovelSelectCmd.h"
+#include "msl_actuator_msgs/MotionLight.h"
+#include "msl_actuator_msgs/RawOdometryInfo.h"
+
+
+class Actuator {
 public:
 	Actuator();
 	~Actuator();
+	static void exitThreads(int sig);
+	void run();
 
-	void exitThreads(int sig);
-
-	CanHandler canHandler;
-
-	std::condition_variable cv;
-	bool killThreads = false;
+	static std::condition_variable cv;
+	static bool killThreads;
 
 private:
-	BlackLib::BlackI2C myI2C(BlackLib::I2C_2, ADR_G);
-	BlackLib::BlackSPI mySpi(BlackLib::SPI0_0, 8, BlackLib::SpiMode0, 2000000);
+	void handleBallHandleControl(const msl_actuator_msgs::BallHandleCmd msg);
+	void handleBallHandleMode(const msl_actuator_msgs::BallHandleMode msg);
+	void handleShovelSelectControl(const msl_actuator_msgs::ShovelSelectCmd msg);
+	void handleMotionLight(const msl_actuator_msgs::MotionLight msg);
+	void handleRawOdometryInfo(const msl_actuator_msgs::RawOdometryInfo msg);
+	void handleCanSub(const msl_actuator_msgs::CanMsg &msg);
+
+	BlackLib::BlackI2C *myI2C;
+	BlackLib::BlackSPI *mySpi;
 
 	BallHandle *ballHandle;
 	IMU *imu;
@@ -46,6 +57,8 @@ private:
 	OpticalFlow *opticalflow;
 	ShovelSelect *shovel;
 	Switches *switches;
+
+	CanHandler canHandler;
 };
 
 #endif /* CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_ACTUATOR_H_ */
