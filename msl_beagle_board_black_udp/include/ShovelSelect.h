@@ -9,7 +9,10 @@
 #define INCLUDE_SHOVELSELECT_H_
 #define TIMEDIFFMS(n,o) (((n).tv_sec-(o).tv_sec)*1000+((n).tv_usec-(o).tv_usec)/1000)
 
-#include <sys/time.h>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
 #include <BeaglePWM.h>
 
 #include "BlackDef.h"
@@ -18,7 +21,7 @@
 class ShovelSelect
 {
 public:
-	ShovelSelect(BlackLib::pwmName pwm_P, bool *killT, condition_variable *cv);	// Delete if using API
+	ShovelSelect(BlackLib::pwmName pwm_P, bool *killT, std::condition_variable *cv);	// Delete if using API
 // API Stuff	ShovelSelect(BeaglePWM::PwmPin pwm_name);
 	~ShovelSelect();
 

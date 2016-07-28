@@ -1,5 +1,12 @@
 #include "Switches.h"
 
+#include <SystemConfig.h>
+#include "Proxy.h"
+
+#include "process_manager/ProcessCommand.h"
+#include "msl_actuator_msgs/VisionRelocTrigger.h"
+#include "std_msgs/Empty.h"
+
 Switches::Switches(bool *killT, std::condition_variable *cv) {
 	/* sw_vis, sw_bun, sw_pwr, led_pwr, led_bun, led_vis */
 	const char *pin_names[] = { "P9_11", "P9_13", "P9_15", "P9_23", "P9_41", "P9_42" };
@@ -20,6 +27,7 @@ Switches::~Switches() {
 }
 
 void Switches::controlSwitches() {
+	Proxy *proxy = Proxy::getInstance();
 	supplementary::SystemConfig* sc;
 	sc = supplementary::SystemConfig::getInstance();
 	int		ownID = (*sc)["bbb"]->get<int>("BBB.robotID",NULL);
@@ -74,7 +82,7 @@ void Switches::controlSwitches() {
 					msg_pm.cmd = 1;
 					pins->clearBit(led_bundle);	// LED aus
 				}
-				onRosProcessCommand554624761(msg_pm);
+				proxy->onRosProcessCommand554624761(msg_pm);
 				//brtPub->publish(msg_pm);
 			}
 		}
@@ -85,7 +93,7 @@ void Switches::controlSwitches() {
 			if (state[sw_vision]) {
 				msg_v.receiverID = ownID;
 				msg_v.usePose = false;
-				onRosVisionRelocTrigger2772566283(msg_v);
+				proxy->onRosVisionRelocTrigger2772566283(msg_v);
 				pins->setBit(led_vision);	// Vision-LED an
 			} else {
 				pins->clearBit(led_vision);	// Vision-LED aus

@@ -8,8 +8,18 @@
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_OPTICALFLOW_H_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_OPTICALFLOW_H_
 
+#include "BlackDef.h"
+#include "BlackSPI.h"
 
-#include "includes.h"
+#include <BeagleGPIO.h>
+#include <BeaglePins.h>
+
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+#include "msl_actuator_msgs/MotionLight.h"
+#include "msl_actuator_msgs/MotionBurst.h"
 
 
 // ADNS3080 Registers
@@ -48,7 +58,7 @@ public:
 	void reset(void);
 	uint8_t read(uint8_t address);
 
-	OpticalFlow(BlackLib::BlackSPI *spi_P, bool *killT, condition_variable *cv);
+	OpticalFlow(BlackLib::BlackSPI *spi_P, bool *killT, std::condition_variable *cv);
 	~OpticalFlow();
 
 	void adns_init(void);

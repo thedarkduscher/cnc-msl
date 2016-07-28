@@ -12,6 +12,10 @@
 #include <mutex>
 #include <condition_variable>
 
+#include <BeagleGPIO.h>
+#include <BeaglePins.h>
+#include <BeaglePWM.h>
+
 
 class Switches
 {

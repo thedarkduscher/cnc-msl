@@ -127,7 +127,6 @@ add_executable(msl_beagle_board_black_udp
 	src/Proxy.cpp
 	src/Sensor.cpp
 	src/ShovelSelect.cpp
-	src/Sensor.cpp
 	src/Spline.cpp
 	src/Switches.cpp
 )

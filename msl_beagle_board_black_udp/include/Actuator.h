@@ -37,10 +37,6 @@ public:
 	static void exitThreads(int sig);
 	void run();
 
-	static std::condition_variable cv;
-	static bool killThreads;
-
-private:
 	void handleBallHandleControl(const msl_actuator_msgs::BallHandleCmd msg);
 	void handleBallHandleMode(const msl_actuator_msgs::BallHandleMode msg);
 	void handleShovelSelectControl(const msl_actuator_msgs::ShovelSelectCmd msg);
@@ -48,6 +44,7 @@ private:
 	void handleRawOdometryInfo(const msl_actuator_msgs::RawOdometryInfo msg);
 	void handleCanSub(const msl_actuator_msgs::CanMsg &msg);
 
+private:
 	BlackLib::BlackI2C *myI2C;
 	BlackLib::BlackSPI *mySpi;
 
@@ -57,6 +54,9 @@ private:
 	OpticalFlow *opticalflow;
 	ShovelSelect *shovel;
 	Switches *switches;
+
+	static std::condition_variable cv;
+	static bool killThreads;
 
 	CanHandler canHandler;
 };

@@ -10,6 +10,7 @@
 
 
 bool Actuator::killThreads = false;
+std::condition_variable Actuator::cv;
 
 Actuator::Actuator() {
 	ballHandle = new BallHandle(&killThreads, &cv);

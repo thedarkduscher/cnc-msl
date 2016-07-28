@@ -5,7 +5,7 @@
 *      Author: Lukas Will
 */
 
-#include "shovelselect.h"
+#include "ShovelSelect.h"
 #include <sys/time.h>
 #include <SystemConfig.h>
 
@@ -29,7 +29,7 @@ ShovelSelect::ShovelSelect(BeaglePWM::PwmPin pwm_name) {
 }*/
 
 	// Delete Constructor if using API
-	ShovelSelect::ShovelSelect(pwmName pwm_P, bool *killT, condition_variable *cv) {
+	ShovelSelect::ShovelSelect(pwmName pwm_P, bool *killT, std::condition_variable *cv) {
 			pwm = new BlackPWM(pwm_P);
 
 			pwm->setPeriodTime(period, nanosecond);

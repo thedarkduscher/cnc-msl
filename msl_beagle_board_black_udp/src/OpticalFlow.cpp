@@ -5,12 +5,12 @@
  *      Author: Lukas Will
  */
 
-#include "opticalflow.h"
+#include "OpticalFlow.h"
 #include "Proxy.h"
 
 using namespace BlackLib;
 
-OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, condition_variable *cv) {
+OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, std::condition_variable *cv) {
 	spi = spi_P;
 
 	const char *pin_names[] = { "P9_30", "P9_25", "P9_27", "P9_12" };

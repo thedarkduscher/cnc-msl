@@ -39,12 +39,9 @@
 #include "std_msgs/Bool.h"
 #include "msl_actuator_msgs/RawOdometryInfo.h"
 #include "msl_actuator_msgs/CanMsg.h"
-#include "msl_actuator_msgs/CanMsg.h"
-#include "msl_actuator_msgs/CanMsg.h"
-#include "msl_actuator_msgs/CanMsg.h"
 #include "msl_actuator_msgs/IMUData.h"
 
-#include "Actuator.h"
+class Actuator;
 
 class Proxy
 {
@@ -69,7 +66,7 @@ public:
 	void onRosIMUData3455796956(msl_actuator_msgs::IMUData& message);
 
 	void listenForPacket();
-	void handleUdpPacket(const boost::system::error_code& error,   std::size_t bytes_transferred);
+	void handleUdpPacket(const boost::system::error_code& error, std::size_t bytes_transferred);
 	void run_udp();
 
 	boost::thread *iothread;
@@ -85,7 +82,7 @@ private:
 	boost::array<char,64000> inBuffer;
 	boost::asio::ip::address multiCastAddress;
 
-	Actuator *actuator;
+	Actuator* actuator;
 };
 
 

@@ -12,7 +12,7 @@
 
 using namespace BlackLib;
 
-LightBarrier::LightBarrier(adcName adc_P, bool *killT, condition_variable *cv) {
+LightBarrier::LightBarrier(adcName adc_P, bool *killT, std::condition_variable *cv) {
 	adc = new BlackADC(adc_P);
 
 	auto sc = supplementary::SystemConfig::getInstance();

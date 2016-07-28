@@ -11,10 +11,14 @@
 #include "BlackDef.h"
 #include "BlackADC.h"
 
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
 
 class LightBarrier {
 public:
-	LightBarrier(BlackLib::adcName adc_P, bool *killT, condition_variable *cv);
+	LightBarrier(BlackLib::adcName adc_P, bool *killT, std::condition_variable *cv);
 	~LightBarrier();
 
 	bool checkLightBarrier();

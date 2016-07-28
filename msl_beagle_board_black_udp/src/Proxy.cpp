@@ -1,4 +1,5 @@
 #include "Proxy.h"
+#include "Actuator.h"
 
 using boost::asio::ip::udp;
 
@@ -17,14 +18,16 @@ Proxy::Proxy() {
 	insocket->set_option(boost::asio::ip::multicast::join_group(multiCastAddress));
 	listenForPacket();
 
-	iothread = new boost::thread(run_udp);
+	iothread = new boost::thread(&Proxy::run_udp, this);
 	std::cout << "Udp connection active..." << std::endl;
 }
 
 Proxy::~Proxy() {
 	io_service.stop();
-	iothread.join();
+	iothread->join();
 	delete actuator;
+	delete iothread;
+	delete insocket;
 }
 
 Proxy* Proxy::getInstance() {
@@ -248,7 +251,7 @@ uint8_t* buffer = NULL;
 }
 void Proxy::listenForPacket() {
 	insocket->async_receive_from(boost::asio::buffer(inBuffer), otherEndPoint,
-        boost::bind(&handleUdpPacket, boost::asio::placeholders::error,boost::asio::placeholders::bytes_transferred));
+        boost::bind(&Proxy::handleUdpPacket, this, boost::asio::placeholders::error,boost::asio::placeholders::bytes_transferred));
 }
 void Proxy::handleUdpPacket(const boost::system::error_code& error,   std::size_t bytes_transferred) {
 	//std::cout << "From "<<otherEndPoint.address() << std::endl;
@@ -265,26 +268,25 @@ void Proxy::handleUdpPacket(const boost::system::error_code& error,   std::size_
 				msl_actuator_msgs::BallHandleCmd m1334345447;
 				ros::serialization::Serializer<msl_actuator_msgs::BallHandleCmd>::read(stream, m1334345447);
 
-
 				actuator->handleBallHandleControl(m1334345447);
 				break; }
 				case 297244167ul: {
 				msl_actuator_msgs::BallHandleMode m297244167;
 				ros::serialization::Serializer<msl_actuator_msgs::BallHandleMode>::read(stream, m297244167);
 
-				handleBallHandleMode(m297244167);
+				actuator->handleBallHandleMode(m297244167);
 				break; }
 				case 1418208429ul: {
 				msl_actuator_msgs::ShovelSelectCmd m1418208429;
 				ros::serialization::Serializer<msl_actuator_msgs::ShovelSelectCmd>::read(stream, m1418208429);
 
-				handleShovelSelectControl(m1418208429);
+				actuator->handleShovelSelectControl(m1418208429);
 				break; }
 				case 2056271736ul: {
 				msl_actuator_msgs::MotionLight m2056271736;
 				ros::serialization::Serializer<msl_actuator_msgs::MotionLight>::read(stream, m2056271736);
 
-				handleMotionLight(m2056271736);
+				actuator->handleMotionLight(m2056271736);
 				break; }
 				case 554624761ul: {
 //				process_manager::ProcessCommand m554624761;
@@ -309,13 +311,13 @@ void Proxy::handleUdpPacket(const boost::system::error_code& error,   std::size_
 				case 3134514216ul: {
 				msl_actuator_msgs::RawOdometryInfo m3134514216;
 				ros::serialization::Serializer<msl_actuator_msgs::RawOdometryInfo>::read(stream, m3134514216);
-				handleRawOdometryInfo(m3134514216);
+				actuator->handleRawOdometryInfo(m3134514216);
 				break; }
 				case 1267609526ul: {
 				// CanSub
 				msl_actuator_msgs::CanMsg m1267609526;
 				ros::serialization::Serializer<msl_actuator_msgs::CanMsg>::read(stream, m1267609526);
-				handleCanSub(m1267609526);
+				actuator->handleCanSub(m1267609526);
 
 				break; }
 				case 217678336ul: {

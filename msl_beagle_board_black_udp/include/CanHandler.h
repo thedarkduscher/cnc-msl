@@ -8,6 +8,7 @@
 #include "ros/ros.h"
 #include "msl_actuator_msgs/CanMsg.h"
 #include "rosmsgfuncs.h"
+#include "Proxy.h"
 
 #include <stdio.h>
 #include <signal.h>
@@ -70,6 +71,7 @@ protected:
 	vector<unsigned short> receivers;
 
 	void Receive(unsigned int canid, unsigned char* data, int len) {
+		Proxy* proxy = Proxy::getInstance();
 		bool found = false;
 		unsigned int id = ((canid & 0xFF00) >> 8);
 		for (unsigned int i = 0; i < receivers.size(); i++) {
@@ -90,7 +92,7 @@ protected:
 					break;
 				case ReKick:
 					printf("sending reckick can msg\n");
-					onRosCanMsg418700403(cm);
+					proxy->onRosCanMsg418700403(cm);
 					break;
 				case BallHandler:
 					break;
