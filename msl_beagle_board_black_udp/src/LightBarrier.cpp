@@ -18,14 +18,14 @@ LightBarrier::LightBarrier(adcName adc_P, bool *killT, std::condition_variable *
 	auto sc = supplementary::SystemConfig::getInstance();
 	this->threshold = (*sc)["bbb"]->get<int>("BBB.lightbarrierThreshold", NULL);
 
-	std::thread lightBarrierThread(&LightBarrier::controlLightBarrier, this);
-	// CV, Mutex, Notify und Activ ???
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+	lbThread = new std::thread(&LightBarrier::controlLightBarrier, this);
 }
 
 LightBarrier::~LightBarrier() {
+	delete lbThread;
 	delete adc;
 }
 

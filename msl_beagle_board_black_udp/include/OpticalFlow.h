@@ -73,6 +73,7 @@ public:
 	bool notifyThread;
 
 private:
+	std::thread* ofThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;

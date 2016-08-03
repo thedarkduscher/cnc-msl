@@ -5,8 +5,6 @@
  *      Author: Lukas Will
  */
 
-
-
 #include "BallHandle.h"
 
 #include <BeaglePWM.h>
@@ -27,13 +25,14 @@ BallHandle::BallHandle(bool *killT, std::condition_variable *cv) {
 	
 	readConfigParameters();
 
-	std::thread ballHandleThread(&BallHandle::controlBallHandle, this);
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+	bhThread = new std::thread(&BallHandle::controlBallHandle, this);
 }
 
 BallHandle::~BallHandle() {
+	delete bhThread;
 	delete rightMotor;
 	delete leftMotor;
 }

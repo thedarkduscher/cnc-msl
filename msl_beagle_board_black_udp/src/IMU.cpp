@@ -24,11 +24,10 @@ IMU::IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv) {
 
 	temperature = 0;
 
-	std::thread imuThread(&IMU::controlIMU, this);
-	// CV, Mutex, Notify und Activ ???
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+	imuThread = new std::thread(&IMU::controlIMU, this);
 }
 
 IMU::~IMU() {

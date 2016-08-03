@@ -27,11 +27,10 @@ OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, std::condition_variable *
 	vQos = 0;
 	debugOF = 0;
 
-	std::thread opticalFlowThread(&OpticalFlow::controlOpticalFlow, this);
-	// CV, Mutex, Notify und Activ ???
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+	ofThread = new std::thread(&OpticalFlow::controlOpticalFlow, this);
 }
 
 OpticalFlow::~OpticalFlow() {

@@ -8,7 +8,19 @@
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 
-#include "includes.h"
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+#include <BeagleGPIO.h>
+#include <BeaglePins.h>
+#include <BeaglePWM.h>
+
+#include <BlackDef.h>
+#include <BlackI2C.h>
+
+#include "msl_actuator_msgs/IMUData.h"
+
 #include "Sensor.h"
 
 const uint8_t ADR_G = 0x6B; // LSM9DS0
@@ -146,13 +158,14 @@ public:
 	bool notifyThread;
 
 private:
-	std::condition_variable *cv;
+	std::thread* imuThread;
+	std::condition_variable* cv;
 	std::mutex mtx;
-	bool *killThread;
+	bool* killThread;
 
-	BlackLib::BlackI2C *i2c;
-	BeagleGPIO *gpio;
-	BeaglePins *pins;
+	BlackLib::BlackI2C* i2c;
+	BeagleGPIO* gpio;
+	BeaglePins* pins;
 
 	timeval last_updated;
 

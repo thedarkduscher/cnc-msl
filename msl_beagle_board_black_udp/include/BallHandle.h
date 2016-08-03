@@ -18,7 +18,6 @@
 #include "Motor.h"
 #include "Spline.h"
 
-
 class BallHandle
 {
 public:
@@ -40,12 +39,13 @@ public:
 	bool notifyThread;
 
 private:
-	std::condition_variable *cv;
+	std::thread* bhThread;
+	std::condition_variable* cv;
 	std::mutex mtx;
-	bool *killThread;
+	bool* killThread;
 
-	Motor *rightMotor;
-	Motor *leftMotor;
+	Motor* rightMotor;
+	Motor* leftMotor;
 
 	uint8_t mode = 1;
 

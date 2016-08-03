@@ -28,6 +28,7 @@ public:
 	bool notifyThread;
 
 private:
+	std::thread* lbThread;
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;

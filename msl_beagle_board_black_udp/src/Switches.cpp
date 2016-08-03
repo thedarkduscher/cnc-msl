@@ -16,13 +16,14 @@ Switches::Switches(bool *killT, std::condition_variable *cv) {
 	int outputIdxs[] = { led_power, led_bundle, led_vision };
 	pins->enableOutput(outputIdxs, 3);
 
-	std::thread switchesThread(&Switches::controlSwitches, this);
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+	sThread = new std::thread(&Switches::controlSwitches, this);
 }
 
 Switches::~Switches() {
+	delete sThread;
 	delete gpio;
 }
 

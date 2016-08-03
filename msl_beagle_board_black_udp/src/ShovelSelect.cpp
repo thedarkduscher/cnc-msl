@@ -44,17 +44,17 @@ ShovelSelect::ShovelSelect(BeaglePWM::PwmPin pwm_name) {
 			enabled = false;
 			init = false;
 
-			std::thread shovelSelectThread(&ShovelSelect::controlShovelSelect, this);
-			// CV, Mutex, Notify und Activ ???
 			killThread = killT;
 			notifyThread = false;
 			this->cv = cv;
+			ssThread = new std::thread(&ShovelSelect::controlShovelSelect, this);
 	}
 
 
 ShovelSelect::~ShovelSelect() {
 /* API
 	pwm->setRunState(pwm_pin, false);*/
+	delete ssThread;
 	delete pwm;
 }
 
