@@ -8,6 +8,7 @@
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 
+#include "Proxy.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -147,7 +148,7 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv);
+	IMU(BlackLib::BlackI2C *i2c_P, bool *killT, std::condition_variable *cv);
 	~IMU();
 
 	bool init();
@@ -162,6 +163,8 @@ private:
 	std::condition_variable* cv;
 	std::mutex mtx;
 	bool* killThread;
+
+	Proxy* proxy;
 
 	BlackLib::BlackI2C* i2c;
 	BeagleGPIO* gpio;

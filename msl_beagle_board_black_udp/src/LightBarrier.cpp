@@ -7,12 +7,11 @@
 
 
 #include "LightBarrier.h"
-#include "Proxy.h"
 #include <SystemConfig.h>
 
 using namespace BlackLib;
 
-LightBarrier::LightBarrier(adcName adc_P, bool *killT, std::condition_variable *cv) {
+LightBarrier::LightBarrier(adcName adc_P, bool* killT, std::condition_variable* cv) {
 	adc = new BlackADC(adc_P);
 
 	auto sc = supplementary::SystemConfig::getInstance();
@@ -21,6 +20,8 @@ LightBarrier::LightBarrier(adcName adc_P, bool *killT, std::condition_variable *
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+	proxy = Proxy::getInstance();
+
 	lbThread = new std::thread(&LightBarrier::controlLightBarrier, this);
 }
 
@@ -38,7 +39,6 @@ bool LightBarrier::checkLightBarrier() {
 }
 
 void LightBarrier::controlLightBarrier() {
-	Proxy *proxy = Proxy::getInstance();
 	std_msgs::Bool msg;
 	unique_lock<mutex> lightBarrierMutex(mtx);
 	while(!killThread) {

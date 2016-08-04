@@ -1,7 +1,6 @@
 #include "Switches.h"
 
 #include <SystemConfig.h>
-#include "Proxy.h"
 
 #include "process_manager/ProcessCommand.h"
 #include "msl_actuator_msgs/VisionRelocTrigger.h"
@@ -19,6 +18,8 @@ Switches::Switches(bool *killT, std::condition_variable *cv) {
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+
+	proxy = Proxy::getInstance();
 	sThread = new std::thread(&Switches::controlSwitches, this);
 }
 
@@ -28,7 +29,6 @@ Switches::~Switches() {
 }
 
 void Switches::controlSwitches() {
-	Proxy *proxy = Proxy::getInstance();
 	supplementary::SystemConfig* sc;
 	sc = supplementary::SystemConfig::getInstance();
 	int		ownID = (*sc)["bbb"]->get<int>("BBB.robotID",NULL);

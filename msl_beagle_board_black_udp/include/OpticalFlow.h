@@ -14,6 +14,7 @@
 #include <BeagleGPIO.h>
 #include <BeaglePins.h>
 
+#include "Proxy.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -77,6 +78,8 @@ private:
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;
+
+	Proxy* proxy;
 
 	BlackLib::BlackSPI *spi;
 	BeagleGPIO *gpio;

@@ -6,7 +6,6 @@
  */
 
 #include "OpticalFlow.h"
-#include "Proxy.h"
 
 using namespace BlackLib;
 
@@ -30,6 +29,8 @@ OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, std::condition_variable *
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+
+	proxy = Proxy::getInstance();
 	ofThread = new std::thread(&OpticalFlow::controlOpticalFlow, this);
 }
 
@@ -187,7 +188,6 @@ void OpticalFlow::update_motion_burst() {
 
 
 msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
-	Proxy *proxy = Proxy::getInstance();
 	msl_actuator_msgs::MotionBurst msg;
 
 	mtx.lock();

@@ -11,6 +11,7 @@
 #include "BlackDef.h"
 #include "BlackADC.h"
 
+#include "Proxy.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -18,7 +19,7 @@
 
 class LightBarrier {
 public:
-	LightBarrier(BlackLib::adcName adc_P, bool *killT, std::condition_variable *cv);
+	LightBarrier(BlackLib::adcName adc_P, bool* killT, std::condition_variable* cv);
 	~LightBarrier();
 
 	bool checkLightBarrier();
@@ -29,11 +30,13 @@ public:
 
 private:
 	std::thread* lbThread;
-	std::condition_variable *cv;
+	std::condition_variable* cv;
 	std::mutex mtx;
-	bool *killThread;
+	bool* killThread;
 
-	BlackLib::BlackADC	*adc;
+	Proxy* proxy;
+
+	BlackLib::BlackADC* adc;
 	int		threshold;
 };
 

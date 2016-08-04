@@ -8,6 +8,7 @@
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_UDP_INCLUDE_SWITCHES_CPP_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_UDP_INCLUDE_SWITCHES_CPP_
 
+#include "Proxy.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -31,6 +32,8 @@ private:
 	std::condition_variable *cv;
 	std::mutex mtx;
 	bool *killThread;
+
+	Proxy* proxy;
 
 	BeagleGPIO *gpio;
 	BeaglePins *pins;

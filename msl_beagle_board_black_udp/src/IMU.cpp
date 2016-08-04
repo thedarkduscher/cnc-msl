@@ -7,11 +7,10 @@
 
 
 #include "IMU.h"
-#include "Proxy.h"
 
 using namespace BlackLib;
 
-IMU::IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv) {
+IMU::IMU(BlackLib::BlackI2C *i2c_P, bool* killT, std::condition_variable* cv) {
 	const char *pin_names[] = { "P8_11", "P8_15", "P8_17", "P8_26" };
 	i2c = i2c_P;
 
@@ -27,6 +26,8 @@ IMU::IMU(BlackLib::BlackI2C *i2c_P, bool *killT, condition_variable *cv) {
 	killThread = killT;
 	notifyThread = false;
 	this->cv = cv;
+
+	proxy = Proxy::getInstance();
 	imuThread = new std::thread(&IMU::controlIMU, this);
 }
 
@@ -301,7 +302,6 @@ void IMU::getData() {
 }
 
 msl_actuator_msgs::IMUData IMU::sendData() {
-	Proxy* proxy = Proxy::getInstance();
 	acc->updateInternalValues();
 	gyr->updateInternalValues();
 	mag->updateInternalValues();
