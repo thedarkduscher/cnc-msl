@@ -4,8 +4,7 @@
 using boost::asio::ip::udp;
 
 Proxy::Proxy() {
-	supplementary::SystemConfig* sc;
-	sc = supplementary::SystemConfig::getInstance();
+	supplementary::SystemConfig* sc = supplementary::SystemConfig::getInstance();
 
 	supplementary::Configuration *proxyconf = (*sc)["msl_bbb_proxy"];
 	std::string baddress = proxyconf->get<std::string>("UdpProxy","MulticastAddress",NULL);
@@ -16,7 +15,7 @@ Proxy::Proxy() {
 	insocket = new udp::socket(io_service,udp::endpoint(multiCastAddress,port));
 	insocket->set_option(boost::asio::ip::multicast::enable_loopback(false));
 	insocket->set_option(boost::asio::ip::multicast::join_group(multiCastAddress));
-	listenForPacket();
+//	listenForPacket();
 
 	iothread = new boost::thread(&Proxy::run_udp, this);
 	std::cout << "Udp connection active..." << std::endl;

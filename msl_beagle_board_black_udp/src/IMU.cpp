@@ -32,6 +32,7 @@ IMU::IMU(BlackLib::BlackI2C *i2c_P, bool* killT, std::condition_variable* cv) {
 }
 
 IMU::~IMU() {
+	delete imuThread;
 	delete gpio;
 	delete acc;
 	delete gyr;
