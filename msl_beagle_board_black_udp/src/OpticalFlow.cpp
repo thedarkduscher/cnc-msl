@@ -9,7 +9,7 @@
 
 using namespace BlackLib;
 
-OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, std::condition_variable *cv) {
+OpticalFlow::OpticalFlow(BlackSPI *spi_P) {
 	spi = spi_P;
 
 	const char *pin_names[] = { "P9_30", "P9_25", "P9_27", "P9_12" };
@@ -26,15 +26,17 @@ OpticalFlow::OpticalFlow(BlackSPI *spi_P, bool *killT, std::condition_variable *
 	vQos = 0;
 	debugOF = 0;
 
-	killThread = killT;
+	killThread = false;
 	notifyThread = false;
-	this->cv = cv;
 
 	proxy = Proxy::getInstance();
 	ofThread = new std::thread(&OpticalFlow::controlOpticalFlow, this);
 }
 
 OpticalFlow::~OpticalFlow() {
+	killThread = true;
+	cv.notify_all();
+
 	delete gpio;
 }
 
@@ -214,7 +216,7 @@ msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
 void OpticalFlow::controlOpticalFlow() {
 	unique_lock<mutex> opticalFlowMutex(mtx);
 	while(!killThread) {
-		cv->wait(opticalFlowMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv.wait(opticalFlowMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
@@ -228,3 +230,7 @@ void OpticalFlow::controlOpticalFlow() {
 	}
 }
 
+void OpticalFlow::notify() {
+	notifyThread = true;
+	cv.notify_all();
+}

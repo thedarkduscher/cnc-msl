@@ -6,7 +6,7 @@
 #include "msl_actuator_msgs/VisionRelocTrigger.h"
 #include "std_msgs/Empty.h"
 
-Switches::Switches(bool *killT, std::condition_variable *cv) {
+Switches::Switches() {
 	/* sw_vis, sw_bun, sw_pwr, led_pwr, led_bun, led_vis */
 	const char *pin_names[] = { "P9_11", "P9_13", "P9_15", "P9_23", "P9_41", "P9_42" };
 	gpio = BeagleGPIO::getInstance();
@@ -15,15 +15,17 @@ Switches::Switches(bool *killT, std::condition_variable *cv) {
 	int outputIdxs[] = { led_power, led_bundle, led_vision };
 	pins->enableOutput(outputIdxs, 3);
 
-	killThread = killT;
+	killThread = false;
 	notifyThread = false;
-	this->cv = cv;
 
 	proxy = Proxy::getInstance();
 	sThread = new std::thread(&Switches::controlSwitches, this);
 }
 
 Switches::~Switches() {
+	killThread = true;
+	cv.notify_all();
+
 	delete sThread;
 	delete gpio;
 }
@@ -37,7 +39,7 @@ void Switches::controlSwitches() {
 
 	std::unique_lock<std::mutex> switchesMutex(mtx);
 	while(!killThread) {
-		cv->wait(switchesMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv.wait(switchesMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
@@ -114,4 +116,9 @@ void Switches::controlSwitches() {
 
 		notifyThread = false;
 	}
+}
+
+void Switches::notify() {
+	notifyThread = true;
+	cv.notify_all();
 }

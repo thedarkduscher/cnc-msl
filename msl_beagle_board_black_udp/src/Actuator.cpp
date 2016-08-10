@@ -9,19 +9,17 @@
 #include "Actuator.h"
 
 
-bool Actuator::killThreads = false;
-std::condition_variable Actuator::cv;
 
 Actuator::Actuator() {
-	ballHandle = new BallHandle(&killThreads, &cv);
+	ballHandle = new BallHandle();
 	myI2C = new BlackLib::BlackI2C(BlackLib::I2C_2, ADR_G);
-	imu = new IMU(myI2C, &killThreads, &cv);
-	lightbarrier = new LightBarrier(BlackLib::AIN0, &killThreads, &cv);
+	imu = new IMU(myI2C);
+	lightbarrier = new LightBarrier(BlackLib::AIN0);
 	mySpi = new BlackLib::BlackSPI(BlackLib::SPI0_0, 8, BlackLib::SpiMode0, 2000000);
-	opticalflow = new OpticalFlow(mySpi, &killThreads, &cv);
-	shovel = new ShovelSelect(BlackLib::P9_14, &killThreads, &cv);	// Delete if using API
+	opticalflow = new OpticalFlow(mySpi);
+	shovel = new ShovelSelect(BlackLib::P9_14);	// Delete if using API
 		//ShovelSelect	shovel(BeaglePWM::P9_14);
-	switches = new Switches(&killThreads, &cv);
+	switches = new Switches();
 
 	myI2C->open(BlackLib::ReadWrite);
 	mySpi->open(BlackLib::ReadWrite);
@@ -43,43 +41,35 @@ Actuator::~Actuator() {
 	delete switches;
 }
 
-void Actuator::exitThreads(int sig) {
-	killThreads = true;
-	cv.notify_all();
-}
-
 void Actuator::run() {
 	ros::Time::init();
 	ros::Rate loop_rate(100);
 
 	int counter = 0;
-	signal(SIGINT, &exitThreads);
 	while(1) {
 		counter++;
 
 		if (counter % 1 == 0) {
 			// 100Hz
-			ballHandle->notifyThread = true;
+			ballHandle->notify();
 		}
 
 		if (counter % 2 == 0) {
 			// 50Hz
-			lightbarrier->notifyThread = true;
+			lightbarrier->notify();
 		}
 
 		if (counter % 3 == 0) {
 			// 33Hz
-			opticalflow->notifyThread = true;
-			imu->notifyThread = true;
+			opticalflow->notify();
+			imu->notify();
 		}
 
 		if (counter % 4 == 0) {
 			// 25Hz
-			shovel->notifyThread = true;
-			switches->notifyThread = true;
+			shovel->notify();
+			switches->notify();
 		}
-
-		cv.notify_all(); // Notify all Threads
 
 		loop_rate.sleep();
 	}

@@ -21,7 +21,7 @@
 class BallHandle
 {
 public:
-	BallHandle(bool *killT, std::condition_variable *cv);
+	BallHandle();
 	~BallHandle();
 
 	void readConfigParameters();
@@ -34,15 +34,14 @@ public:
 	uint8_t getMode();
 	void setMode(uint8_t newMode);
 	void controlBallHandle();
-
-
-	bool notifyThread;
+	void notify();
 
 private:
 	std::thread* bhThread;
-	std::condition_variable* cv;
+	std::condition_variable cv;
 	std::mutex mtx;
-	bool* killThread;
+	bool killThread;
+	bool notifyThread;
 
 	Motor* rightMotor;
 	Motor* leftMotor;

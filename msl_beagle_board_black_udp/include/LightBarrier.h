@@ -19,20 +19,20 @@
 
 class LightBarrier {
 public:
-	LightBarrier(BlackLib::adcName adc_P, bool* killT, std::condition_variable* cv);
+	LightBarrier(BlackLib::adcName adc_P);
 	~LightBarrier();
 
 	bool checkLightBarrier();
 	void controlLightBarrier();
+	void notify();
 	bool setTreshold(int th);
-
-	bool notifyThread;
 
 private:
 	std::thread* lbThread;
-	std::condition_variable* cv;
+	std::condition_variable cv;
 	std::mutex mtx;
-	bool* killThread;
+	bool killThread;
+	bool notifyThread;
 
 	Proxy* proxy;
 

@@ -34,7 +34,6 @@ class Actuator {
 public:
 	Actuator();
 	~Actuator();
-	static void exitThreads(int sig);
 	void run();
 
 	void handleBallHandleControl(const msl_actuator_msgs::BallHandleCmd msg);
@@ -54,9 +53,6 @@ private:
 	OpticalFlow *opticalflow;
 	ShovelSelect *shovel;
 	Switches *switches;
-
-	static std::condition_variable cv;
-	static bool killThreads;
 
 	CanHandler canHandler;
 };

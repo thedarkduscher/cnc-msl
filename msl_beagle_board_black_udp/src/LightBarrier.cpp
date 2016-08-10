@@ -11,21 +11,23 @@
 
 using namespace BlackLib;
 
-LightBarrier::LightBarrier(adcName adc_P, bool* killT, std::condition_variable* cv) {
+LightBarrier::LightBarrier(adcName adc_P) {
 	adc = new BlackADC(adc_P);
 
 	auto sc = supplementary::SystemConfig::getInstance();
 	this->threshold = (*sc)["bbb"]->get<int>("BBB.lightbarrierThreshold", NULL);
 
-	killThread = killT;
+	killThread = false;
 	notifyThread = false;
-	this->cv = cv;
 	proxy = Proxy::getInstance();
 
 	lbThread = new std::thread(&LightBarrier::controlLightBarrier, this);
 }
 
 LightBarrier::~LightBarrier() {
+	killThread = true;
+	cv.notify_all();
+
 	delete lbThread;
 	delete adc;
 }
@@ -42,7 +44,7 @@ void LightBarrier::controlLightBarrier() {
 	std_msgs::Bool msg;
 	unique_lock<mutex> lightBarrierMutex(mtx);
 	while(!killThread) {
-		cv->wait(lightBarrierMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv.wait(lightBarrierMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
@@ -56,6 +58,11 @@ void LightBarrier::controlLightBarrier() {
 
 		notifyThread = false;
 	}
+}
+
+void LightBarrier::notify() {
+	notifyThread = true;
+	cv.notify_all();
 }
 
 bool LightBarrier::setTreshold(int th) {

@@ -16,7 +16,7 @@
 #include "msl_actuator_msgs/BallHandleCmd.h"
 #include "msl_actuator_msgs/BallHandleMode.h"
 
-BallHandle::BallHandle(bool *killT, std::condition_variable *cv) {
+BallHandle::BallHandle() {
 	const char *BH_right_pins[] = { "P8_9", "P8_10", "P8_16", "P8_18" };
 	const char *BH_left_pins[] = { "P8_7", "P8_8", "P8_12", "P8_14" };
 
@@ -25,13 +25,15 @@ BallHandle::BallHandle(bool *killT, std::condition_variable *cv) {
 	
 	readConfigParameters();
 
-	killThread = killT;
+	killThread = false;
 	notifyThread = false;
-	this->cv = cv;
 	bhThread = new std::thread(&BallHandle::controlBallHandle, this);
 }
 
 BallHandle::~BallHandle() {
+	killThread = true;
+	cv.notify_all();
+
 	delete bhThread;
 	delete rightMotor;
 	delete leftMotor;
@@ -76,7 +78,7 @@ void BallHandle::controlBallHandle() {
 	msl_actuator_msgs::BallHandleMode msg;
 	unique_lock<mutex> ballHandleMutex(mtx);
 	while(!killThread) {
-		cv->wait(ballHandleMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv.wait(ballHandleMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
@@ -101,6 +103,11 @@ void BallHandle::controlBallHandle() {
 
 		notifyThread = false;
 	}
+}
+
+void BallHandle::notify() {
+	notifyThread = true;
+	cv.notify_all();
 }
 
 void BallHandle::dribbleControl() {

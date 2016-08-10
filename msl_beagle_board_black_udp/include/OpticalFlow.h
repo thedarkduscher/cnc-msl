@@ -59,7 +59,7 @@ public:
 	void reset(void);
 	uint8_t read(uint8_t address);
 
-	OpticalFlow(BlackLib::BlackSPI *spi_P, bool *killT, std::condition_variable *cv);
+	OpticalFlow(BlackLib::BlackSPI *spi_P);
 	~OpticalFlow();
 
 	void adns_init(void);
@@ -67,17 +67,17 @@ public:
 	void update_motion_burst();
 	msl_actuator_msgs::MotionBurst sendMotionBurstMsg();
 	void controlOpticalFlow();
+	void notify();
 
 	uint8_t 	getInverseProductId(void);
 	uint8_t 	getProductId(void);
 
-	bool notifyThread;
-
 private:
 	std::thread* ofThread;
-	std::condition_variable *cv;
+	std::condition_variable cv;
 	std::mutex mtx;
-	bool *killThread;
+	bool killThread;
+	bool notifyThread;
 
 	Proxy* proxy;
 

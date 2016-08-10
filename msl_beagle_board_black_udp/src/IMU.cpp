@@ -10,7 +10,7 @@
 
 using namespace BlackLib;
 
-IMU::IMU(BlackLib::BlackI2C *i2c_P, bool* killT, std::condition_variable* cv) {
+IMU::IMU(BlackLib::BlackI2C *i2c_P) {
 	const char *pin_names[] = { "P8_11", "P8_15", "P8_17", "P8_26" };
 	i2c = i2c_P;
 
@@ -23,15 +23,17 @@ IMU::IMU(BlackLib::BlackI2C *i2c_P, bool* killT, std::condition_variable* cv) {
 
 	temperature = 0;
 
-	killThread = killT;
+	killThread = false;
 	notifyThread = false;
-	this->cv = cv;
 
 	proxy = Proxy::getInstance();
 	imuThread = new std::thread(&IMU::controlIMU, this);
 }
 
 IMU::~IMU() {
+	killThread = true;
+	cv.notify_all();
+
 	delete imuThread;
 	delete gpio;
 	delete acc;
@@ -350,7 +352,7 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 void IMU::controlIMU() {
 	unique_lock<mutex> imuMutex(mtx);
 	while(!killThread) {
-		cv->wait(imuMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
+		cv.wait(imuMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
 		if (!killThread)
 			break;
 
@@ -362,4 +364,9 @@ void IMU::controlIMU() {
 
 		notifyThread = false;
 	}
+}
+
+void IMU::notify() {
+	notifyThread = true;
+	cv.notify_all();
 }

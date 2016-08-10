@@ -21,17 +21,17 @@
 class Switches
 {
 public:
-	Switches(bool *killT, std::condition_variable *cv);
+	Switches();
 	~Switches();
 	void controlSwitches();
-
-	bool notifyThread;
+	void notify();
 
 private:
 	std::thread* sThread;
-	std::condition_variable *cv;
+	std::condition_variable cv;
 	std::mutex mtx;
-	bool *killThread;
+	bool killThread;
+	bool notifyThread;
 
 	Proxy* proxy;
 

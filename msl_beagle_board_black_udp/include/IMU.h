@@ -148,21 +148,21 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(BlackLib::BlackI2C *i2c_P, bool *killT, std::condition_variable *cv);
+	IMU(BlackLib::BlackI2C *i2c_P);
 	~IMU();
 
 	bool init();
 	void getData();
 	msl_actuator_msgs::IMUData sendData();
 	void controlIMU();
-
-	bool notifyThread;
+	void notify();
 
 private:
 	std::thread* imuThread;
-	std::condition_variable* cv;
+	std::condition_variable cv;
 	std::mutex mtx;
-	bool* killThread;
+	bool killThread;
+	bool notifyThread;
 
 	Proxy* proxy;
 
