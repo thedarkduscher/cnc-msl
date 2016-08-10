@@ -50,7 +50,6 @@ void LightBarrier::controlLightBarrier() {
 
 		try {
 			msg.data = checkLightBarrier();
-			cout << "sending LightBarrier Data ... " << endl;
 			proxy->onRosBool2802967882(msg);
 		} catch (exception &e) {
 			cout << "ADC: " << e.what() << endl;
