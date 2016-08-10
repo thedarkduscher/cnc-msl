@@ -352,8 +352,8 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 void IMU::controlIMU() {
 	unique_lock<mutex> imuMutex(mtx);
 	while(!killThread) {
-		cv.wait(imuMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
-		if (!killThread)
+		cv.wait(imuMutex, [&] { return killThread || notifyThread; }); // protection against spurious wake-ups
+		if (killThread)
 			break;
 
 		try {

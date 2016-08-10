@@ -216,8 +216,8 @@ msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
 void OpticalFlow::controlOpticalFlow() {
 	unique_lock<mutex> opticalFlowMutex(mtx);
 	while(!killThread) {
-		cv.wait(opticalFlowMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
-		if (!killThread)
+		cv.wait(opticalFlowMutex, [&] { return killThread || notifyThread; }); // protection against spurious wake-ups
+		if (killThread)
 			break;
 
 		try {

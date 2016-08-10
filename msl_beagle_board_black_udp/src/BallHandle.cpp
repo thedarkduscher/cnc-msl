@@ -78,8 +78,8 @@ void BallHandle::controlBallHandle() {
 	msl_actuator_msgs::BallHandleMode msg;
 	unique_lock<mutex> ballHandleMutex(mtx);
 	while(!killThread) {
-		cv.wait(ballHandleMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
-		if (!killThread)
+		cv.wait(ballHandleMutex, [&] { return killThread || notifyThread; }); // protection against spurious wake-ups
+		if (killThread)
 			break;
 
 		try {

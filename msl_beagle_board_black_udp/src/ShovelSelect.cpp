@@ -99,8 +99,8 @@ void ShovelSelect::controlShovelSelect() {
 	timeval	t;
 	unique_lock<mutex> shovelSelectMutex(mtx);
 	while(!killThread) {
-		cv.wait(shovelSelectMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
-		if (!killThread)
+		cv.wait(shovelSelectMutex, [&] { return killThread || notifyThread; }); // protection against spurious wake-ups
+		if (killThread)
 			break;
 
 		try {

@@ -44,8 +44,8 @@ void LightBarrier::controlLightBarrier() {
 	std_msgs::Bool msg;
 	unique_lock<mutex> lightBarrierMutex(mtx);
 	while(!killThread) {
-		cv.wait(lightBarrierMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
-		if (!killThread)
+		cv.wait(lightBarrierMutex, [&] { return killThread || notifyThread; }); // protection against spurious wake-ups
+		if (killThread)
 			break;
 
 		try {

@@ -39,8 +39,8 @@ void Switches::controlSwitches() {
 
 	std::unique_lock<std::mutex> switchesMutex(mtx);
 	while(!killThread) {
-		cv.wait(switchesMutex, [&] { return !killThread || notifyThread; }); // protection against spurious wake-ups
-		if (!killThread)
+		cv.wait(switchesMutex, [&] { return killThread || notifyThread; }); // protection against spurious wake-ups
+		if (killThread)
 			break;
 
 		static bool		state[3] = {false, false, false};
