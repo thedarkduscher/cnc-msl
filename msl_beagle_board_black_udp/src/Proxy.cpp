@@ -12,10 +12,13 @@ Proxy::Proxy() {
 	multiCastAddress = boost::asio::ip::address::from_string(baddress);
 	destEndPoint = udp::endpoint(multiCastAddress,port);
 	std::cout<<"Opening to "<<multiCastAddress <<std::endl;
+
 	insocket = new udp::socket(io_service,udp::endpoint(multiCastAddress,port));
 	insocket->set_option(boost::asio::ip::multicast::enable_loopback(false));
 	insocket->set_option(boost::asio::ip::multicast::join_group(multiCastAddress));
-//	listenForPacket();
+	listenForPacket();
+
+	usleep(50000);
 
 	iothread = new boost::thread(&Proxy::run_udp, this);
 	std::cout << "Udp connection active..." << std::endl;
