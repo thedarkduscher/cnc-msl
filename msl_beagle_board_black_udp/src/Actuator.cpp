@@ -116,5 +116,9 @@ void Actuator::handleRawOdometryInfo(const msl_actuator_msgs::RawOdometryInfo ms
 
 void Actuator::handleCanSub(const msl_actuator_msgs::CanMsg &msg) {
 	// Nachrichten ueber can verschicken
-	canHandler.sendCanMsg(msg);
+	try {
+		canHandler.sendCanMsg(msg);
+	} catch (exception &e) {
+		cout << "Can't send CAN-Msg: " << e.what() << endl;
+	}
 }
