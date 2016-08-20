@@ -18,6 +18,13 @@ namespace alica
     protected:
         virtual void initialiseParameters();
         /*PROTECTED REGION ID(pro1469109429392) ENABLED START*/ //Add additional protected methods here
+        // consts for checkBallRotation()
+        static const int ROTATE_CORRECT = 0;
+        static const int ROTATE_LEFT = 10;
+        static const int ROTATE_RIGHT = 20;
+        //static const int ROTATE_BACKWARDS = 30;
+        static const int ROTATE_TOO_SLOW = 40;
+        static const int ROTATE_ERR = -10;
         DribbleCalibrationContainer dcc;
 
         bool ballRotateCorrect;

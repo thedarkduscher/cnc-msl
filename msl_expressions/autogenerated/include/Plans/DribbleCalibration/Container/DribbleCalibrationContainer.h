@@ -11,13 +11,15 @@
 #include "msl_actuator_msgs/MotionControl.h"
 #include "msl_robot/robotmovement/MovementQuery.h"
 
+#define DEBUG_DC
+
 using namespace msl;
 namespace alica
 {
-	#define FORWARD 100
-	#define BACKWARD 200
-	#define LEFT 300
-	#define RIGHT 400
+//	#define DRIBBLEFORWARD 100
+//	#define DRIBBLEBACKWARD 200
+//	#define DRIBBLELEFT 300
+//	#define DRIBBLERIGHT 400
 
 	struct subsection
 	{
@@ -35,10 +37,15 @@ namespace alica
 		msl_actuator_msgs::MotionControl getBall();
 		msl_actuator_msgs::MotionControl move(int movement, int translation);
 
+		static const int DRIBBLE_FORWARD = 100;
+		static const int DRIBBLE_BACKWARD = 200;
+		static const int DRIBBLE_LEFT = 300;
+		static const int DRIBBLE_RIGHT = 400;
+
 
 		double readConfigParameter(const char *path);
 //		void writeConfigParameters(shared_ptr<vector<subsection>> sections);
-		void writeConfigParameters(vector<subsection> sections);
+		void writeConfigParameters(vector<subsection> sections, const char* path);
 	private:
 		msl::MSLWorldModel* wm;
 

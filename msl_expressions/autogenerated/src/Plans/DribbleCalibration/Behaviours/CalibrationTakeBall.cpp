@@ -10,13 +10,6 @@ using namespace std;
 #include "container/CNPoint2D.h"
 //#include <msl_actuator_msgs/BallHandleCmd.h>
 
-#define ROTATE_CORRECT 0
-#define ROTATE_LEFT 10
-#define ROTATE_RIGHT 20
-//#define ROTATE_BACKWARDS 30
-#define ROTATE_TOO_SLOW 40
-#define ROTATE_ERR -10
-
 /*PROTECTED REGION END*/
 namespace alica
 {
@@ -30,7 +23,7 @@ namespace alica
         ballHoldCorrect = false;
 
         dribbleFactorRightOld = 0;
-        changingFactor = 1;
+
         defectWheel = 0;
 
         readConfigParameters();
@@ -43,6 +36,10 @@ namespace alica
     }
     void CalibrationTakeBall::run(void* msg)
     {
+    	// TODO: remove when finished testing
+    	this->setSuccess(true);
+    	return;
+
         /*PROTECTED REGION ID(run1469109429392) ENABLED START*/ //Add additional options here
 //		BallHandleCmd bhc;
         // check if robot has the ball
@@ -189,6 +186,9 @@ namespace alica
         // left and right are swapped!!!!
         dribbleFactorLeft = dcc.readConfigParameter("Dribble.DribbleFactorRight");
         dribbleFactorRight = dcc.readConfigParameter("Dribble.DribbleFactorLeft");
+
+        // maybe put in config
+        changingFactor = 1;
     }
 
     void CalibrationTakeBall::writeConfigParameters()

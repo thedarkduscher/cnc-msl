@@ -50,7 +50,7 @@ namespace alica
     {
     	msl_actuator_msgs::MotionControl mc;
 
-    	if (movement != FORWARD && movement != BACKWARD && movement != LEFT && movement  != RIGHT)
+    	if (movement != DRIBBLE_FORWARD && movement != DRIBBLE_BACKWARD && movement != DRIBBLE_LEFT && movement  != DRIBBLE_RIGHT)
     	{
     		cout << "DribbleCalibrationContainer::move() -> invalid input parameter" << endl;
     		mc.senderID = -1;
@@ -66,13 +66,13 @@ namespace alica
     	shared_ptr<geometry::CNPoint2D> egoDestination = make_shared<geometry::CNPoint2D>(0, 0) ;
     	double distance = 300;
     	// drive forward
-    	egoDestination = movement == FORWARD ? make_shared<geometry::CNPoint2D>(-distance, 0) : egoDestination;
+    	egoDestination = movement == DRIBBLE_FORWARD ? make_shared<geometry::CNPoint2D>(-distance, 0) : egoDestination;
     	// drive backward
-    	egoDestination = movement == BACKWARD ? make_shared<geometry::CNPoint2D>(distance, 0) : egoDestination;
+    	egoDestination = movement == DRIBBLE_BACKWARD ? make_shared<geometry::CNPoint2D>(distance, 0) : egoDestination;
     	// drive left
-    	egoDestination = movement == LEFT ? make_shared<geometry::CNPoint2D>(0, distance) : egoDestination;
+    	egoDestination = movement == DRIBBLE_LEFT ? make_shared<geometry::CNPoint2D>(0, distance) : egoDestination;
     	// drive right
-    	egoDestination = movement == RIGHT ? make_shared<geometry::CNPoint2D>(0, -distance) : egoDestination;
+    	egoDestination = movement == DRIBBLE_RIGHT ? make_shared<geometry::CNPoint2D>(0, -distance) : egoDestination;
 
     	query->egoDestinationPoint = egoDestination;
     	query->egoAlignPoint = egoDestination;
@@ -89,12 +89,23 @@ namespace alica
 		return (*sys)["Actuation"]->get<double>(path, NULL);
 	}
 
-	void DribbleCalibrationContainer::writeConfigParameters(vector<subsection> sections)
+	void DribbleCalibrationContainer::writeConfigParameters(vector<subsection> sections, const char* path)
 	{
+#ifdef DEBUG_DC
+		cout << "write sections to config!" << endl;
+#endif
+		supplementary::SystemConfig* sys = supplementary::SystemConfig::getInstance();
 		for (subsection section : sections)
 		{
+			string s(path);
+			s += "." + section.name;
 
+			(*sys)["Actuation"]->set(boost::lexical_cast < std::string > (section.actuatorSpeed), (s + ".actuatorSpeed").c_str() , NULL);
+#ifdef DEBUG_DC
+			cout << "wrote: " << s.append(".actuatorSpeed").c_str() << " with value " << section.actuatorSpeed << endl;
+#endif
+			(*sys)["Actuation"]->set(boost::lexical_cast < std::string > (section.robotSpeed), (s + ".robotSpeed").c_str() , NULL);
 		}
-
+		(*sys)["Actuation"]->store();
 	}
 } /* namespace alica */
