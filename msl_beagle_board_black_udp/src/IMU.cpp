@@ -326,7 +326,7 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 */
 	timeval t;
 	gettimeofday(&t, NULL);
-	mtx.lock();
+//	mtx.lock();
 	msl_actuator_msgs::IMUData msg;
 	msg.acceleration.x = acc->mean->x;
 	msg.acceleration.y = acc->mean->y;
@@ -342,7 +342,7 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 	msg.magnetSens = mag->sense;
 	msg.temperature = temperature;
 	msg.time = (unsigned long long)t.tv_sec*1000000 + t.tv_usec;
-	mtx.unlock();
+//	mtx.unlock();
 
 	proxy->onRosIMUData3455796956(msg);
 
@@ -358,6 +358,7 @@ void IMU::controlIMU() {
 
 		try {
 			getData();
+			sendData();
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
 		}

@@ -192,7 +192,7 @@ void OpticalFlow::update_motion_burst() {
 msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
 	msl_actuator_msgs::MotionBurst msg;
 
-	mtx.lock();
+//	mtx.lock();
 	int16_t tqos = 0;
 	if( vQos != 0 ) {
 		tqos = qos/vQos;
@@ -206,7 +206,7 @@ msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
 	y = 0;
 	qos = 0;
 	vQos = 0;
-	mtx.unlock();
+//	mtx.unlock();
 
 	proxy->onRosMotionBurst1028144660(msg);
 
@@ -222,6 +222,7 @@ void OpticalFlow::controlOpticalFlow() {
 
 		try {
 			update_motion_burst();
+			sendMotionBurstMsg();
 		} catch (exception &e) {
 			cout << "Optical Flow: " << e.what() << endl;
 		}
