@@ -302,9 +302,16 @@ void IMU::getData() {
 	this->getGyro();
 	this->getMagnet();
 	this->getTemp();
+	printf("getData");
 }
 
 msl_actuator_msgs::IMUData IMU::sendData() {
+	timeval t;
+	gettimeofday(&t, NULL);
+	msl_actuator_msgs::IMUData msg;
+	{
+	unique_lock<mutex> imuMutex(mtx);
+
 	acc->updateInternalValues();
 	gyr->updateInternalValues();
 	mag->updateInternalValues();
@@ -324,10 +331,6 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 
 	std::cout << "TEMP: " << temperature << std::endl;
 */
-	timeval t;
-	gettimeofday(&t, NULL);
-//	mtx.lock();
-	msl_actuator_msgs::IMUData msg;
 	msg.acceleration.x = acc->mean->x;
 	msg.acceleration.y = acc->mean->y;
 	msg.acceleration.z = acc->mean->z;
@@ -341,10 +344,11 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 	msg.magnet.z = mag->mean->z;
 	msg.magnetSens = mag->sense;
 	msg.temperature = temperature;
+	}
 	msg.time = (unsigned long long)t.tv_sec*1000000 + t.tv_usec;
-//	mtx.unlock();
 
 	proxy->onRosIMUData3455796956(msg);
+	printf("sending :)");
 
 	return msg;
 }
@@ -358,7 +362,7 @@ void IMU::controlIMU() {
 
 		try {
 			getData();
-			sendData();
+			//sendData();
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
 		}

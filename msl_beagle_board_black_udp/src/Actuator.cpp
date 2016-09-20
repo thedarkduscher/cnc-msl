@@ -51,7 +51,7 @@ void Actuator::run() {
 
 		if (counter % 1 == 0) {
 			// 100Hz
-			ballHandle->notify();
+//			ballHandle->notify();
 		}
 
 		if (counter % 2 == 0) {
@@ -66,7 +66,7 @@ void Actuator::run() {
 
 			// Data from Optical Flow Sensor and IMU into BallHandle !
 			// opticalflow->sendMotionBurstMsg();
-			// imu->sendData();
+			imu->sendData();
 		}
 
 		if (counter % 4 == 0) {
