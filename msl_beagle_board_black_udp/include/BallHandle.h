@@ -17,6 +17,9 @@
 
 #include "Motor.h"
 #include "Spline.h"
+#include <msl_msgs/Point3dInfo.h>
+#include "GeometryCalculator.h"
+
 
 class BallHandle
 {
@@ -26,7 +29,7 @@ public:
 
 	void readConfigParameters();
 	void setOdometryData(double newAngle, double newTranslation);
-	void setRotation(double newRotation);
+	void setIMUData(geometry::CNPoint3D acceleration, geometry::CNPoint3D newRotation, uint64_t timeDifference_us);
 	void dribbleControl();
 	void setBallHandling(int32_t left, int32_t right);
 	void ping();
@@ -56,6 +59,8 @@ private:
 	const int maxSpeed = 10000;
 	double speedX = 0;
 	double speedY = 0;
+	double calculatedIMUSpeedX = 0;
+	double calculatedIMUSpeedY = 0;
 
 	int timeout = 1000;
 	double handlerSpeedSummand = 0;

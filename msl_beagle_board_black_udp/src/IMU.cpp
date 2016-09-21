@@ -10,9 +10,10 @@
 
 using namespace BlackLib;
 
-IMU::IMU(BlackLib::BlackI2C *i2c_P) {
+IMU::IMU(BlackLib::BlackI2C* i2c_P, BallHandle* bh) {
 	const char *pin_names[] = { "P8_11", "P8_15", "P8_17", "P8_26" };
 	i2c = i2c_P;
+	ballHandle = bh;
 
 	gpio = BeagleGPIO::getInstance();
 	pins = gpio->claim((char**) pin_names, 4);
@@ -297,20 +298,28 @@ void IMU::getTemp() {
 }
 
 void IMU::getData() {
-	gettimeofday(&last_updated, NULL);
+	timeval t;
+	gettimeofday(&t, NULL);
+	uint32_t timeDifference = TIMEDIFFMS(t,last_updated);
+	last_updated = t;
+
 	this->getAccel();
 	this->getGyro();
 	this->getMagnet();
 	this->getTemp();
-	printf("getData");
+
+	dataAvailable = true;
+	ballHandle->setIMUData(*(acc->data[acc->data.size()-1]), *(gyr->data[gyr->data.size()-1]), timeDifference);
 }
 
-msl_actuator_msgs::IMUData IMU::sendData() {
+void IMU::sendData() {
+	if(!dataAvailable)
+		return;
+
 	timeval t;
 	gettimeofday(&t, NULL);
 	msl_actuator_msgs::IMUData msg;
-	{
-//	unique_lock<mutex> dataMutex(mtxTest);
+	unique_lock<mutex> dataMutex(mtxData);
 
 	acc->updateInternalValues();
 	gyr->updateInternalValues();
@@ -344,13 +353,11 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 	msg.magnet.z = mag->mean->z;
 	msg.magnetSens = mag->sense;
 	msg.temperature = temperature;
-	}
 	msg.time = (unsigned long long)t.tv_sec*1000000 + t.tv_usec;
 
 	proxy->onRosIMUData3455796956(msg);
+	dataAvailable = false;
 	printf("sending :)");
-
-	return msg;
 }
 
 void IMU::controlIMU() {
@@ -361,9 +368,8 @@ void IMU::controlIMU() {
 			break;
 
 		try {
-			unique_lock<mutex> dataMutex(mtxTest);
+			unique_lock<mutex> dataMutex(mtxData);
 			getData();
-			sendData();
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
 		}

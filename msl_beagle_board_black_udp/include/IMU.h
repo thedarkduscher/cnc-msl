@@ -8,6 +8,9 @@
 #ifndef CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 #define CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_
 
+#define TIMEDIFFMS(n,o) (((n).tv_sec-(o).tv_sec)*1000+((n).tv_usec-(o).tv_usec)/1000)
+
+
 #include "Proxy.h"
 #include <thread>
 #include <mutex>
@@ -22,6 +25,7 @@
 
 #include "msl_actuator_msgs/IMUData.h"
 
+#include "BallHandle.h"
 #include "Sensor.h"
 
 const uint8_t ADR_G = 0x6B; // LSM9DS0
@@ -148,12 +152,12 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(BlackLib::BlackI2C *i2c_P);
+	IMU(BlackLib::BlackI2C *i2c_P, BallHandle* bh);
 	~IMU();
 
 	bool init();
 	void getData();
-	msl_actuator_msgs::IMUData sendData();
+	void sendData();
 	void controlIMU();
 	void notify();
 
@@ -161,11 +165,12 @@ private:
 	std::thread* imuThread;
 	std::condition_variable cv;
 	std::mutex mtx;
-	std::mutex mtxTest;
+	std::mutex mtxData;
 	bool killThread;
 	bool notifyThread;
 
 	Proxy* proxy;
+	BallHandle* ballHandle;
 
 	BlackLib::BlackI2C* i2c;
 	BeagleGPIO* gpio;
@@ -177,6 +182,7 @@ private:
 	Sensor* acc;
 	Sensor* mag;
 	int16_t temperature;
+	bool dataAvailable = false;
 
 	bool whoAmI();
 	void initAccel(uint8_t rate, uint8_t scale);

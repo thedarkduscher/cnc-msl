@@ -68,10 +68,15 @@ void BallHandle::readConfigParameters() {
 void BallHandle::setOdometryData(double newAngle, double newTranslation) {
 	angle = newAngle;
 	translation = newTranslation;
+
+	calculatedIMUSpeedX = 0;
+	calculatedIMUSpeedY = 0;
 }
 
-void BallHandle::setRotation(double newRotation) {
-	rotation = newRotation;
+void BallHandle::setIMUData(geometry::CNPoint3D acceleration, geometry::CNPoint3D newRotation, uint64_t timeDifference_us) {
+	calculatedIMUSpeedX += acceleration.x * ((double) timeDifference_us / 1000000);
+	calculatedIMUSpeedY += acceleration.y * ((double) timeDifference_us / 1000000);
+	rotation = newRotation.z;
 }
 
 void BallHandle::controlBallHandle() {
@@ -116,8 +121,8 @@ void BallHandle::dribbleControl() {
 	double orthoL = 0;
 	double orthoR = 0;
 	double speedDC = 0;
-	double speedX = cos(angle) * translation;
-	double speedY = sin(angle) * translation;
+	double speedX = cos(angle) * translation + calculatedIMUSpeedX * 1000;
+	double speedY = sin(angle) * translation + calculatedIMUSpeedY * 1000;
 	int speedL = 0;
 	int speedR = 0;
 
@@ -190,6 +195,7 @@ void BallHandle::dribbleControl() {
 }
 
 void BallHandle::setBallHandling(int32_t speedL, int32_t speedR) {
+	ping();
 	leftMotor->setSpeed(speedL);
 	rightMotor->setSpeed(speedR);
 	printf("REMOTE:  Left: %i  -  Right: %i\n", speedL, speedR);
@@ -214,5 +220,6 @@ uint8_t BallHandle::getMode() {
 }
 
 void BallHandle::setMode(uint8_t newMode) {
+	ping();
 	mode = newMode;
 }

@@ -5,15 +5,12 @@
  *      Author: Lukas Will
  */
 
-
 #include "Actuator.h"
-
-
 
 Actuator::Actuator() {
 	ballHandle = new BallHandle();
 	myI2C = new BlackLib::BlackI2C(BlackLib::I2C_2, ADR_G);
-	imu = new IMU(myI2C);
+	imu = new IMU(myI2C, ballHandle);
 	lightbarrier = new LightBarrier(BlackLib::AIN0);
 	mySpi = new BlackLib::BlackSPI(BlackLib::SPI0_0, 8, BlackLib::SpiMode0, 2000000);
 	opticalflow = new OpticalFlow(mySpi);
