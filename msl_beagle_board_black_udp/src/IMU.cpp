@@ -310,7 +310,7 @@ msl_actuator_msgs::IMUData IMU::sendData() {
 	gettimeofday(&t, NULL);
 	msl_actuator_msgs::IMUData msg;
 	{
-	unique_lock<mutex> imuMutex(mtx);
+//	unique_lock<mutex> dataMutex(mtxTest);
 
 	acc->updateInternalValues();
 	gyr->updateInternalValues();
@@ -361,8 +361,9 @@ void IMU::controlIMU() {
 			break;
 
 		try {
+			unique_lock<mutex> dataMutex(mtxTest);
 			getData();
-			//sendData();
+			sendData();
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
 		}

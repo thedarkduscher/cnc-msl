@@ -161,6 +161,7 @@ private:
 	std::thread* imuThread;
 	std::condition_variable cv;
 	std::mutex mtx;
+	std::mutex mtxTest;
 	bool killThread;
 	bool notifyThread;
 
