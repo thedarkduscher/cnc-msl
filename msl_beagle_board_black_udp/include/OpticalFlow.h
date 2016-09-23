@@ -22,6 +22,8 @@
 #include "msl_actuator_msgs/MotionLight.h"
 #include "msl_actuator_msgs/MotionBurst.h"
 
+#include "BallHandle.h"
+
 
 // ADNS3080 Registers
 #define PRODUCT_ID 0x00

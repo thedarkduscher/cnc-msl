@@ -13,7 +13,7 @@ Actuator::Actuator() {
 	imu = new IMU(myI2C, ballHandle);
 	lightbarrier = new LightBarrier(BlackLib::AIN0);
 	mySpi = new BlackLib::BlackSPI(BlackLib::SPI0_0, 8, BlackLib::SpiMode0, 2000000);
-	opticalflow = new OpticalFlow(mySpi);
+	opticalflow = new OpticalFlow(mySpi, ballHandle);
 	shovel = new ShovelSelect(BlackLib::P9_14);	// Delete if using API
 		//ShovelSelect	shovel(BeaglePWM::P9_14);
 	switches = new Switches();
@@ -48,26 +48,26 @@ void Actuator::run() {
 
 		if (counter % 1 == 0) {
 			// 100Hz
-			ballHandle->notify();
 		}
 
 		if (counter % 2 == 0) {
 			// 50Hz
-			lightbarrier->notify();
 		}
 
 		if (counter % 3 == 0) {
 			// 33Hz
-			opticalflow->notify();
+			ballHandle->notify();
 			imu->notify();
+			lightbarrier->notify();
+			opticalflow->notify();
 
 			// Data from Optical Flow Sensor and IMU into BallHandle !
 			// opticalflow->sendMotionBurstMsg();
-			imu->sendData();
 		}
 
 		if (counter % 4 == 0) {
 			// 25Hz
+			imu->sendData();
 			shovel->notify();
 			switches->notify();
 		}
