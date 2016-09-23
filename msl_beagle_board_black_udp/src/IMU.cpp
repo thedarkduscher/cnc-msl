@@ -56,7 +56,7 @@ bool IMU::init() {
 	return true;
 }
 
-bool IMU::whoAmI() {
+bool IMU::whoAmI() {	//TODO: Umbenennen in isCorrectIMUBoard
 	uint8_t g, xm;
 
 	i2c->setDeviceAddress(ADR_G);
@@ -235,7 +235,7 @@ void IMU::getAccel() {
 	point->y = (int16_t)(val[2] | ((int16_t)val[3] << 8));
 	point->z = (int16_t)(val[4] | ((int16_t)val[5] << 8));
 
-	point = point * 9.81 / 1000 * acc->sense;
+	point = point * 9.81 / 1000.0 * (double) acc->sense;
 	if (acc->offset != nullptr)
 		point = point - acc->offset;
 
@@ -257,7 +257,7 @@ void IMU::getGyro() {
 	point->y = (int16_t)(val[2] | ((int16_t)val[3] << 8));
 	point->z = (int16_t)(val[4] | ((int16_t)val[5] << 8));
 
-	point = point / 1000 * gyr->sense;
+	point = point / 1000.0 * (double) gyr->sense;
 	if (acc->offset != nullptr)
 		point = point - gyr->offset;
 
@@ -278,7 +278,7 @@ void IMU::getMagnet() {
 	point->y = (int16_t)(val[2] | ((int16_t)val[3] << 8));
 	point->z = (int16_t)(val[4] | ((int16_t)val[5] << 8));
 
-	point = point * mag->sense;
+	point = point * (double) mag->sense;
 
 	mag->data.push_back(point);
 }
@@ -298,6 +298,7 @@ void IMU::getTemp() {
 }
 
 void IMU::getData() {
+	unique_lock<mutex> dataMutex(mtxData);
 	timeval t;
 	gettimeofday(&t, NULL);
 	uint32_t timeDifference = TIMEDIFFMS(t,last_updated);
@@ -319,11 +320,13 @@ void IMU::sendData() {
 	timeval t;
 	gettimeofday(&t, NULL);
 	msl_actuator_msgs::IMUData msg;
-	unique_lock<mutex> dataMutex(mtxData);
 
-	acc->updateInternalValues();
-	gyr->updateInternalValues();
-	mag->updateInternalValues();
+	{
+		unique_lock<mutex> dataMutex(mtxData);
+		acc->updateInternalValues();
+		gyr->updateInternalValues();
+		mag->updateInternalValues();
+	}
 
 
 /*
@@ -367,7 +370,6 @@ void IMU::controlIMU() {
 			break;
 
 		try {
-			unique_lock<mutex> dataMutex(mtxData);
 			getData();
 		} catch (exception &e) {
 			cout << "IMU: " << e.what() << endl;
