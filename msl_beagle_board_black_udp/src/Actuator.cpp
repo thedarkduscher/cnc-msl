@@ -63,7 +63,7 @@ void Actuator::run() {
 
 			// Data from Optical Flow Sensor and IMU into BallHandle !
 			// opticalflow->sendMotionBurstMsg();
-		//	imu->sendData();
+			imu->sendData();
 		}
 
 		if (counter % 4 == 0) {
