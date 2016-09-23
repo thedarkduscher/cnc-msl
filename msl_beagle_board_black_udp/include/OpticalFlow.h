@@ -59,13 +59,13 @@ public:
 	void reset(void);
 	uint8_t read(uint8_t address);
 
-	OpticalFlow(BlackLib::BlackSPI *spi_P);
+	OpticalFlow(BlackLib::BlackSPI *spi_P, BallHandle* bh);
 	~OpticalFlow();
 
 	void adns_init(void);
 	void controlLED(bool enabled);
 	void update_motion_burst();
-	msl_actuator_msgs::MotionBurst sendMotionBurstMsg();
+	void sendMotionBurstMsg();
 	void controlOpticalFlow();
 	void notify();
 
@@ -80,6 +80,7 @@ private:
 	bool notifyThread;
 
 	Proxy* proxy;
+	BallHandle* ballHandle;
 
 	BlackLib::BlackSPI *spi;
 	BeagleGPIO *gpio;

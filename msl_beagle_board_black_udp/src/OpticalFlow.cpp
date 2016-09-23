@@ -9,8 +9,9 @@
 
 using namespace BlackLib;
 
-OpticalFlow::OpticalFlow(BlackSPI *spi_P) {
+OpticalFlow::OpticalFlow(BlackSPI *spi_P, BallHandle* bh) {
 	spi = spi_P;
+	ballHandle = bh;
 
 	const char *pin_names[] = { "P9_30", "P9_25", "P9_27", "P9_12" };
 
@@ -186,13 +187,13 @@ void OpticalFlow::update_motion_burst() {
 	if( x!=0 || y!=0 ) {
 		vQos++;
 	}
+	// Daten an BallHandle übergeben
 }
 
 
-msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
+void OpticalFlow::sendMotionBurstMsg() {
 	msl_actuator_msgs::MotionBurst msg;
 
-//	mtx.lock();
 	int16_t tqos = 0;
 	if( vQos != 0 ) {
 		tqos = qos/vQos;
@@ -206,11 +207,8 @@ msl_actuator_msgs::MotionBurst OpticalFlow::sendMotionBurstMsg() {
 	y = 0;
 	qos = 0;
 	vQos = 0;
-//	mtx.unlock();
 
 	proxy->onRosMotionBurst1028144660(msg);
-
-	return msg;
 }
 
 void OpticalFlow::controlOpticalFlow() {
