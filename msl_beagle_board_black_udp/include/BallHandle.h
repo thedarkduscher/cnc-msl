@@ -46,6 +46,10 @@ private:
 	bool killThread;
 	bool notifyThread;
 
+	std::mutex mtxMode;
+	std::mutex mtxData;
+	std::mutex mtxPing;
+
 	Motor* rightMotor;
 	Motor* leftMotor;
 

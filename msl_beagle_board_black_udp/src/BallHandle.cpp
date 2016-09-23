@@ -66,6 +66,7 @@ void BallHandle::readConfigParameters() {
 }
 
 void BallHandle::setOdometryData(double newAngle, double newTranslation) {
+	unique_lock<mutex> dataMutex(mtxData);
 	angle = newAngle;
 	translation = newTranslation;
 
@@ -74,6 +75,7 @@ void BallHandle::setOdometryData(double newAngle, double newTranslation) {
 }
 
 void BallHandle::setIMUData(geometry::CNPoint3D acceleration, geometry::CNPoint3D newRotation, uint64_t timeDifference_us) {
+	unique_lock<mutex> dataMutex(mtxData);
 	calculatedIMUSpeedX += acceleration.x * ((double) timeDifference_us / 1000000);
 	calculatedIMUSpeedY += acceleration.y * ((double) timeDifference_us / 1000000);
 	rotation = newRotation.z;
@@ -88,7 +90,7 @@ void BallHandle::controlBallHandle() {
 			break;
 
 		try {
-			switch (mode)
+			switch (getMode())
 			{
 				case msg.AUTONOMOUS_CONTROL:
 					dribbleControl();
@@ -116,6 +118,7 @@ void BallHandle::notify() {
 }
 
 void BallHandle::dribbleControl() {
+	unique_lock<mutex> dataMutex(mtxData);
 	double l = 0;
 	double r = 0;
 	double orthoL = 0;
@@ -195,20 +198,20 @@ void BallHandle::dribbleControl() {
 }
 
 void BallHandle::setBallHandling(int32_t speedL, int32_t speedR) {
-	ping();
 	leftMotor->setSpeed(speedL);
 	rightMotor->setSpeed(speedR);
-	printf("REMOTE:  Left: %i  -  Right: %i\n", speedL, speedR);
+//	printf("REMOTE:  Left: %i  -  Right: %i\n", speedL, speedR);
 }
 
 void BallHandle::ping() {
+	unique_lock<mutex> pingMutex(mtxPing);
 	gettimeofday(&last_ping, NULL);
 }
 
 void BallHandle::checkTimeout() {
-	// Deactivates the BallHandling when controlBallHandling() is called next time
 	timeval	t;
 	gettimeofday(&t, NULL);
+	unique_lock<mutex> pingMutex(mtxPing);
 	if (TIMEDIFFMS(t, last_ping) > timeout) {
 		this->setBallHandling(0, 0);
 	}
@@ -216,10 +219,11 @@ void BallHandle::checkTimeout() {
 
 
 uint8_t BallHandle::getMode() {
+	unique_lock<mutex> modeMutex(mtxMode);
 	return mode;
 }
 
 void BallHandle::setMode(uint8_t newMode) {
-	ping();
+	unique_lock<mutex> modeMutex(mtxMode);
 	mode = newMode;
 }

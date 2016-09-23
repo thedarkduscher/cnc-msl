@@ -357,7 +357,6 @@ void IMU::sendData() {
 
 	proxy->onRosIMUData3455796956(msg);
 	dataAvailable = false;
-	printf("sending :)");
 }
 
 void IMU::controlIMU() {

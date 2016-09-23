@@ -48,7 +48,7 @@ void Actuator::run() {
 
 		if (counter % 1 == 0) {
 			// 100Hz
-//			ballHandle->notify();
+			ballHandle->notify();
 		}
 
 		if (counter % 2 == 0) {
