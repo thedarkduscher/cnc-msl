@@ -99,28 +99,44 @@ namespace BlackLib
         	case P8_13:
 			{
 				// searchResult = this->searchDirectoryOcp(BlackCore::PWM_P8_13);
-				searchResult = "/sys/class/pwm/pwmchip4/pwm1/";
+				/* Some Changes from Kernel 3.14 to 4.4:
+				 * 3.14: searchResult = "/sys/class/pwm/pwmchip4/pwm1/";
+				 * 4.4 : searchResult = "/sys/class/pwm/pwmchip2/pwm1/";
+				 */
+				searchResult = "/sys/class/pwm/pwmchip2/pwm1/";
 				break;
 			}
 
 			case P8_19:
 			{
 				// searchResult = this->searchDirectoryOcp(BlackCore::PWM_P8_19);
-				searchResult = "/sys/class/pwm/pwmchip4/pwm0/";
+				/* Some Changes from Kernel 3.14 to 4.4:
+				 * 3.14: searchResult = "/sys/class/pwm/pwmchip4/pwm0/";
+				 * 4.4 : searchResult = "/sys/class/pwm/pwmchip2/pwm0/";
+				 */
+				searchResult = "/sys/class/pwm/pwmchip2/pwm0/";
 				break;
 			}
 
 			case P9_14:
 			{
 				// searchResult = this->searchDirectoryOcp(BlackCore::PWM_P9_14);
-				searchResult = "/sys/class/pwm/pwmchip2/pwm0/";
+				/* Some Changes from Kernel 3.14 to 4.4:
+				 * 3.14: searchResult = "/sys/class/pwm/pwmchip2/pwm0/";
+				 * 4.4 : searchResult = "/sys/class/pwm/pwmchip0/pwm0/";
+				 */
+				searchResult = "/sys/class/pwm/pwmchip0/pwm0/";
 				break;
 			}
 
 			case P9_16:
 			{
 				// searchResult = this->searchDirectoryOcp(BlackCore::PWM_P9_16);
-				searchResult = "/sys/class/pwm/pwmchip2/pwm1/";
+				/* Some Changes from Kernel 3.14 to 4.4:
+				 * 3.14: searchResult = "/sys/class/pwm/pwmchip2/pwm1/";
+				 * 4.4 : searchResult = "/sys/class/pwm/pwmchip0/pwm1/";
+				 */
+				searchResult = "/sys/class/pwm/pwmchip0/pwm1/";
 				break;
 			}
 
