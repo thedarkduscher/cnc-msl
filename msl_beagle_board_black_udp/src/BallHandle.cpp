@@ -66,10 +66,10 @@ void BallHandle::readConfigParameters() {
 }
 
 void BallHandle::setOdometryData(double newAngle, double newTranslation) {
+	unique_lock<mutex> dataMutex(mtxData);
 	angle = newAngle;
 	translation = newTranslation;
 
-	unique_lock<mutex> dataMutex(mtxData);
 	calculatedIMUSpeedX = 0;
 	calculatedIMUSpeedY = 0;
 }
