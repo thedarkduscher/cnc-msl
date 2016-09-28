@@ -260,13 +260,13 @@ void Proxy::handleUdpPacket(const boost::system::error_code& error,   std::size_
 	if (bytes_transferred > 64000) {
 		return;
 	}
-	if (!error) { // && otherEndPoint.address() != localIP) {
+
+	// Check if Actuator-Object is set
+	if (!error && this->actuator != nullptr) { // && otherEndPoint.address() != localIP) {
 		__uint32_t id = *((__uint32_t*)(inBuffer.data()));
 		//std::cout << "Got packet"<<std::endl;
 		try {
 			ros::serialization::IStream stream(((uint8_t*)inBuffer.data())+sizeof(__uint32_t),bytes_transferred-sizeof(__uint32_t));
-			if(this->actuator == nullptr)		// Check if Actuator-Object is set
-				return;
 			switch(id) {
 				case 1334345447ul: {
 				msl_actuator_msgs::BallHandleCmd m1334345447;
