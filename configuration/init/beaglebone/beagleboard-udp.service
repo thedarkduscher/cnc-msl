@@ -1,0 +1,10 @@
+[Unit]
+Description=Launcher for the CN Beagle Bone Process
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/start-beagleboard-udp
+
+[Install]
+WantedBy=multi-user.target
+
