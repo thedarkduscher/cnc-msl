@@ -10,7 +10,7 @@
 #define MOTOR3  2
 
 #define DIRECTION_CW  0
-#define	DIRECTION_CCW 1
+#define DIRECTION_CCW 1
 
 #define ENCODER_TICK_BIAS 0x7FFF
 

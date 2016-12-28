@@ -118,10 +118,10 @@ const uint8_t GYR_HPFMODE_REF = 0x01;
 const uint8_t GYR_HPFMODE_NORM = 0x02;
 const uint8_t GYR_HPFMODE_AUTORST = 0x03;
 
-//const uint8_t GYR_HPFCUT_		= 0x00;
-//const uint8_t GYR_HPFCUT_		= 0x01;
-//const uint8_t GYR_HPFCUT_		= 0x02;
-//const uint8_t GYR_HPFCUT_		= 0x03;
+//const uint8_t GYR_HPFCUT_     = 0x00;
+//const uint8_t GYR_HPFCUT_     = 0x01;
+//const uint8_t GYR_HPFCUT_     = 0x02;
+//const uint8_t GYR_HPFCUT_     = 0x03;
 
 const uint8_t GYR_FS_245DPS = 0x00;
 const uint8_t GYR_FS_500DPS = 0x01;
@@ -135,36 +135,36 @@ const float GYR_SENSE_2000DPS = 70;
 class IMU
 {
 public:
-	IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P);
-	~IMU();
+    IMU(const char *pin_names[], BlackLib::BlackI2C *i2c_P);
+    ~IMU();
 
-	bool init();
-	void getData(timeval time_now);
-	msl_actuator_msgs::IMUData sendData(timeval time_now);
+    bool init();
+    void getData(timeval time_now);
+    msl_actuator_msgs::IMUData sendData(timeval time_now);
 
 private:
-	BlackLib::BlackI2C *i2c;
-	BeagleGPIO *gpio;
-	BeaglePins *pins;
+    BlackLib::BlackI2C *i2c;
+    BeagleGPIO *gpio;
+    BeaglePins *pins;
 
-	timeval last_updated;
-	timeval last_sended;
+    timeval last_updated;
+    timeval last_sended;
 
-	Sensor* gyr;
-	Sensor* acc;
-	Sensor* mag;
-	int16_t temperature;
+    Sensor* gyr;
+    Sensor* acc;
+    Sensor* mag;
+    int16_t temperature;
 
-	bool whoAmI();
-	void initAccel(uint8_t rate, uint8_t scale);
-	void initGyro(uint8_t rate, uint8_t bandwidth, uint8_t scale);
-	void initMagnet(uint8_t res, uint8_t rate, uint8_t scale);
-	void initTemp(bool enable);
-	void getOffsets();
-	void getAccel();
-	void getGyro();
-	void getMagnet();
-	void getTemp();
+    bool whoAmI();
+    void initAccel(uint8_t rate, uint8_t scale);
+    void initGyro(uint8_t rate, uint8_t bandwidth, uint8_t scale);
+    void initMagnet(uint8_t res, uint8_t rate, uint8_t scale);
+    void initTemp(bool enable);
+    void getOffsets();
+    void getAccel();
+    void getGyro();
+    void getMagnet();
+    void getTemp();
 };
 
 #endif /* CNC_MSL_MSL_BEAGLE_BOARD_BLACK_INCLUDE_IMU_H_ */

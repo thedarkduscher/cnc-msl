@@ -14,18 +14,18 @@
 class Sensor
 {
 public:
-	Sensor();
-	virtual ~Sensor();
+    Sensor();
+    virtual ~Sensor();
 
-	void updateInternalValues();
+    void updateInternalValues();
 
-	shared_ptr<geometry::CNPoint3D> mean;
-	shared_ptr<geometry::CNPoint3D> offset;
-	vector<shared_ptr<geometry::CNPoint3D>> data;
-	float sense;
-	float angle_rad;
-	float angle_deg;
-	float temperature;
+    shared_ptr<geometry::CNPoint3D> mean;
+    shared_ptr<geometry::CNPoint3D> offset;
+    vector<shared_ptr<geometry::CNPoint3D>> data;
+    float sense;
+    float angle_rad;
+    float angle_deg;
+    float temperature;
 
 private:
 

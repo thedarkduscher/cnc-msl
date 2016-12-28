@@ -45,15 +45,15 @@ namespace alica
         additionalPoints->push_back(alloBall);
 
         shared_ptr < geometry::CNPoint2D > alloAlignPoint = nullptr;
-//		shared_ptr<geometry::CNPoint2D> egoAlignPoint = nullptr;
+//      shared_ptr<geometry::CNPoint2D> egoAlignPoint = nullptr;
 
         //the receiver should stand on a line with the middle of the goal with minimum allowed distance to ball in opp half
 
 //        shared_ptr < geometry::CNPoint2D > alloGoalMid = wm->field->posOppGoalMid();
 //        shared_ptr < geometry::CNPoint2D > lineVect = alloBall - alloGoalMid;
 
-//		alloTarget->y = alloBall->y;
-//		alloTarget->x = alloBall->x - 2300;
+//      alloTarget->y = alloBall->y;
+//      alloTarget->x = alloBall->x - 2300;
 
         if (alloBall->y > 0)
         {
@@ -92,7 +92,7 @@ namespace alica
 //        } // only allo
 //        else if (alloAlignPoint)
 //        {
-////			alloTarget = alloBall + alloAlignPoint->normalize() * 2300;
+////            alloTarget = alloBall + alloAlignPoint->normalize() * 2300;
 //            egoAlignPoint = alloAlignPoint->alloToEgo(*ownPos);
 //        } // else egoalignpoint should be set
 

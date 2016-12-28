@@ -39,35 +39,35 @@ using namespace std;
 
 
 class SpicaHelper {
-	public:
-		ros::Subscriber sub;
-		ros::Subscriber viSub;
-		ros::Publisher VCPub;
-		msl_sensor_msgs::VisionDebug* vdd;
-		msl_sensor_msgs::BallInfo bi;
+    public:
+        ros::Subscriber sub;
+        ros::Subscriber viSub;
+        ros::Publisher VCPub;
+        msl_sensor_msgs::VisionDebug* vdd;
+        msl_sensor_msgs::BallInfo bi;
 
-		void handleLinepointData(const msl_sensor_msgs::VisionDebug::ConstPtr& msg);
-		void handleVisionImage(const msl_sensor_msgs::VisionImage::ConstPtr& msg);
-		void sendVisionControl(char key, char debugMode);
+        void handleLinepointData(const msl_sensor_msgs::VisionDebug::ConstPtr& msg);
+        void handleVisionImage(const msl_sensor_msgs::VisionImage::ConstPtr& msg);
+        void sendVisionControl(char key, char debugMode);
 
-		void initialize(const char* nodename, bool imagedata);
+        void initialize(const char* nodename, bool imagedata);
 
-		bool lpdirty;
-		bool wmdirty;
-		bool vidirty;
-		int receiverID;
-		ros::NodeHandle *nh;
-		vector<msl_msgs::Point2dInfo> linePoints;
-		vector<msl_sensor_msgs::ObstacleInfo> obstacles;
-		vector<double> distanceScan;
+        bool lpdirty;
+        bool wmdirty;
+        bool vidirty;
+        int receiverID;
+        ros::NodeHandle *nh;
+        vector<msl_msgs::Point2dInfo> linePoints;
+        vector<msl_sensor_msgs::ObstacleInfo> obstacles;
+        vector<double> distanceScan;
 
 
-		vector<unsigned char> imageData;
-		int width, height;
-		vector<int> params;
+        vector<unsigned char> imageData;
+        int width, height;
+        vector<int> params;
 
-		msl_msgs::PositionInfo pos;
-		ros::AsyncSpinner *spinner;
+        msl_msgs::PositionInfo pos;
+        ros::AsyncSpinner *spinner;
 };
 
 #endif

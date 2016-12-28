@@ -10,19 +10,19 @@
 namespace msl
 {
 
-	PathPlannerQuery::PathPlannerQuery()
-	{
-		this->blockOppPenaltyArea = false;
-		this->blockOppGoalArea = false;
-		this->blockOwnPenaltyArea = false;
-		this->blockOwnGoalArea = false;
-		this->block3MetersAroundBall = false;
-		this->additionalPoints = nullptr;
+    PathPlannerQuery::PathPlannerQuery()
+    {
+        this->blockOppPenaltyArea = false;
+        this->blockOppGoalArea = false;
+        this->blockOwnPenaltyArea = false;
+        this->blockOwnGoalArea = false;
+        this->block3MetersAroundBall = false;
+        this->additionalPoints = nullptr;
 
-	}
+    }
 
-	PathPlannerQuery::~PathPlannerQuery()
-	{
-	}
+    PathPlannerQuery::~PathPlannerQuery()
+    {
+    }
 
 } /* namespace msl */

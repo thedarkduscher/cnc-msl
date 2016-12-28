@@ -37,27 +37,27 @@ class MyThread : public QThread
 {
 
 public:
-	MyThread() {};
-	virtual ~MyThread(){};
+    MyThread() {};
+    virtual ~MyThread(){};
 
 
-	void setMyThread( QString cmd, int number )
-	{
-		this->cmd = cmd;
-		this->number = number;
-	}
+    void setMyThread( QString cmd, int number )
+    {
+        this->cmd = cmd;
+        this->number = number;
+    }
 
-	virtual void run()
-	{
-		//cerr << cmd.toAscii() << "  :  ";
-		//cerr << system( cmd.toAscii() ) << endl;
+    virtual void run()
+    {
+        //cerr << cmd.toAscii() << "  :  ";
+        //cerr << system( cmd.toAscii() ) << endl;
 
-		system( cmd.toLatin1() );
-	}
+        system( cmd.toLatin1() );
+    }
 
 private:
-	QString cmd;
-	int number;
+    QString cmd;
+    int number;
 };
 
 //============================================================ RWidget ==============================================
@@ -65,72 +65,72 @@ private:
 class RWidget : public QWidget, public Ui::RobotWidget
 {
 
-	Q_OBJECT
+    Q_OBJECT
 
 
 public:
-	RWidget(QWidget *partent = 0);
-	~RWidget();
-	void changeRobotStatus(QString *status);
+    RWidget(QWidget *partent = 0);
+    ~RWidget();
+    void changeRobotStatus(QString *status);
 
 private:
 
-	int my_number;
-	char NA_flag;
-	
-	QTimer *UpdateTimer;
+    int my_number;
+    char NA_flag;
 
-	QDialog *RobotDetailsDialog;
+    QTimer *UpdateTimer;
 
-	QString *KO;
-	QString *NA;
-	QString *OK;
-	QString *SB;
+    QDialog *RobotDetailsDialog;
 
-	QColor stat_Red;
-	QColor stat_Green;
-	QColor stat_White;
-	QColor stat_blue;
+    QString *KO;
+    QString *NA;
+    QString *OK;
+    QString *SB;
 
-	bool RunBotFlip;
+    QColor stat_Red;
+    QColor stat_Green;
+    QColor stat_White;
+    QColor stat_blue;
 
-	MyThread start;
-	MyThread stop;
-	MyThread agent;
-	MyThread Monitor_on;
-	MyThread Monitor_off;
+    bool RunBotFlip;
 
-//	bool Started_flag;
-	bool lock_flag;
+    MyThread start;
+    MyThread stop;
+    MyThread agent;
+    MyThread Monitor_on;
+    MyThread Monitor_off;
 
-	
+//  bool Started_flag;
+    bool lock_flag;
+
+
 
 public slots:
-	void runBotPressed (void);
-	void changeRobotRun(void);
-	void changeRobotStop(void);
-	void updateInfo(void);
-	void ChangeTextSize(int size);
-	void RoleChanged(int role_id);
-	void TeamColorChanged(int color_id);
-	void GoalColorChanged(int color_id);
+    void runBotPressed (void);
+    void changeRobotRun(void);
+    void changeRobotStop(void);
+    void updateInfo(void);
+    void ChangeTextSize(int size);
+    void RoleChanged(int role_id);
+    void TeamColorChanged(int color_id);
+    void GoalColorChanged(int color_id);
 
-	void startBotPressed(void);
-	void stopBotPressed(void);
-	void agentBotPressed(void);
-	void monitor_on_Pressed(void);
-	void monitor_off_Pressed(void);
+    void startBotPressed(void);
+    void stopBotPressed(void);
+    void agentBotPressed(void);
+    void monitor_on_Pressed(void);
+    void monitor_off_Pressed(void);
 
-	void detailsBotPressed (void);
-	void relocBotPressed (void);
+    void detailsBotPressed (void);
+    void relocBotPressed (void);
 
-	void lockRobot(int lock);
+    void lockRobot(int lock);
 
-	void changeBackGroundColor(QString *status);
+    void changeBackGroundColor(QString *status);
 
 signals:
-	void transmitCoach(void);
-	
+    void transmitCoach(void);
+
 };
 
 #endif

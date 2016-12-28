@@ -19,13 +19,13 @@
 
 
 typedef struct cn_map_point {
-  
-	sword x;
-	sword y;
-	
+
+    sword x;
+    sword y;
+
 } map_point;
 
-#define DMOD(x,y)	( (x) - floor((x)/(y)) * (y) )
+#define DMOD(x,y)   ( (x) - floor((x)/(y)) * (y) )
 
 
 void cn_init_force_lookup();

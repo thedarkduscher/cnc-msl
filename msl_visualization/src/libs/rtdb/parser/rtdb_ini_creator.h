@@ -26,12 +26,12 @@
 #include "rtdb_structs.h"
 #include "rtdb_configuration.h"
 
-/* 
+/*
 Function to write, compile and execute a rtdb_sizeof_tmp.c file
    that has included the headerfile where the datatype is defined
    and write a rtdb_size.tmp with the size of the datatype.
 After that, the rtdb_size.tmp file is opened, the size of the
-   datatype is read and returned 
+   datatype is read and returned
 */
 int getSizeof(char*, char*);
 

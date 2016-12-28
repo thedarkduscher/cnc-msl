@@ -7,50 +7,50 @@
 class BeaglePins
 {
 
-	protected:
-		friend class GPIO;
-		bool active;
+    protected:
+        friend class GPIO;
+        bool active;
 
-		BeaglePins(){active = false;};
-        
-	private:
-		friend class BeagleGPIO;
-		friend class TestGPIOLeds;
+        BeaglePins(){active = false;};
 
-		BeagleGPIO *parent;
-		char **localNames;
-		BeagleGPIO::GPIOInfo **pins;
-		uint32_t *ports;
-		uint32_t *masks;
-		int num;
-		int current;
-		BeagleGPIO::gpioWriteSemantics writeSemantics;
-        
-		int addPin(BeagleGPIO::GPIOInfo *pin);
-        
-		BeaglePins(int num, BeagleGPIO::gpioWriteSemantics semantics,
-				BeagleGPIO *parent);
-                
-		virtual ~BeaglePins();
-        
-	public:
+    private:
+        friend class BeagleGPIO;
+        friend class TestGPIOLeds;
 
-		virtual void namePin(int i, char *name);
-		virtual void namePins(char *names[]);
-		virtual int findPinIndex(char *name);
-		virtual void enableOutput(bool enable);
-		virtual void enableOutput(int i, bool enable);
-		virtual void enableOutput(int *outs, int num);
-		virtual void enableOutput(char **outNames, int num);
-		virtual void write(uint32_t v);
-		virtual void set(uint32_t v);
-		virtual void setBit(int bit);
-		virtual void clear(uint32_t v);
-		virtual void clearBit(int bit);
-		virtual uint32_t read();
-		virtual int getBit(int bit);
-        
-		bool isValid(){ return active;};
+        BeagleGPIO *parent;
+        char **localNames;
+        BeagleGPIO::GPIOInfo **pins;
+        uint32_t *ports;
+        uint32_t *masks;
+        int num;
+        int current;
+        BeagleGPIO::gpioWriteSemantics writeSemantics;
+
+        int addPin(BeagleGPIO::GPIOInfo *pin);
+
+        BeaglePins(int num, BeagleGPIO::gpioWriteSemantics semantics,
+                BeagleGPIO *parent);
+
+        virtual ~BeaglePins();
+
+    public:
+
+        virtual void namePin(int i, char *name);
+        virtual void namePins(char *names[]);
+        virtual int findPinIndex(char *name);
+        virtual void enableOutput(bool enable);
+        virtual void enableOutput(int i, bool enable);
+        virtual void enableOutput(int *outs, int num);
+        virtual void enableOutput(char **outNames, int num);
+        virtual void write(uint32_t v);
+        virtual void set(uint32_t v);
+        virtual void setBit(int bit);
+        virtual void clear(uint32_t v);
+        virtual void clearBit(int bit);
+        virtual uint32_t read();
+        virtual int getBit(int bit);
+
+        bool isValid(){ return active;};
 };
 
 #endif /* BEAGLEGOOP_H_ */

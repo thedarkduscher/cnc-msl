@@ -13,18 +13,18 @@
 
 
 class LightBarrier {
-	private:
-		BlackLib::BlackADC	*adc;
+    private:
+        BlackLib::BlackADC  *adc;
 
-		int		threshold;
+        int     threshold;
 
 
-	public:
-				LightBarrier(BlackLib::adcName adc_P);
-				~LightBarrier();
+    public:
+                LightBarrier(BlackLib::adcName adc_P);
+                ~LightBarrier();
 
-		bool	checkLightBarrier();
-		bool	setTreshold(int th);
+        bool    checkLightBarrier();
+        bool    setTreshold(int th);
 
 };
 

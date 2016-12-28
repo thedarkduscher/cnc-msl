@@ -31,10 +31,10 @@
 typedef void *TCOD_noise_t;
 
 typedef enum {
-	TCOD_NOISE_PERLIN = 1,
-	TCOD_NOISE_SIMPLEX = 2,
-	TCOD_NOISE_WAVELET = 4,
-	TCOD_NOISE_DEFAULT = 0
+    TCOD_NOISE_PERLIN = 1,
+    TCOD_NOISE_SIMPLEX = 2,
+    TCOD_NOISE_WAVELET = 4,
+    TCOD_NOISE_DEFAULT = 0
 } TCOD_noise_type_t;
 
 #include "noise_defaults.h"

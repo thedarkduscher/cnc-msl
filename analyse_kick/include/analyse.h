@@ -11,8 +11,8 @@
 class analyse
 {
 public:
-	analyse();
-	virtual ~analyse();
+    analyse();
+    virtual ~analyse();
 };
 
 #endif /* SRC_ANALYSE_H_ */

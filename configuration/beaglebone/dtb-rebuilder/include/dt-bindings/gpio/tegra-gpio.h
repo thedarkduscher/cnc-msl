@@ -46,6 +46,6 @@
 #define TEGRA_GPIO_BANK_ID_FF 31
 
 #define TEGRA_GPIO(bank, offset) \
-	((TEGRA_GPIO_BANK_ID_##bank * 8) + offset)
+    ((TEGRA_GPIO_BANK_ID_##bank * 8) + offset)
 
 #endif

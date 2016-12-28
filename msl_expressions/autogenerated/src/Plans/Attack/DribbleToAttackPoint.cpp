@@ -118,10 +118,10 @@ namespace alica
             info.y = closestOpponent->egoToAllo(*ownPos)->y;
             netMsg.sites.push_back(info);
 
-//			if (lastClosesOpp != nullptr && (closestOpponent - lastClosesOpp)->length() > 1000)
-//			{
-//				cout << "changed last closest opp" << endl;
-//			}
+//          if (lastClosesOpp != nullptr && (closestOpponent - lastClosesOpp)->length() > 1000)
+//          {
+//              cout << "changed last closest opp" << endl;
+//          }
             lastClosesOpp = closestOpponent;
         }
         //create motion control
@@ -141,12 +141,12 @@ namespace alica
         else
         {
             //adjustment
-//        	sinus regelung
-//			mc.motion.rotation = egoAlignPoint->rotate(M_PI)->angleTo()
+//          sinus regelung
+//          mc.motion.rotation = egoAlignPoint->rotate(M_PI)->angleTo()
 //                    * abs(sin(egoAlignPoint->rotate(M_PI)->angleTo())) * 2; // + (egoAlignPoint->rotate(M_PI)->angleTo() - lastRotError) * 0.3;
-//			wurzel regelung
-//        	mc.motion.rotation = egoAlignPoint->rotate(M_PI)->angleTo()
-//					* sqrt(abs(egoAlignPoint->rotate(M_PI)->angleTo())) * 2;
+//          wurzel regelung
+//          mc.motion.rotation = egoAlignPoint->rotate(M_PI)->angleTo()
+//                  * sqrt(abs(egoAlignPoint->rotate(M_PI)->angleTo())) * 2;
             //calculate clausen function
             double clausenValue = 0.0;
             for (int i = 1; i < this->clausenDepth; i++)
@@ -180,7 +180,7 @@ namespace alica
 
         mc.motion.angle = driveTo->angleTo();
         mc.motion.translation = min(this->maxVel, driveTo->length());
-//		cout << "Rotation " << mc.motion.rotation << " Angle " << egoAlignPoint->rotate(M_PI)->angleTo() << endl;
+//      cout << "Rotation " << mc.motion.rotation << " Angle " << egoAlignPoint->rotate(M_PI)->angleTo() << endl;
         //debug msg
         msl_msgs::Point2dInfo info;
         info.x = egoAlignPoint->egoToAllo(*ownPos)->x;

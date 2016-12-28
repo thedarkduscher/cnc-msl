@@ -54,7 +54,7 @@ namespace alica
             if (avoidBall)
             {
                 // replace method with new moveToPoint method
-//				mc = msl::RobotMovement::placeRobotCareBall(driveTo, ballPos, maxVel);
+//              mc = msl::RobotMovement::placeRobotCareBall(driveTo, ballPos, maxVel);
                 movQuery->egoDestinationPoint = driveTo;
                 movQuery->egoAlignPoint = ballPos;
                 mc = rm.moveToPoint(movQuery);

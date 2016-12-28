@@ -4,7 +4,7 @@
 /// \file ais_thermic.h
 ///
 /// \brief Header file for the Thermic Modul
-/// 
+///
 /// \author Jan Paulus and Dipl. Ing. Kubina
 ///
 /// \version 0.8

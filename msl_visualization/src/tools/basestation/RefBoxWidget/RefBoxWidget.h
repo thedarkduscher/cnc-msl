@@ -32,69 +32,69 @@
 
 class RefBoxWidget: public QWidget, public Ui::RefBoxWG
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	RefBoxWidget(QWidget * parent =0);
-	~RefBoxWidget();
+    RefBoxWidget(QWidget * parent =0);
+    ~RefBoxWidget();
 
 private:
-	
-	QDialog *RBDialog;
-	QTimer *UpdateTimer;
+
+    QDialog *RBDialog;
+    QTimer *UpdateTimer;
 
 protected:
-	ros::Publisher RefereeBoxInfoBodyPublisher;
-	ros::NodeHandle* rosNode;
+    ros::Publisher RefereeBoxInfoBodyPublisher;
+    ros::NodeHandle* rosNode;
 
 public Q_SLOTS:
-	void detailsBotPressed(void);
+    void detailsBotPressed(void);
 
-	void PlayOnPressed(void);
-	void StopPressed(void);
-	void HaltPressed(void);
-	void DroppedBallPressed(void);
-	void ParkingPressed(void);
-	void JoystickPressed(void);
+    void PlayOnPressed(void);
+    void StopPressed(void);
+    void HaltPressed(void);
+    void DroppedBallPressed(void);
+    void ParkingPressed(void);
+    void JoystickPressed(void);
 
-	/* our */
-	void OurKickOffPressed(void);
-	void OurFreeKickPressed(void);
-	void OurGoalKickPressed(void);
-	void OurThrowinPressed(void);
-	void OurCornerKickPressed(void);
-	void OurPenaltyPressed(void);
+    /* our */
+    void OurKickOffPressed(void);
+    void OurFreeKickPressed(void);
+    void OurGoalKickPressed(void);
+    void OurThrowinPressed(void);
+    void OurCornerKickPressed(void);
+    void OurPenaltyPressed(void);
 
-	/* their */
-	void TheirKickOffPressed(void);
-	void TheirFreeKickPressed(void);
-	void TheirGoalKickPressed(void);
-	void TheirThrowinPressed(void);
-	void TheirCornerKickPressed(void);
-	void TheirPenaltyPressed(void);
-
-
-	void updateStateInfo(void);
-
-	void updateCoachInfo(void);
-
-	void changeGoalColor_sl(int);
-
-	void UpdateGameParameter_slot(void);
-
-	void updateRefLog(void);
-
-	void SetLogViewMode_slot(bool);
+    /* their */
+    void TheirKickOffPressed(void);
+    void TheirFreeKickPressed(void);
+    void TheirGoalKickPressed(void);
+    void TheirThrowinPressed(void);
+    void TheirCornerKickPressed(void);
+    void TheirPenaltyPressed(void);
 
 
-	
+    void updateStateInfo(void);
+
+    void updateCoachInfo(void);
+
+    void changeGoalColor_sl(int);
+
+    void UpdateGameParameter_slot(void);
+
+    void updateRefLog(void);
+
+    void SetLogViewMode_slot(bool);
+
+
+
 
 
 Q_SIGNALS:
-	void transmitCoach(void);
-	void changeGoalColor (int);
-	void UpdateGameParameter_signal(void);
-	void SetLogViewMode_signal(bool);
+    void transmitCoach(void);
+    void changeGoalColor (int);
+    void UpdateGameParameter_signal(void);
+    void SetLogViewMode_signal(bool);
 };
 
 #endif

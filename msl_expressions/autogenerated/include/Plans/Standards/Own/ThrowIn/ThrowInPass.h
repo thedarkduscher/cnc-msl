@@ -51,10 +51,10 @@ namespace alica
                          shared_ptr<geometry::CNPoint2D> passPoint, double passCorridorWidth,
                          shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> points);
                          bool outsideCorridore(shared_ptr<geometry::CNPoint2D> ball, shared_ptr<geometry::CNPoint2D>passPoint,
-        							  double passCorridorWidth, shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> points);
-							double minFree(double angle, double width, shared_ptr<vector<double> > dstscan);
-									int mod(int x, int y);
-        /*PROTECTED REGION END*/			};
-		} /* namespace alica */
+                                      double passCorridorWidth, shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> points);
+                            double minFree(double angle, double width, shared_ptr<vector<double> > dstscan);
+                                    int mod(int x, int y);
+        /*PROTECTED REGION END*/            };
+        } /* namespace alica */
 
 #endif /* ThrowInPass_H_ */

@@ -4,7 +4,7 @@
 /// \file ais_calculatestate.h
 ///
 /// \brief Header file for the calculate module
-/// 
+///
 /// \author Pascal Langenberg
 ///
 /// \version 0.1

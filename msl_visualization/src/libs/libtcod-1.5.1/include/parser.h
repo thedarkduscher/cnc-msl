@@ -30,60 +30,60 @@
 
 /* generic type */
 typedef enum {
-	TCOD_TYPE_NONE,
-	TCOD_TYPE_BOOL,
-	TCOD_TYPE_CHAR,
-	TCOD_TYPE_INT,
-	TCOD_TYPE_FLOAT,
-	TCOD_TYPE_STRING,
-	TCOD_TYPE_COLOR,
-	TCOD_TYPE_DICE,
-	TCOD_TYPE_VALUELIST00,
-	TCOD_TYPE_VALUELIST01,
-	TCOD_TYPE_VALUELIST02,
-	TCOD_TYPE_VALUELIST03,
-	TCOD_TYPE_VALUELIST04,
-	TCOD_TYPE_VALUELIST05,
-	TCOD_TYPE_VALUELIST06,
-	TCOD_TYPE_VALUELIST07,
-	TCOD_TYPE_VALUELIST08,
-	TCOD_TYPE_VALUELIST09,
-	TCOD_TYPE_VALUELIST10,
-	TCOD_TYPE_VALUELIST11,
-	TCOD_TYPE_VALUELIST12,
-	TCOD_TYPE_VALUELIST13,
-	TCOD_TYPE_VALUELIST14,
-	TCOD_TYPE_VALUELIST15,
-	TCOD_TYPE_CUSTOM00,
-	TCOD_TYPE_CUSTOM01,
-	TCOD_TYPE_CUSTOM02,
-	TCOD_TYPE_CUSTOM03,
-	TCOD_TYPE_CUSTOM04,
-	TCOD_TYPE_CUSTOM05,
-	TCOD_TYPE_CUSTOM06,
-	TCOD_TYPE_CUSTOM07,
-	TCOD_TYPE_CUSTOM08,
-	TCOD_TYPE_CUSTOM09,
-	TCOD_TYPE_CUSTOM10,
-	TCOD_TYPE_CUSTOM11,
-	TCOD_TYPE_CUSTOM12,
-	TCOD_TYPE_CUSTOM13,
-	TCOD_TYPE_CUSTOM14,
-	TCOD_TYPE_CUSTOM15,
-	TCOD_TYPE_LIST=1024
+    TCOD_TYPE_NONE,
+    TCOD_TYPE_BOOL,
+    TCOD_TYPE_CHAR,
+    TCOD_TYPE_INT,
+    TCOD_TYPE_FLOAT,
+    TCOD_TYPE_STRING,
+    TCOD_TYPE_COLOR,
+    TCOD_TYPE_DICE,
+    TCOD_TYPE_VALUELIST00,
+    TCOD_TYPE_VALUELIST01,
+    TCOD_TYPE_VALUELIST02,
+    TCOD_TYPE_VALUELIST03,
+    TCOD_TYPE_VALUELIST04,
+    TCOD_TYPE_VALUELIST05,
+    TCOD_TYPE_VALUELIST06,
+    TCOD_TYPE_VALUELIST07,
+    TCOD_TYPE_VALUELIST08,
+    TCOD_TYPE_VALUELIST09,
+    TCOD_TYPE_VALUELIST10,
+    TCOD_TYPE_VALUELIST11,
+    TCOD_TYPE_VALUELIST12,
+    TCOD_TYPE_VALUELIST13,
+    TCOD_TYPE_VALUELIST14,
+    TCOD_TYPE_VALUELIST15,
+    TCOD_TYPE_CUSTOM00,
+    TCOD_TYPE_CUSTOM01,
+    TCOD_TYPE_CUSTOM02,
+    TCOD_TYPE_CUSTOM03,
+    TCOD_TYPE_CUSTOM04,
+    TCOD_TYPE_CUSTOM05,
+    TCOD_TYPE_CUSTOM06,
+    TCOD_TYPE_CUSTOM07,
+    TCOD_TYPE_CUSTOM08,
+    TCOD_TYPE_CUSTOM09,
+    TCOD_TYPE_CUSTOM10,
+    TCOD_TYPE_CUSTOM11,
+    TCOD_TYPE_CUSTOM12,
+    TCOD_TYPE_CUSTOM13,
+    TCOD_TYPE_CUSTOM14,
+    TCOD_TYPE_CUSTOM15,
+    TCOD_TYPE_LIST=1024
 } TCOD_value_type_t;
 
 /* generic value */
 typedef union {
-	bool b;
-	char c;
-	int32 i;
-	float f;
-	char *s;
-	TCOD_color_t col;
-	TCOD_dice_t dice;
-	TCOD_list_t list;
-	void *custom;
+    bool b;
+    char c;
+    int32 i;
+    float f;
+    char *s;
+    TCOD_color_t col;
+    TCOD_dice_t dice;
+    TCOD_list_t list;
+    void *custom;
 } TCOD_value_t;
 
 /* parser structures */
@@ -101,11 +101,11 @@ TCODLIB_API TCOD_value_type_t TCOD_struct_get_type(TCOD_parser_struct_t def, con
 
 /* parser listener */
 typedef struct {
-	bool (*new_struct)(TCOD_parser_struct_t str,const char *name);
-	bool (*new_flag)(const char *name);
-	bool (*new_property)(const char *propname, TCOD_value_type_t type, TCOD_value_t value);
-	bool (*end_struct)(TCOD_parser_struct_t str, const char *name);
-	void (*error)(const char *msg);
+    bool (*new_struct)(TCOD_parser_struct_t str,const char *name);
+    bool (*new_flag)(const char *name);
+    bool (*new_property)(const char *propname, TCOD_value_type_t type, TCOD_value_t value);
+    bool (*end_struct)(TCOD_parser_struct_t str, const char *name);
+    void (*error)(const char *msg);
 } TCOD_parser_listener_t;
 
 /* a custom type parser */
@@ -136,26 +136,26 @@ TCODLIB_API TCOD_list_t TCOD_parser_get_list_property(TCOD_parser_t parser, cons
 /* parser internals (may be used by custom type parsers) */
 /* parser structures */
 typedef struct {
-	char *name; /* entity type name */
-	/* list of flags */
-	TCOD_list_t flags;
-	/* list of properties (name, type, mandatory) */
-	TCOD_list_t props;
-	/* list of value lists */
-	TCOD_list_t lists;
-	/* list of sub-structures */
-	TCOD_list_t structs;
+    char *name; /* entity type name */
+    /* list of flags */
+    TCOD_list_t flags;
+    /* list of properties (name, type, mandatory) */
+    TCOD_list_t props;
+    /* list of value lists */
+    TCOD_list_t lists;
+    /* list of sub-structures */
+    TCOD_list_t structs;
 } TCOD_struct_int_t;
 /* the parser */
 typedef struct {
-	/* list of structures */
-	TCOD_list_t structs;
-	/* list of custom type parsers */
-	TCOD_parser_custom_t customs[16];
-	/* fatal error occured */
-	bool fatal;
-	/* list of properties if default listener is used */
-	TCOD_list_t props;
+    /* list of structures */
+    TCOD_list_t structs;
+    /* list of custom type parsers */
+    TCOD_parser_custom_t customs[16];
+    /* fatal error occured */
+    bool fatal;
+    /* list of properties if default listener is used */
+    TCOD_list_t props;
 } TCOD_parser_int_t;
 TCODLIB_API TCOD_value_t TCOD_parse_bool_value();
 TCODLIB_API TCOD_value_t TCOD_parse_char_value();

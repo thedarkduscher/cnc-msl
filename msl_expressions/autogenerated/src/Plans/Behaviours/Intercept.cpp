@@ -104,8 +104,8 @@ namespace alica
 
         shared_ptr < geometry::CNPoint2D > predBall = make_shared < geometry::CNPoint2D
                 > (egoBallPos->x, egoBallPos->y);
-//		if (egoBallVel->length() > 4000.0)
-//		{
+//      if (egoBallVel->length() > 4000.0)
+//      {
         shared_ptr < geometry::CNPosition > predPos = make_shared < geometry::CNPosition > (0.0, 0.0, 0.0);
         double timestep = 33;
         double rot = od->motion.rotation * timestep / 1000.0;
@@ -138,7 +138,7 @@ namespace alica
             mc.motion.translation = 0;
             send(mc);
         }
-//		}
+//      }
         // PID controller for minimizing the distance between ball and me
         double distErr = max(predBall->length(), 1000.0);
         double controlDist = distErr * pdist + distIntErr * pidist + (distErr - lastDistErr) * pddist;
@@ -157,10 +157,10 @@ namespace alica
         {
             egoVelocity = egoBallVel->getPoint();
         }
-//		cout << "Intercept: egoVelocity: " << egoVelocity->toString() << endl;
+//      cout << "Intercept: egoVelocity: " << egoVelocity->toString() << endl;
         egoVelocity->x += controlDist * cos(predBall->angleTo());
         egoVelocity->y += controlDist * sin(predBall->angleTo());
-//		cout << "Intercept: egoVelocity: " << egoVelocity->toString() << endl;
+//      cout << "Intercept: egoVelocity: " << egoVelocity->toString() << endl;
 
         auto pathPlanningPoint = egoVelocity->normalize() * min(egoVelocity->length(), predBall->length());
         auto alloDest = pathPlanningPoint->egoToAllo(*ownPos);

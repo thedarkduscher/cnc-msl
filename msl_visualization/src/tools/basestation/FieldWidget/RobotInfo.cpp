@@ -10,55 +10,55 @@
 
 RobotInfo::RobotInfo(FieldWidget3D* field)
 {
-	id = 0;
-	timeStamp = 0;
-	this->visualization = std::make_shared<RobotVisualization>(this, field);
+    id = 0;
+    timeStamp = 0;
+    this->visualization = std::make_shared<RobotVisualization>(this, field);
 }
 
 RobotInfo::~RobotInfo()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 bool RobotInfo::getVisStatus() const
 {
-	return myVis;
+    return myVis;
 }
 
 void RobotInfo::setVisStatus(bool vis)
 {
-	this->myVis = vis;
+    this->myVis = vis;
 }
 
 int RobotInfo::getId() const
 {
-	return id;
+    return id;
 }
 
 void RobotInfo::setId(int id)
 {
-	this->id = id;
+    this->id = id;
 }
 
 std::string RobotInfo::getName() const
 {
-	return name;
+    return name;
 }
 
 void RobotInfo::setName(std::string name)
 {
-	this->name = name;
+    this->name = name;
 }
 
 
 bool RobotInfo::getBallOnly() const
 {
-	return ballOnly;
+    return ballOnly;
 }
 
 void RobotInfo::setBallOnly(bool ballOnly)
 {
-	this->ballOnly = ballOnly;
+    this->ballOnly = ballOnly;
 }
 
 std::shared_ptr<RobotVisualization> RobotInfo::getVisualization()
@@ -68,12 +68,12 @@ std::shared_ptr<RobotVisualization> RobotInfo::getVisualization()
 
 const boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> RobotInfo::getSharedWorldInfo() const
 {
-	return msg;
+    return msg;
 }
 
 void RobotInfo::setSharedWorldInfo(const boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> msg)
 {
-	this->msg = msg;
+    this->msg = msg;
 }
 
 const boost::shared_ptr<msl_msgs::CorridorCheck>& RobotInfo::getCorridorCheckInfo() const
@@ -162,7 +162,7 @@ void RobotInfo::setPassMsg(const boost::shared_ptr<msl_helper_msgs::PassMsg>& pa
 
 unsigned long RobotInfo::getTimeStamp()
 {
-	return timeStamp;
+    return timeStamp;
 }
 
 void RobotInfo::updateTimeStamp()

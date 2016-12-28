@@ -3,7 +3,7 @@
 //@{
 /// \file ais_i2c.h
 ///
-/// \brief 	Header File for Software-emulated I2C Driver Functions
+/// \brief  Header File for Software-emulated I2C Driver Functions
 ///
 /// \author Adam Cwientzek
 ///

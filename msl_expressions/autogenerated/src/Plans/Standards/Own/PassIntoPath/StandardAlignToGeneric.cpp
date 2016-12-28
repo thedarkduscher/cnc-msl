@@ -14,10 +14,10 @@ namespace alica
         /*PROTECTED REGION ID(con1457531616421) ENABLED START*/ //Add additional options here
         tol = M_PI / 40; //45
         trans = 100.0;
-//    				field = FootballField.GetInstance();
-//			this.maxTranslation = this.sc["Team"].TryGetDouble(3000.0, "Team.StandardSituationSpeed");
-//			this.tol = this.sc["Behaviour"].GetDouble("StandardAlign.AlignTolerance");
-//			this.trans = this.sc["Behaviour"].GetDouble("StandardAlign.AlignSpeed");
+//                  field = FootballField.GetInstance();
+//          this.maxTranslation = this.sc["Team"].TryGetDouble(3000.0, "Team.StandardSituationSpeed");
+//          this.tol = this.sc["Behaviour"].GetDouble("StandardAlign.AlignTolerance");
+//          this.trans = this.sc["Behaviour"].GetDouble("StandardAlign.AlignSpeed");
         /*PROTECTED REGION END*/
     }
     StandardAlignToGeneric::~StandardAlignToGeneric()
@@ -32,7 +32,7 @@ namespace alica
     void StandardAlignToGeneric::run(void* msg)
     {
         /*PROTECTED REGION ID(run1457531616421) ENABLED START*/ //Add additional options here
-        /*		Point2D ballPos = WM.RawBallPosition;
+        /*      Point2D ballPos = WM.RawBallPosition;
 
          Position ownPos = WM.OwnPositionCorrected;
 
@@ -170,37 +170,37 @@ namespace alica
 
          Send(bm);*/
 
-//		msl_actuator_msgs::MotionControl mc;
-//		auto ownPos = wm->rawSensorData.getOwnPositionVision();
-//		auto ballPos = wm->ball.getAlloBallPosition();
-//		if (ownPos==nullptr || ballPos==nullptr) return;
+//      msl_actuator_msgs::MotionControl mc;
+//      auto ownPos = wm->rawSensorData.getOwnPositionVision();
+//      auto ballPos = wm->ball.getAlloBallPosition();
+//      if (ownPos==nullptr || ballPos==nullptr) return;
 //
-//		bool ret = query->getSolution(SolverType::GRADIENTSOLVER, runningPlan, result);
-//		auto passGoal = make_shared<geometry::CNPoint2D>(result[0], result[1]);
-//		auto p = ballPos+(ballPos-passGoal)->normalize()*(2000.0/3.0);
-//		if(ret) {
-//			msl_helper_msgs::PassMsg pm;
-//			pm.origin.x = ownPos->x;
-//			pm.origin.y = ownPos->y;
-//			pm.destination.x = passGoal->x;
-//			pm.destination.y = passGoal->y;
-//			pm.validFor = 5000000000;
+//      bool ret = query->getSolution(SolverType::GRADIENTSOLVER, runningPlan, result);
+//      auto passGoal = make_shared<geometry::CNPoint2D>(result[0], result[1]);
+//      auto p = ballPos+(ballPos-passGoal)->normalize()*(2000.0/3.0);
+//      if(ret) {
+//          msl_helper_msgs::PassMsg pm;
+//          pm.origin.x = ownPos->x;
+//          pm.origin.y = ownPos->y;
+//          pm.destination.x = passGoal->x;
+//          pm.destination.y = passGoal->y;
+//          pm.validFor = 5000000000;
 //
-//			//Reduce Communication
-//			if(iterationCount++%3==0) {
-//				send(pm, -1);
-//			}
-//		}
+//          //Reduce Communication
+//          if(iterationCount++%3==0) {
+//              send(pm, -1);
+//          }
+//      }
 //
 //
-//		auto egoBall=wm->ball.getEgoBallPosition();
-//		if (result!=nullptr && result.size() > 0)  {
-//			auto driveTo = p->alloToEgo(*ownPos);
-//			mc = msl::RobotMovement::placeRobotCareBall(driveTo, egoBall, maxVel);
-//		} else {
-//			return;
-//		}
-//		send(mc);
+//      auto egoBall=wm->ball.getEgoBallPosition();
+//      if (result!=nullptr && result.size() > 0)  {
+//          auto driveTo = p->alloToEgo(*ownPos);
+//          mc = msl::RobotMovement::placeRobotCareBall(driveTo, egoBall, maxVel);
+//      } else {
+//          return;
+//      }
+//      send(mc);
         /*PROTECTED REGION END*/
     }
     void StandardAlignToGeneric::initialiseParameters()
@@ -212,42 +212,42 @@ namespace alica
         query->addStaticVariable(getVariablesByName("Y"));
         result.clear();
 
-//			try
-//			{
-//				if (parameters.ContainsKey("xOffSet")) {
-//					xOffSet = Double.Parse(parameters["xOffSet"]);
-//				} else {
-//					xOffSet = 0;
-//				}
-//			}
-//			catch(Exception)
-//			{
-//				xOffSet = 0;
-//			}
-//			if( parameters.ContainsKey("AlignTolerance") && parameters.ContainsKey("AlignSpeed") )
-//			{
-//				try
-//				{
-//					this.tol = Double.Parse(parameters["AlignTolerance"]);
-//					this.trans = Double.Parse(parameters["AlignSpeed"]);
-//				}
-//				catch( Exception )
-//				{
-//					this.tol = this.sc["Behaviour"].GetDouble("StandardAlign.AlignTolerance");
-//					this.trans = this.sc["Behaviour"].GetDouble("StandardAlign.AlignSpeed");
-//				}
-//			}
-//			else {
-//				this.tol = this.sc["Behaviour"].GetDouble("StandardAlign.AlignTolerance");
-//				this.trans = this.sc["Behaviour"].GetDouble("StandardAlign.AlignSpeed");
-//			}
-//			//receiver = GetRunningPlanEntryPointPair("TestThrowInPos1", "Defend");
-//			query.ClearStaticVariables();
-//			this.query.AddVariable(VariableByName("X"));
-//			this.query.AddVariable(VariableByName("Y"));
+//          try
+//          {
+//              if (parameters.ContainsKey("xOffSet")) {
+//                  xOffSet = Double.Parse(parameters["xOffSet"]);
+//              } else {
+//                  xOffSet = 0;
+//              }
+//          }
+//          catch(Exception)
+//          {
+//              xOffSet = 0;
+//          }
+//          if( parameters.ContainsKey("AlignTolerance") && parameters.ContainsKey("AlignSpeed") )
+//          {
+//              try
+//              {
+//                  this.tol = Double.Parse(parameters["AlignTolerance"]);
+//                  this.trans = Double.Parse(parameters["AlignSpeed"]);
+//              }
+//              catch( Exception )
+//              {
+//                  this.tol = this.sc["Behaviour"].GetDouble("StandardAlign.AlignTolerance");
+//                  this.trans = this.sc["Behaviour"].GetDouble("StandardAlign.AlignSpeed");
+//              }
+//          }
+//          else {
+//              this.tol = this.sc["Behaviour"].GetDouble("StandardAlign.AlignTolerance");
+//              this.trans = this.sc["Behaviour"].GetDouble("StandardAlign.AlignSpeed");
+//          }
+//          //receiver = GetRunningPlanEntryPointPair("TestThrowInPos1", "Defend");
+//          query.ClearStaticVariables();
+//          this.query.AddVariable(VariableByName("X"));
+//          this.query.AddVariable(VariableByName("Y"));
 //
-//			haveBall = false;
-//			delayKickCounter = 0;
+//          haveBall = false;
+//          delayKickCounter = 0;
 
         /*PROTECTED REGION END*/
     }

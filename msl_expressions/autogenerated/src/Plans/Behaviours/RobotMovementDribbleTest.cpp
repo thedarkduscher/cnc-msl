@@ -73,7 +73,7 @@ namespace alica
          msl_actuator_msgs::MotionControl bm;
          shared_ptr < geometry::CNPoint2D > pathPlanningPoint;
          //bm = DribbleHelper.DribbleToPoint(egoTarget,this.dribbleVel,WM,out pathPlanningPoint);
-         //		auto tmpMC = msl::RobotMovement::dribbleToPointConservative(egoTarget, pathPlanningPoint);
+         //     auto tmpMC = msl::RobotMovement::dribbleToPointConservative(egoTarget, pathPlanningPoint);
          query->egoDestinationPoint = egoTarget;
          query->dribble = true;
          auto tmpMC = rm.experimentallyMoveToPoint(query);
@@ -92,14 +92,14 @@ namespace alica
          //         if(oppInFront!=null) HHelper.SetTargetPoint(WorldHelper.Ego2Allo(oppInFront.Rotate(Math.PI),ownPos));
          //         this.FailureStatus = true;
          //         }
-         //		shared_ptr<geometry::CNPoint2D> turnTo = msl::RobotMovement::dribbleNeedToTurn(ownPos, ballPos,
-         //																						pathPlanningPoint);
-         //		if (turnTo!=nullptr) {
-         //			HHelper.SetTargetPoint(turnTo);
-         //			this->failure = true;
-         //		}
+         //     shared_ptr<geometry::CNPoint2D> turnTo = msl::RobotMovement::dribbleNeedToTurn(ownPos, ballPos,
+         //                                                                                     pathPlanningPoint);
+         //     if (turnTo!=nullptr) {
+         //         HHelper.SetTargetPoint(turnTo);
+         //         this->failure = true;
+         //     }
          //if i drive in to the enemy goal area
-         //		bm = msl::RobotMovement::nearGoalArea(bm);
+         //     bm = msl::RobotMovement::nearGoalArea(bm);
          //        bm = DriveHelper.NearGoalArea(WM,bm);
          bm = rm.experimentallyRuleActionForBallGetter();
 
@@ -121,8 +121,8 @@ namespace alica
         auto ownPos = wm->rawSensorData->getOwnPositionVision();
         if (ownPos == nullptr)
             return;
-        //		Random rand = new Random();
-        //		int index = (int)Math.Round(rand.NextDouble()*2.0);
+        //      Random rand = new Random();
+        //      int index = (int)Math.Round(rand.NextDouble()*2.0);
 
         srand(supplementary::DateTime::getUtcNowC());
         int index = (rand() % attackPosY.size());
@@ -131,7 +131,7 @@ namespace alica
         {
             currentTarget = make_shared < geometry::CNPoint2D > (wm->field->getFieldLength() / 6.0 - 1500, 0);
             //} else if (ownPos.X < field.FieldLength/2.0) {
-            //	currentTarget = new Point2D(field.FieldLength/2.0,0);
+            //  currentTarget = new Point2D(field.FieldLength/2.0,0);
         }
         else
         {

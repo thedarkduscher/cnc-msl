@@ -20,9 +20,9 @@
 
 /// Structure for Error_check flags
 struct ERR_MOTOR  {
-	 /// flag if there is a mechanical problem with the motor 0: no problem 1: problem
+     /// flag if there is a mechanical problem with the motor 0: no problem 1: problem
      TMC_UCHAR_8 motor;
-	 /// flag if there is a problem with the encodersignals 0: no problem 1: problem
+     /// flag if there is a problem with the encodersignals 0: no problem 1: problem
      TMC_UCHAR_8 encoder;
 };
 

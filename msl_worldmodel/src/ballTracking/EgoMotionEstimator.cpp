@@ -33,9 +33,9 @@ EgoMotionEstimator * EgoMotionEstimator::instance_ = NULL;
 
 EgoMotionEstimator * EgoMotionEstimator::getInstance(){
 
-	if(instance_ == NULL)
-		instance_ = new EgoMotionEstimator();
-	return instance_;
+    if(instance_ == NULL)
+        instance_ = new EgoMotionEstimator();
+    return instance_;
 
 
 }
@@ -43,16 +43,16 @@ EgoMotionEstimator * EgoMotionEstimator::getInstance(){
 
 EgoMotionEstimator::EgoMotionEstimator(){
 
-	//rawHelper = RawOdometryHelper::getInstance();
+    //rawHelper = RawOdometryHelper::getInstance();
 
-	init();
+    init();
 
 }
 
 EgoMotionEstimator::~EgoMotionEstimator(){
 
 
-	cleanup();
+    cleanup();
 
 }
 
@@ -70,223 +70,223 @@ void EgoMotionEstimator::cleanup(){
 
 
 MovingRobot EgoMotionEstimator::trackObject(Position * posBuffer, unsigned long long * timestampBuf, int length, int lastIndex, double timeBack){
-	int validCounter = 0;
-	unsigned long long timediff = TimeHelper::getInstance()->getTimeDiffToOmniCam(timestampBuf[lastIndex]);
+    int validCounter = 0;
+    unsigned long long timediff = TimeHelper::getInstance()->getTimeDiffToOmniCam(timestampBuf[lastIndex]);
 
-	if(timediff > 1.0E07){
-		MovingRobot mr;
-		mr.position.x = 0.0;
-		mr.position.y = 0.0;
-		mr.position.heading = 0.0;
-		mr.velocity.vx = 0.0;
-		mr.velocity.vy = 0.0;
-		mr.velocity.w = 0.0;
+    if(timediff > 1.0E07){
+        MovingRobot mr;
+        mr.position.x = 0.0;
+        mr.position.y = 0.0;
+        mr.position.heading = 0.0;
+        mr.velocity.vx = 0.0;
+        mr.velocity.vy = 0.0;
+        mr.velocity.w = 0.0;
 
-		return mr;
+        return mr;
 
-	}	
+    }
 
-	validCounter = 1;
+    validCounter = 1;
 
-	int startIndex = lastIndex;
-	int currIndex = lastIndex - 1;
+    int startIndex = lastIndex;
+    int currIndex = lastIndex - 1;
 
 
-	while(1){
+    while(1){
 
-		timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
+        timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
 
-		if(timediff > timeBack || currIndex == lastIndex)
-			break;
+        if(timediff > timeBack || currIndex == lastIndex)
+            break;
 
-		
-		validCounter++;
-		startIndex = currIndex;
 
-		currIndex--;
-		if(currIndex < 0)
-			currIndex += length;
+        validCounter++;
+        startIndex = currIndex;
 
-	}
+        currIndex--;
+        if(currIndex < 0)
+            currIndex += length;
 
-	if(validCounter == 1){
+    }
 
-		MovingRobot mr;
-		mr.position.x = posBuffer[lastIndex].x;
-		mr.position.y = posBuffer[lastIndex].y;
-		mr.position.heading = posBuffer[lastIndex].heading;
-		mr.velocity.vx = 0.0;
-		mr.velocity.vy = 0.0;
-		mr.velocity.w = 0.0;
+    if(validCounter == 1){
 
-		return mr;
+        MovingRobot mr;
+        mr.position.x = posBuffer[lastIndex].x;
+        mr.position.y = posBuffer[lastIndex].y;
+        mr.position.heading = posBuffer[lastIndex].heading;
+        mr.velocity.vx = 0.0;
+        mr.velocity.vy = 0.0;
+        mr.velocity.w = 0.0;
 
-	}
+        return mr;
 
+    }
 
 
-	MovingRobot mr;
 
-	double lambda = 0.0;
+    MovingRobot mr;
 
-	if(validCounter <= 3)
-		lambda = 0.005;
-	else
-		lambda = 0.005*pow(0.5, validCounter - 3);
+    double lambda = 0.0;
 
+    if(validCounter <= 3)
+        lambda = 0.005;
+    else
+        lambda = 0.005*pow(0.5, validCounter - 3);
 
 
 
-//	Estimate the robot rotational velocity
 
+//  Estimate the robot rotational velocity
 
-	double sumTimes = 0.0;
-	double sumTimesSquare = 0.0;
-	double sumTimeHeadings = 0.0;
-	double sumHeadings = 0.0;
 
+    double sumTimes = 0.0;
+    double sumTimesSquare = 0.0;
+    double sumTimeHeadings = 0.0;
+    double sumHeadings = 0.0;
 
 
-	sumHeadings += 0.0;
 
-	currIndex = startIndex;
-	
-	while(currIndex != lastIndex){
+    sumHeadings += 0.0;
 
+    currIndex = startIndex;
 
-		unsigned long long timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
+    while(currIndex != lastIndex){
 
 
-		sumTimesSquare += (timediff/-1.0E07)*(timediff/-1.0E07);
-		sumTimes += (timediff/-1.0E07);
+        unsigned long long timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
 
-		double headingAdd = posBuffer[currIndex].heading - posBuffer[lastIndex].heading;
-		if(headingAdd > M_PI)
-			headingAdd -= 2.0*M_PI;
-		if(headingAdd < -M_PI)
-			headingAdd += 2.0*M_PI;
 
-		sumHeadings += headingAdd;
-		sumTimeHeadings += headingAdd*(timediff/-1.0E07);
+        sumTimesSquare += (timediff/-1.0E07)*(timediff/-1.0E07);
+        sumTimes += (timediff/-1.0E07);
 
-		currIndex++;
-		if(currIndex >= length)
-			currIndex -= length;
+        double headingAdd = posBuffer[currIndex].heading - posBuffer[lastIndex].heading;
+        if(headingAdd > M_PI)
+            headingAdd -= 2.0*M_PI;
+        if(headingAdd < -M_PI)
+            headingAdd += 2.0*M_PI;
 
-	}
+        sumHeadings += headingAdd;
+        sumTimeHeadings += headingAdd*(timediff/-1.0E07);
 
+        currIndex++;
+        if(currIndex >= length)
+            currIndex -= length;
 
-	double w = (validCounter*sumTimeHeadings - sumTimes*sumHeadings)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
-	double heading = (sumTimesSquare*sumHeadings - sumTimes*sumTimeHeadings)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
+    }
 
-	heading += posBuffer[lastIndex].heading;
-	if(heading > M_PI)
-		heading -= 2.0*M_PI;
-	if(heading < -M_PI)
-		heading += 2.0*M_PI;
 
-	double vx = 0.0;
-	double vy = 0.0;
-	double x = 0.0;
-	double y = 0.0;
+    double w = (validCounter*sumTimeHeadings - sumTimes*sumHeadings)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
+    double heading = (sumTimesSquare*sumHeadings - sumTimes*sumTimeHeadings)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
 
-	if(fabs(w) < 1.0E-03){
+    heading += posBuffer[lastIndex].heading;
+    if(heading > M_PI)
+        heading -= 2.0*M_PI;
+    if(heading < -M_PI)
+        heading += 2.0*M_PI;
 
-		double sumPointsX = posBuffer[lastIndex].x;
-		double sumPointsY = posBuffer[lastIndex].y;
-		double sumTimePointsX = 0.0;
-		double sumTimePointsY = 0.0;
+    double vx = 0.0;
+    double vy = 0.0;
+    double x = 0.0;
+    double y = 0.0;
 
-		currIndex = startIndex;
-		
-		while(currIndex != lastIndex){
-	
-	
-			unsigned long long timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
+    if(fabs(w) < 1.0E-03){
 
-			sumPointsX += posBuffer[currIndex].x;
-			sumPointsY += posBuffer[currIndex].y;	
-			sumTimePointsX += posBuffer[currIndex].x*(timediff/-1.0E07);
-			sumTimePointsY += posBuffer[currIndex].y*(timediff/-1.0E07);
-	
-			currIndex++;
-			if(currIndex >= length)
-				currIndex -= length;
-	
-		}
+        double sumPointsX = posBuffer[lastIndex].x;
+        double sumPointsY = posBuffer[lastIndex].y;
+        double sumTimePointsX = 0.0;
+        double sumTimePointsY = 0.0;
 
-		vx = (validCounter*sumTimePointsX - sumTimes*sumPointsX)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
-		vy = (validCounter*sumTimePointsY - sumTimes*sumPointsY)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
+        currIndex = startIndex;
 
-		x = (sumTimesSquare*sumPointsX - sumTimes*sumTimePointsX)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
-		y = (sumTimesSquare*sumPointsY - sumTimes*sumTimePointsY)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
+        while(currIndex != lastIndex){
 
-	}
-	else {
 
+            unsigned long long timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
 
-		double sumSi = 0.0;
-		double sumCi = 0.0;
-		double sumComplexX = 0.0;
-		double sumComplexY = 0.0;
-		double sumSiCiSquare = 0.0;
-		double sumPointsX = posBuffer[lastIndex].x;
-		double sumPointsY = posBuffer[lastIndex].y;
+            sumPointsX += posBuffer[currIndex].x;
+            sumPointsY += posBuffer[currIndex].y;
+            sumTimePointsX += posBuffer[currIndex].x*(timediff/-1.0E07);
+            sumTimePointsY += posBuffer[currIndex].y*(timediff/-1.0E07);
 
+            currIndex++;
+            if(currIndex >= length)
+                currIndex -= length;
 
-		currIndex = startIndex;
-		
-		while(currIndex != lastIndex){
-	
-	
-			unsigned long long timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
+        }
 
-			double si = sin(w*timediff/-1.0E07)/w;
-			double ci = (cos(w*timediff/-1.0E07) - 1.0)/w; 
+        vx = (validCounter*sumTimePointsX - sumTimes*sumPointsX)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
+        vy = (validCounter*sumTimePointsY - sumTimes*sumPointsY)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
 
-			sumSi += si;
-			sumCi += ci;
+        x = (sumTimesSquare*sumPointsX - sumTimes*sumTimePointsX)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
+        y = (sumTimesSquare*sumPointsY - sumTimes*sumTimePointsY)/(validCounter*sumTimesSquare - sumTimes*sumTimes);
 
-			//ToDo if problems then look here
-			sumComplexX += si*posBuffer[currIndex].x - ci*posBuffer[currIndex].y;
-			sumComplexY += ci*posBuffer[currIndex].x + si*posBuffer[currIndex].y;
+    }
+    else {
 
-			sumSiCiSquare += si*si + ci*ci;
 
-			sumPointsX += posBuffer[currIndex].x;
-			sumPointsY += posBuffer[currIndex].y;
+        double sumSi = 0.0;
+        double sumCi = 0.0;
+        double sumComplexX = 0.0;
+        double sumComplexY = 0.0;
+        double sumSiCiSquare = 0.0;
+        double sumPointsX = posBuffer[lastIndex].x;
+        double sumPointsY = posBuffer[lastIndex].y;
 
-	
-			currIndex++;
-			if(currIndex >= length)
-				currIndex -= length;
-	
-		}
 
+        currIndex = startIndex;
 
-		double d = sumSi*sumSi + sumCi*sumCi - validCounter*sumSiCiSquare;
-		d = 1.0/d;
+        while(currIndex != lastIndex){
 
-		vx = d*(sumSi*sumPointsX - sumCi*sumPointsY - validCounter*sumComplexX);
-		vy = d*(sumSi*sumPointsY + sumCi*sumPointsX - validCounter*sumComplexY);
 
-		x = (sumPointsX - sumSi*vx - sumCi*vy)/validCounter;
-		y = (sumPointsY + sumCi*vx - sumSi*vy)/validCounter;
+            unsigned long long timediff = timestampBuf[lastIndex] - timestampBuf[currIndex];
 
+            double si = sin(w*timediff/-1.0E07)/w;
+            double ci = (cos(w*timediff/-1.0E07) - 1.0)/w;
 
-	}
+            sumSi += si;
+            sumCi += ci;
 
-	mr.velocity.vx = vx;
-	mr.velocity.vy = vy;
-	mr.velocity.w = w;
+            //ToDo if problems then look here
+            sumComplexX += si*posBuffer[currIndex].x - ci*posBuffer[currIndex].y;
+            sumComplexY += ci*posBuffer[currIndex].x + si*posBuffer[currIndex].y;
 
-	mr.position.x = x;
-	mr.position.y = y;
-	mr.position.heading = heading;
+            sumSiCiSquare += si*si + ci*ci;
 
+            sumPointsX += posBuffer[currIndex].x;
+            sumPointsY += posBuffer[currIndex].y;
 
 
-	return mr;
+            currIndex++;
+            if(currIndex >= length)
+                currIndex -= length;
+
+        }
+
+
+        double d = sumSi*sumSi + sumCi*sumCi - validCounter*sumSiCiSquare;
+        d = 1.0/d;
+
+        vx = d*(sumSi*sumPointsX - sumCi*sumPointsY - validCounter*sumComplexX);
+        vy = d*(sumSi*sumPointsY + sumCi*sumPointsX - validCounter*sumComplexY);
+
+        x = (sumPointsX - sumSi*vx - sumCi*vy)/validCounter;
+        y = (sumPointsY + sumCi*vx - sumSi*vy)/validCounter;
+
+
+    }
+
+    mr.velocity.vx = vx;
+    mr.velocity.vy = vy;
+    mr.velocity.w = w;
+
+    mr.position.x = x;
+    mr.position.y = y;
+    mr.position.heading = heading;
+
+
+
+    return mr;
 
 }
 

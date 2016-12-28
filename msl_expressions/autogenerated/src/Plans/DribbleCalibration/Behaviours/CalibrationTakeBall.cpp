@@ -85,8 +85,8 @@ namespace alica
         }
         else
         {
-            //			MotionControl mc = dcc.getBall();
-            //			send(mc);
+            //          MotionControl mc = dcc.getBall();
+            //          send(mc);
             return;
         }
         cout << "successfully calibrated the ball taking!" << endl;
@@ -127,17 +127,17 @@ namespace alica
 
         double xValue = dcc.getAverageOpticalFlowXValue(opQueue);
         double yValue = dcc.getAverageOpticalFlowYValue(opQueue);
-        //		double qosValue = dcc.getAverageOpticalFlowQOSValue(opQueue);
+        //      double qosValue = dcc.getAverageOpticalFlowQOSValue(opQueue);
 
         cout << "checkBallRotation x: " << xValue << endl;
         cout << "checkBallRotation y: " << yValue << endl;
 
-        //		if (qosValue == 0)
-        //		{
-        //			return ROTATE_ERR;
-        //		}
+        //      if (qosValue == 0)
+        //      {
+        //          return ROTATE_ERR;
+        //      }
 
-        //		if (xValue > minX && yValue < maxY && yValue > -maxY)
+        //      if (xValue > minX && yValue < maxY && yValue > -maxY)
         if (yValue < maxY && yValue > -maxY)
         {
             return RotateCorrect;

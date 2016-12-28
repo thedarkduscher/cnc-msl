@@ -6,14 +6,14 @@ using namespace std;
 namespace msl_ptgrey_camera
 {
 
-	MSLPtGreyCamera::MSLPtGreyCamera()
-	{
+    MSLPtGreyCamera::MSLPtGreyCamera()
+    {
 
-	}
+    }
 
-	MSLPtGreyCamera::~MSLPtGreyCamera()
-	{
-		// TODO Auto-generated destructor stub
-	}
+    MSLPtGreyCamera::~MSLPtGreyCamera()
+    {
+        // TODO Auto-generated destructor stub
+    }
 
 } /* namespace msl_ptgrey_camera */

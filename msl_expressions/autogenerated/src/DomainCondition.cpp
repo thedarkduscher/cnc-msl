@@ -6,17 +6,17 @@
 
 namespace alica
 {
-	DomainCondition::DomainCondition() :
-			BasicCondition()
-	{
-		this->wm = msl::MSLWorldModel::get();
-		this->robot = msl::MSLRobot::get();
-		this->rules = msl::Rules::getInstance();
-		this->sc = supplementary::SystemConfig::getInstance();
-		this->timeUntilEmergencyExecute = this->rules->getStandbyTime() *0.8;
-	}
+    DomainCondition::DomainCondition() :
+            BasicCondition()
+    {
+        this->wm = msl::MSLWorldModel::get();
+        this->robot = msl::MSLRobot::get();
+        this->rules = msl::Rules::getInstance();
+        this->sc = supplementary::SystemConfig::getInstance();
+        this->timeUntilEmergencyExecute = this->rules->getStandbyTime() *0.8;
+    }
 
-	DomainCondition::~DomainCondition()
-	{
-	}
+    DomainCondition::~DomainCondition()
+    {
+    }
 } /* namespace alica */

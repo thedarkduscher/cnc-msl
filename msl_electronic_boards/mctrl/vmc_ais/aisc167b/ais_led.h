@@ -22,16 +22,16 @@
 #include "ais_typedef.h"
 
 
-#define _LED_BREAK_NO_			0	
-#define _LED_BREAK_SHORT_		2
-#define _LED_BREAK_LONG_		5
+#define _LED_BREAK_NO_          0
+#define _LED_BREAK_SHORT_       2
+#define _LED_BREAK_LONG_        5
 
-#define _LED_SP_SLOW_			8
-#define _LED_SP_FAST_		 	2	
-#define _LED_SP_ON_			  	100 
-#define _LED_SP_OFF_		  	0
+#define _LED_SP_SLOW_           8
+#define _LED_SP_FAST_           2
+#define _LED_SP_ON_             100
+#define _LED_SP_OFF_            0
 
-#define _LED_SP_BASE_			2
+#define _LED_SP_BASE_           2
 
 
 

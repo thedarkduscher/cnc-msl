@@ -20,26 +20,26 @@
 
 #include <reg167.h>
 
-#define	_MOTORSTATE_FREE_   0
-#define	_MOTORSTATE_BREAK_  1
-#define	_MOTORSTATE_FWD_	2
-#define	_MOTORSTATE_REV_	3
+#define _MOTORSTATE_FREE_   0
+#define _MOTORSTATE_BREAK_  1
+#define _MOTORSTATE_FWD_    2
+#define _MOTORSTATE_REV_    3
 
 
-sbit dir1_pwm0   	= P7^4;		// Pin 7.4: PWM output channel left
-sbit dp_dir1_pwm0  	= DP7^4;    // Direction register 7.4
-sbit dir2_pwm0   	= P7^5;     // Pin 7.5: PWM output channel left
-sbit dp_dir2_pwm0  	= DP7^5;    // Direction register 7.5
+sbit dir1_pwm0      = P7^4;     // Pin 7.4: PWM output channel left
+sbit dp_dir1_pwm0   = DP7^4;    // Direction register 7.4
+sbit dir2_pwm0      = P7^5;     // Pin 7.5: PWM output channel left
+sbit dp_dir2_pwm0   = DP7^5;    // Direction register 7.5
 
-sbit dir1_pwm1   	= P7^6;     // Pin 7.6: PWM output channel left
-sbit dp_dir1_pwm1  	= DP7^6;    // Direction register 7.6
-sbit dir2_pwm1   	= P7^7;     // Pin 7.7: PWM output channel left
-sbit dp_dir2_pwm1  	= DP7^7;    // Direction register 7.7
+sbit dir1_pwm1      = P7^6;     // Pin 7.6: PWM output channel left
+sbit dp_dir1_pwm1   = DP7^6;    // Direction register 7.6
+sbit dir2_pwm1      = P7^7;     // Pin 7.7: PWM output channel left
+sbit dp_dir2_pwm1   = DP7^7;    // Direction register 7.7
 
-sbit dir1_pwm2   	= P8^1;     // Pin 8.1: PWM output channel left
-sbit dp_dir1_pwm2  	= DP8^1;    // Direction register 8.1
-sbit dir2_pwm2   	= P8^3;     // Pin 8.3: PWM output channel left
-sbit dp_dir2_pwm2  	= DP8^3;    // Direction register 8.3
+sbit dir1_pwm2      = P8^1;     // Pin 8.1: PWM output channel left
+sbit dp_dir1_pwm2   = DP8^1;    // Direction register 8.1
+sbit dir2_pwm2      = P8^3;     // Pin 8.3: PWM output channel left
+sbit dp_dir2_pwm2   = DP8^3;    // Direction register 8.3
 
 
 // Direction register for Port 2.0 - 2.5

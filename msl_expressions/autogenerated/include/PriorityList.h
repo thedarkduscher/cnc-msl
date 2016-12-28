@@ -19,24 +19,24 @@ using namespace std;
 namespace alica
 {
 
-	class UtilityInterval;
-	class IAssignment;
+    class UtilityInterval;
+    class IAssignment;
 
-	class PriorityList : public USummand
-	{
-	public:
-		PriorityList(double weight, string name, long id, vector<long> relevantEntryPointIds);
-		virtual ~PriorityList();
+    class PriorityList : public USummand
+    {
+    public:
+        PriorityList(double weight, string name, long id, vector<long> relevantEntryPointIds);
+        virtual ~PriorityList();
 
-		virtual UtilityInterval eval(IAssignment* ass);
-		string toString();
+        virtual UtilityInterval eval(IAssignment* ass);
+        string toString();
 
 
-	protected:
-		shared_ptr<vector<double>> w;
-		shared_ptr<vector<int>> c;
-		double norm;
-	};
+    protected:
+        shared_ptr<vector<double>> w;
+        shared_ptr<vector<int>> c;
+        double norm;
+    };
 
 } /* namespace alica */
 

@@ -60,10 +60,10 @@ namespace alica
 
             //if solution is inside pen area, make sure not to block path of ball to goal
 
-//			shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> trianglePoints = make_shared<vector<shared_ptr<geometry::CNPoint2D>>>();
-//			trianglePoints->push_back(wm->field->posLeftOppGoalPost());
-//			trianglePoints->push_back(wm->field->posRightOppGoalPost());
-//			trianglePoints->push_back(alloBall);
+//          shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> trianglePoints = make_shared<vector<shared_ptr<geometry::CNPoint2D>>>();
+//          trianglePoints->push_back(wm->field->posLeftOppGoalPost());
+//          trianglePoints->push_back(wm->field->posRightOppGoalPost());
+//          trianglePoints->push_back(alloBall);
 
             cout << "Target x,y: " << alloTarget->x << " " << alloTarget->y << endl;
 

@@ -22,7 +22,7 @@ namespace alica
         lastAlignment = 0;
         // for alignToPointWithBall
         lastRotError = 0;
-//		lastRotErrorWithBall = 0;
+//      lastRotErrorWithBall = 0;
         readConfigParameters();
 
         /*PROTECTED REGION END*/

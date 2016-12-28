@@ -295,7 +295,7 @@ namespace alica
                 )
         {
 
-            //						// min dist to opponent
+            //                      // min dist to opponent
             auto obs = vNet->getOpponentPositions();
             bool opponentTooClose = false;
             for (int i = 0; i < obs->size(); i++)
@@ -421,14 +421,14 @@ namespace alica
                                                  c2p = p - c;
 
                                                  if ((a2p->x * a2b->y - a2p->y * a2b->x) / a2p->normalize()->length()< tolerance
-					&& (b2p->x * b2c->y - b2p->y * b2c->x) / b2p->normalize()->length() < tolerance
-					&& (c2p->x * c2a->y - c2p->y * c2a->x) / c2p->normalize()->length() < tolerance)
-			{
-				return false;
-			}
+                    && (b2p->x * b2c->y - b2p->y * b2c->x) / b2p->normalize()->length() < tolerance
+                    && (c2p->x * c2a->y - c2p->y * c2a->x) / c2p->normalize()->length() < tolerance)
+            {
+                return false;
+            }
 
-		}
-		return true;
-	}
-	/*PROTECTED REGION END*/			
-		} /* namespace alica */
+        }
+        return true;
+    }
+    /*PROTECTED REGION END*/
+        } /* namespace alica */

@@ -47,7 +47,7 @@ namespace alica
         shared_ptr < geometry::CNPoint2D > egoTarget = nullptr;
         shared_ptr < geometry::CNPoint2D > egoAlignPoint = make_shared < geometry::CNPoint2D
                 > (fieldLength / 2, 0)->alloToEgo(*ownPos);
-//		shared_ptr<geometry::CNPoint2D> oppGoal = make_shared<geometry::CNPoint2D>(fieldLength / 2, 0);
+//      shared_ptr<geometry::CNPoint2D> oppGoal = make_shared<geometry::CNPoint2D>(fieldLength / 2, 0);
         shared_ptr < geometry::CNPoint2D > oppGoal = wm->field->posOppGoalMid();
         msl_actuator_msgs::MotionControl mc;
         msl_actuator_msgs::BallHandleCmd bhc;

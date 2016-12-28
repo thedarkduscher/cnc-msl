@@ -5,7 +5,7 @@
 
 //#define TIME_TICKS_PER_MINUTE 1171875l
 //#define TIME_TICKS_PER_SECOND 19531l
-//#define	TIME_TICKS_PER_MILLISECOND 20l
+//#define   TIME_TICKS_PER_MILLISECOND 20l
 
 #define TIME_TICKS_PER_MINUTE      2343750l
 #define TIME_TICKS_PER_SECOND      39063l
@@ -18,25 +18,25 @@ extern uword  cycle_time;
 extern uword  last_cycle_ticks;
 extern bool   normal_op;
 
-void		  cn_time_init();
+void          cn_time_init();
 //unsigned long cn_getRTC();
 //void          cn_sleep(unsigned long msec);
 //unsigned int cn_getTimer();
 //void cn_resetTimer();
 
 #ifdef TMC
-	#define TIMER T7
+    #define TIMER T7
 #endif
 #ifdef VMC
-	#define TIMER T6
+    #define TIMER T6
 #endif
 
 #define cn_getTimer()   TIMER
 void cn_resetTimer();
 
-//void					cn_mark_cycle_start();
-void					cn_sync_to_cycle();
-														
+//void                  cn_mark_cycle_start();
+void                    cn_sync_to_cycle();
+
 void          cn_start_command_timeout();
 void          cn_stop_command_timeout();
 void          cn_reset_command_timeout();

@@ -180,10 +180,10 @@ namespace alica
                 mc.motion.rotation = egoAlignPoint->angleTo() * abs(clausenValue) * 8;
 
             }
-//			mc.motion.rotation = -(deltaTargetAngle * defaultRotateP
-//					+ (deltaTargetAngle - lastRotError) * alignToPointpRot);
-//			mc.motion.rotation = (mc.motion.rotation < 0 ? -1 : 1)
-//					* min(alignToPointMaxRotation, max(fabs(mc.motion.rotation), alignToPointMinRotation));
+//          mc.motion.rotation = -(deltaTargetAngle * defaultRotateP
+//                  + (deltaTargetAngle - lastRotError) * alignToPointpRot);
+//          mc.motion.rotation = (mc.motion.rotation < 0 ? -1 : 1)
+//                  * min(alignToPointMaxRotation, max(fabs(mc.motion.rotation), alignToPointMinRotation));
 
             lastRotErrorWithBallRapid = deltaTargetAngle;
 

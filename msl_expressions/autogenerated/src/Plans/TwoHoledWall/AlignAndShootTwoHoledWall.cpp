@@ -133,7 +133,7 @@ namespace alica
         double deltaBallAngle = geometry::deltaAngle(egoBallAngle, M_PI);
 
         // Counter for correct aiming
-//		if (fabs(deltaHoleAngle) < this->angleTolerance)
+//      if (fabs(deltaHoleAngle) < this->angleTolerance)
         if (fabs(deltaBallAngle) < this->ballAngleTolerance && fabs(deltaHoleAngle) < this->angleTolerance)
         {
             //cout << "align and shoot: hit target" << endl;

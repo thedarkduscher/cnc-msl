@@ -123,10 +123,10 @@ namespace alica
             bm = rm.moveToPoint(query);
             //DriveHelper.DriveToPointAndAlignCareBall(WorldHelper.Allo2Ego(dest, ownPos), ballPos, maxVel, WM);
         }
-//		if (mc == nullptr)
-//		{
-//			return;
-//		}
+//      if (mc == nullptr)
+//      {
+//          return;
+//      }
         if (!std::isnan(bm.motion.translation))
         {
             send(bm);

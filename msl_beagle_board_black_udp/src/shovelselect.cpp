@@ -10,24 +10,24 @@
 
 using namespace BlackLib;
 /* API
-	ShovelSelect::ShovelSelect(BeaglePWM::PwmPin pwm_name) {
-		pwm = BeaglePWM::getInstance();
+    ShovelSelect::ShovelSelect(BeaglePWM::PwmPin pwm_name) {
+        pwm = BeaglePWM::getInstance();
 
-		pwm_pin = pwm_name;
-		pwm->setPeriod(pwm_pin, period);
-		pwm->setRunState(pwm_pin, true);
-		pwm->setDutyCycle(pwm_pin, 0);
+        pwm_pin = pwm_name;
+        pwm->setPeriod(pwm_pin, period);
+        pwm->setRunState(pwm_pin, true);
+        pwm->setDutyCycle(pwm_pin, 0);
 
-		auto sc = supplementary::SystemConfig::getInstance();
-		this->kickPWM = (*sc)["bbb"]->get<int>("BBB.shovelKick", NULL);
-		this->passPWM = (*sc)["bbb"]->get<int>("BBB.shovelPass", NULL);
-		this->timeout = (*sc)["bbb"]->get<int>("BBB.timeout", NULL);
-		
-		enabled = false;
-		init = false;
-	}*/
+        auto sc = supplementary::SystemConfig::getInstance();
+        this->kickPWM = (*sc)["bbb"]->get<int>("BBB.shovelKick", NULL);
+        this->passPWM = (*sc)["bbb"]->get<int>("BBB.shovelPass", NULL);
+        this->timeout = (*sc)["bbb"]->get<int>("BBB.timeout", NULL);
 
-		// Delete Constructor if using API
+        enabled = false;
+        init = false;
+    }*/
+
+        // Delete Constructor if using API
         ShovelSelect::ShovelSelect(pwmName pwm_P) {
                 pwm = new BlackPWM(pwm_P);
 
@@ -45,47 +45,47 @@ using namespace BlackLib;
         }
 
 
-	ShovelSelect::~ShovelSelect() {
+    ShovelSelect::~ShovelSelect() {
 /* API
-		pwm->setRunState(pwm_pin, false);*/
-		delete pwm;
-	}
+        pwm->setRunState(pwm_pin, false);*/
+        delete pwm;
+    }
 
-	bool ShovelSelect::checkTimeout(timeval time) {
-		if ((TIMEDIFFMS(time, ping) > timeout) && enabled) {
+    bool ShovelSelect::checkTimeout(timeval time) {
+        if ((TIMEDIFFMS(time, ping) > timeout) && enabled) {
 /* API
-			pwm->setDutyCycle(pwm_pin, 0);*/
-			pwm->setRunState(stop);	// Delete if using API
-			enabled = false;
+            pwm->setDutyCycle(pwm_pin, 0);*/
+            pwm->setRunState(stop); // Delete if using API
+            enabled = false;
 
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	bool ShovelSelect::setShovel(bool passing, timeval time_now) {
-		if (statePassing == passing && init) {
-			return false;
-		}
+    bool ShovelSelect::setShovel(bool passing, timeval time_now) {
+        if (statePassing == passing && init) {
+            return false;
+        }
 
-		init = true;
-		ping = time_now;
-		statePassing = passing;
-		if (passing) {
-/* API		
-			pwm->setDutyCycle(pwm_pin, passPWM * 1000);	// * 1000 because ns needed and passPWM is in us */
-			pwm->setSpaceRatioTime(passPWM, microsecond);	// Delete if using API
-		} else {
+        init = true;
+        ping = time_now;
+        statePassing = passing;
+        if (passing) {
 /* API
-			pwm->setDutyCycle(pwm_pin, kickPWM * 1000);	// * 1000 because ns needed and kickPWM is in us */
-			pwm->setSpaceRatioTime(kickPWM, microsecond);	// Delete if using API
-		}
-		if (!enabled) {
-			pwm->setRunState(run);	// Delete if using API
-			enabled = true;
-		}
+            pwm->setDutyCycle(pwm_pin, passPWM * 1000); // * 1000 because ns needed and passPWM is in us */
+            pwm->setSpaceRatioTime(passPWM, microsecond);   // Delete if using API
+        } else {
+/* API
+            pwm->setDutyCycle(pwm_pin, kickPWM * 1000); // * 1000 because ns needed and kickPWM is in us */
+            pwm->setSpaceRatioTime(kickPWM, microsecond);   // Delete if using API
+        }
+        if (!enabled) {
+            pwm->setRunState(run);  // Delete if using API
+            enabled = true;
+        }
 
-		return true;
-	}
+        return true;
+    }
 

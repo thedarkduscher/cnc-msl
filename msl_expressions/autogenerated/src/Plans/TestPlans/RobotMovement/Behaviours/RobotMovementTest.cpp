@@ -50,7 +50,7 @@ namespace alica
 //        cout << "hadBall = " << (hadBall == true ? "true" : "false") << endl;
             if (!wm->ball->haveBall() && !hadBall)
             {
-//        	cout << "getBall" << endl;
+//          cout << "getBall" << endl;
                 query->egoDestinationPoint = egoBallPos;
                 query->egoAlignPoint = egoBallPos;
                 mc = rm.moveToPoint(query);

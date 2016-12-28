@@ -1,9 +1,9 @@
 #include "main.h"
 
-// protocol definition			  
+// protocol definition
 #define GROUP_CONFIGURE           0x50
 #define GROUP_CONFIGURE_RESPONSE  0x51
-								  
+
 #define CMD_SET_MODE              0x10 //implemented
 #define CMD_SET_CYCLE_TIME        0x11 //implemented
 #define CMD_CURRENT_LIMIT_ON      0x12
@@ -31,11 +31,11 @@
 #define CMD_IO_PORT_CONF          0x60
 #define CMD_ROBOT_RADIUS          0x70 //implemented
 #define CMD_WHEEL_ANGLE           0x71
-#define CMD_TOGGLE_ODO_LOG		  0x72 //implemented	
+#define CMD_TOGGLE_ODO_LOG        0x72 //implemented
 
 
 #define GROUP_CONTROL             0x52
-								  
+
 #define CMD_SET_ALL_PWM           0x10
 #define CMD_SET_PWM               0x11
 #define CMD_SET_ALL_DIRECTION     0x12
@@ -45,10 +45,10 @@
 #define CMD_SET_MOTION_VECTOR     0x30 //implemented
 #define CMD_RESET_HARD            0x40
 #define CMD_RESET_CONTROLLER      0x41
-								  
+
 #define GROUP_REQUEST             0x54
 #define GROUP_REQUEST_RESPONSE    0x55
-								  
+
 #define CMD_MOTOR_RPM             0x10
 #define CMD_MOTOR_PWM             0x11
 #define CMD_MOTOR_VOLTAGE         0x12
@@ -62,19 +62,19 @@
 #define CMD_READ_IO               0x40
 #define CMD_SET_IO                0x41
 #define CMD_READ_ANA              0x42
-#define CMD_MOTION_VECTOR         0x60 
+#define CMD_MOTION_VECTOR         0x60
 #define CMD_AVERAGE_SLEEP_TIME    0x61
 #define CMD_PATH_VECTOR           0x62 //implemented
-#define CMD_READ_ODO_LOG		  0x63
+#define CMD_READ_ODO_LOG          0x63
 
-									 
+
 #define GROUP_CONTROL_CONFIG      0x56
 #define GROUP_CONTROL_CONFIG_RES  0x57
 
-#define CMD_PID_KP                0x10	//implemented
-#define CMD_PID_KI                0x11	//implemented
+#define CMD_PID_KP                0x10  //implemented
+#define CMD_PID_KI                0x11  //implemented
 #define CMD_PID_B                 0x12  //implemented
-#define CMD_PID_KD                0x13	//implemented
+#define CMD_PID_KD                0x13  //implemented
 #define CMD_PID_KDI               0x14  //implemented
 #define CMD_CONTROLLER_COMMIT     0x15  //implemented
 #define CMD_DEAD_BAND             0x2A  //implemented
@@ -91,7 +91,7 @@
 #define GROUP_ERROR_RESPONSE      0x59
 
 #define CMD_UNKNOWN_ERROR         0x01
-#define CMD_UNKNOWN_CMD			  0x02
+#define CMD_UNKNOWN_CMD           0x02
 #define CMD_PARAMETER_ERROR       0x10
 #define CMD_OUT_OF_RANGE          0x11
 #define CMD_CYCLE_OVERTIME        0x20

@@ -25,43 +25,43 @@ typedef struct cn_cval {
 } controller_params;
 
 typedef struct cn_cartMotionVector {
-	sdword x;
-	sdword y;
-	sdword rotation;  
+    sdword x;
+    sdword y;
+    sdword rotation;
 } cart_motion_vector;
 
 typedef struct cn_motorConfig  {
-	uword maxRPM;
-	ubyte nominal_current;
-	ubyte gear_numerator;
-	ubyte gear_denumerator;
-	uword wheel_radius;		//in 0.1 mm
-	uword robot_radius;	   //in mm
-	uword encoder_ticks;
-	uword ticks_2_rpms_denum; //ticks / ticks_2_repms_denum = rotation per millisecond
-	udword wheel_circ_64;
+    uword maxRPM;
+    ubyte nominal_current;
+    ubyte gear_numerator;
+    ubyte gear_denumerator;
+    uword wheel_radius;     //in 0.1 mm
+    uword robot_radius;    //in mm
+    uword encoder_ticks;
+    uword ticks_2_rpms_denum; //ticks / ticks_2_repms_denum = rotation per millisecond
+    udword wheel_circ_64;
 
 } motor_params;
 
 typedef struct cn_controllerStatus {   //the state of the controller, more to come
-	sdword actual_rpm[3];   					//actual rotations per minute
-	sdword last_rpm[3];
-	cart_motion_vector actual_motion_vector;	//what we are travelling at, aka odometry info
-	cart_motion_vector motion_request;			//what we were told to travel at
-	cart_motion_vector motion_goal;				//what we next aim for
-	sdword rpm_goal[3];							//what we aim for in rpm, PID control signal
-	sdword pid_e[3];
-	sdword pid_eI[3];
-	sdword pid_eD[3];
-	sword pwm[3];
-	sdword rotation_error;	
-} controller_status;													   
+    sdword actual_rpm[3];                       //actual rotations per minute
+    sdword last_rpm[3];
+    cart_motion_vector actual_motion_vector;    //what we are travelling at, aka odometry info
+    cart_motion_vector motion_request;          //what we were told to travel at
+    cart_motion_vector motion_goal;             //what we next aim for
+    sdword rpm_goal[3];                         //what we aim for in rpm, PID control signal
+    sdword pid_e[3];
+    sdword pid_eI[3];
+    sdword pid_eD[3];
+    sword pwm[3];
+    sdword rotation_error;
+} controller_status;
 
 typedef struct cn_controller_pwm_vector {
-  
-	ureg pwm[3];
-	bool dir[3];
-	
+
+    ureg pwm[3];
+    bool dir[3];
+
 } controller_pwm_vector;
 
 #define CONTROLLER_MODE_LOWEST 0
@@ -126,7 +126,7 @@ void cn_controller_current_control();
 void cn_controller_control_direct();
 void cn_controller_control_pid();
 void cn_controller_recalc_derived_motor_params();
-void cn_controller_recalc_derived_controller_params();    
+void cn_controller_recalc_derived_controller_params();
 void cn_controller_set_final_pwm();
 void cn_controller_calc_odometry();
 void cn_controller_prep_lookup();

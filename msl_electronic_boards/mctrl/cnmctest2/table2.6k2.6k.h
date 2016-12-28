@@ -5,7 +5,7 @@ controller_params_active.accelbound_min  = 2600;
 controller_params_active.accelbound_max  = 2600;
 }
 
-map_point xhuge lookup[LINE_WIDTH*LINE_WIDTH] = { 
+map_point xhuge lookup[LINE_WIDTH*LINE_WIDTH] = {
 {-39,-44},
 {-39,-43},
 {-39,-42},

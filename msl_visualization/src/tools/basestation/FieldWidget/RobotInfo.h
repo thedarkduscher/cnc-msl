@@ -42,22 +42,22 @@ struct DebugMsg
 class RobotInfo
 {
 public:
-	RobotInfo(FieldWidget3D* field);
-	virtual ~RobotInfo();
+    RobotInfo(FieldWidget3D* field);
+    virtual ~RobotInfo();
 
-	int getId() const;
-	void setId(int id);
-	std::string getName() const;
-	void setName(std::string name);
-	bool getBallOnly() const;
-	void setBallOnly(bool ballOnly);
-	bool getVisStatus() const;
-	void setVisStatus(bool vis);
+    int getId() const;
+    void setId(int id);
+    std::string getName() const;
+    void setName(std::string name);
+    bool getBallOnly() const;
+    void setBallOnly(bool ballOnly);
+    bool getVisStatus() const;
+    void setVisStatus(bool vis);
 
-	std::shared_ptr<RobotVisualization> getVisualization();
+    std::shared_ptr<RobotVisualization> getVisualization();
 
-	const boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> getSharedWorldInfo() const;
-	void setSharedWorldInfo(const boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> msg);
+    const boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> getSharedWorldInfo() const;
+    void setSharedWorldInfo(const boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> msg);
 
         const boost::shared_ptr<msl_msgs::CorridorCheck>& getCorridorCheckInfo() const;
         void setCorridorCheckInfo(const boost::shared_ptr<msl_msgs::CorridorCheck>& corridorCheckInfo);
@@ -74,29 +74,29 @@ public:
         const boost::shared_ptr<msl_helper_msgs::PassMsg>& getPassMsg() const;
         void setPassMsg(const boost::shared_ptr<msl_helper_msgs::PassMsg>& passMsg);
 
-	unsigned long getTimeStamp();
-	void updateTimeStamp();
+    unsigned long getTimeStamp();
+    void updateTimeStamp();
 
-	bool isTimeout();
+    bool isTimeout();
         bool isPathPlannerMsgTimeout();
         bool isVoronoiNetMsgTimeout();
         bool isCorridorCheckMsgTimeout();
         bool isPassMsgTimeout();
 
 private:
-   	bool myVis;
-	int id;
-	std::string name;
-	bool ballOnly;
-	unsigned long timeStamp;
+    bool myVis;
+    int id;
+    std::string name;
+    bool ballOnly;
+    unsigned long timeStamp;
         unsigned long pathPlannerMsgTimeStamp;
         unsigned long voronoiNetMsgTimeStamp;
         unsigned long corridorCheckMsgTimeStamp;
         unsigned long passMsgTimeStamp;
-	std::shared_ptr<RobotVisualization> visualization;
-	FieldWidget3D* field;
+    std::shared_ptr<RobotVisualization> visualization;
+    FieldWidget3D* field;
 
-	boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> msg;
+    boost::shared_ptr<msl_sensor_msgs::SharedWorldInfo> msg;
         boost::shared_ptr<msl_msgs::PathPlanner> pathPlannerInfo;
         boost::shared_ptr<msl_msgs::VoronoiNetInfo> voronoiNetInfo;
         boost::shared_ptr<msl_msgs::CorridorCheck> corridorCheckInfo;

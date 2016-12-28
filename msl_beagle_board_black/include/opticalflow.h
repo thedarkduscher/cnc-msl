@@ -38,44 +38,44 @@
 
 
 class OpticalFlow {
-	private:
-		BlackLib::BlackGPIO *ncs, *npd, *rst, *led;
-		BlackLib::BlackSPI *spi;
-		uint8_t 	img[1536];
+    private:
+        BlackLib::BlackGPIO *ncs, *npd, *rst, *led;
+        BlackLib::BlackSPI *spi;
+        uint8_t     img[1536];
 
-		int16_t		x, y;
-		int16_t 	qos, vQos;
-		int8_t 		motionBurst[7];
-		int8_t 		debugOF;
+        int16_t     x, y;
+        int16_t     qos, vQos;
+        int8_t      motionBurst[7];
+        int8_t      debugOF;
 
-		timeval		last_updated, last_sended;
-
-
-
-		void		write(uint8_t address, uint8_t value);
-
-		uint8_t		getConfigurationBits(void);
-		void		getFrame(uint8_t *image);
-		void		getFrameBurst(uint8_t *image, uint16_t size);
-		void 		getMotionBurst(int8_t *burst);
-
-		void		setConfigurationBits(uint8_t conf);
+        timeval     last_updated, last_sended;
 
 
-	public:
-		void		reset(void);
-		uint8_t		read(uint8_t address);
 
-					OpticalFlow(BlackLib::gpioName ncs_P, BlackLib::gpioName npd_P, BlackLib::gpioName rst_P, BlackLib::gpioName led_P, BlackLib::BlackSPI *spi_P);
-					~OpticalFlow();
+        void        write(uint8_t address, uint8_t value);
 
-		void 		adns_init(void);
-		void		controlLED(bool enabled);
-		void 		update_motion_burst(timeval time_now);
-		void 		send_motion_burst(timeval time_now, ros::Publisher *mbcPub);
+        uint8_t     getConfigurationBits(void);
+        void        getFrame(uint8_t *image);
+        void        getFrameBurst(uint8_t *image, uint16_t size);
+        void        getMotionBurst(int8_t *burst);
 
-		uint8_t 	getInverseProductId(void);
-		uint8_t 	getProductId(void);
+        void        setConfigurationBits(uint8_t conf);
+
+
+    public:
+        void        reset(void);
+        uint8_t     read(uint8_t address);
+
+                    OpticalFlow(BlackLib::gpioName ncs_P, BlackLib::gpioName npd_P, BlackLib::gpioName rst_P, BlackLib::gpioName led_P, BlackLib::BlackSPI *spi_P);
+                    ~OpticalFlow();
+
+        void        adns_init(void);
+        void        controlLED(bool enabled);
+        void        update_motion_burst(timeval time_now);
+        void        send_motion_burst(timeval time_now, ros::Publisher *mbcPub);
+
+        uint8_t     getInverseProductId(void);
+        uint8_t     getProductId(void);
 
 
 

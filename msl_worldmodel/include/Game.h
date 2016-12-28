@@ -21,55 +21,55 @@
 using namespace std;
 
 namespace supplementary{
-	class SystemConfig;
+    class SystemConfig;
 }
 
 namespace msl
 {
 
-	class MSLWorldModel;
-	class Game
-	{
-	public:
-		Game(MSLWorldModel* wm, int ringBufferLength);
-		virtual ~Game();
-		void onRobotCommand(robot_control::RobotCommandPtr msg);
-		void onRefBoxCommand(msl_msgs::RefBoxCommandPtr msg);
-		shared_ptr<msl_msgs::RefBoxCommand> getRefBoxCommand(int index);
-		bool checkSituation(Situation situation);
-		int getOppGoal();
-		int getOwnGoal();
-		unsigned long getTimeSinceStart();
-		Situation getSituation();
-		GameState getGameState();
-		void setGameState(GameState gameState);
-		void updateGameState();
-		bool isMayScore();
+    class MSLWorldModel;
+    class Game
+    {
+    public:
+        Game(MSLWorldModel* wm, int ringBufferLength);
+        virtual ~Game();
+        void onRobotCommand(robot_control::RobotCommandPtr msg);
+        void onRefBoxCommand(msl_msgs::RefBoxCommandPtr msg);
+        shared_ptr<msl_msgs::RefBoxCommand> getRefBoxCommand(int index);
+        bool checkSituation(Situation situation);
+        int getOppGoal();
+        int getOwnGoal();
+        unsigned long getTimeSinceStart();
+        Situation getSituation();
+        GameState getGameState();
+        void setGameState(GameState gameState);
+        void updateGameState();
+        bool isMayScore();
 
-		Color ownTeamColor;
-		Color ownGoalColor;
-		long gameTime;
+        Color ownTeamColor;
+        Color ownGoalColor;
+        long gameTime;
 
-	private:
-		MSLWorldModel* wm;
-		Situation situation;
-		ros::NodeHandle n;
-		ros::AsyncSpinner* spinner;
-		ros::Subscriber refBoxCommandSub;
-		ros::Subscriber robotCommandSub;
-		RingBuffer<InformationElement<msl_msgs::RefBoxCommand>> refBoxCommand;
-		mutex refereeMutex;
-		mutex situationChecker;
-		mutex goalMutex;
-		supplementary::SystemConfig* sc;
-		int ownGoal;
-		int oppGoal;
-		unsigned long timeSinceStart;
-		GameState gameState;
-		int teamMateWithBall;
-		bool mayScore;
-		void setMayScore();
-	};
+    private:
+        MSLWorldModel* wm;
+        Situation situation;
+        ros::NodeHandle n;
+        ros::AsyncSpinner* spinner;
+        ros::Subscriber refBoxCommandSub;
+        ros::Subscriber robotCommandSub;
+        RingBuffer<InformationElement<msl_msgs::RefBoxCommand>> refBoxCommand;
+        mutex refereeMutex;
+        mutex situationChecker;
+        mutex goalMutex;
+        supplementary::SystemConfig* sc;
+        int ownGoal;
+        int oppGoal;
+        unsigned long timeSinceStart;
+        GameState gameState;
+        int teamMateWithBall;
+        bool mayScore;
+        void setMayScore();
+    };
 
 } /* namespace alica */
 

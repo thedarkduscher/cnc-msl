@@ -16,8 +16,8 @@
 #define CN_ADC_STRUCT_MOTOR3 3
 
 typedef struct {
-	uword voltage;
-	uword pwm;
+    uword voltage;
+    uword pwm;
 } cn_adc_res;
 
 void cn_adc_init();

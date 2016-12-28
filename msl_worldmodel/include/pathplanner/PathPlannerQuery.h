@@ -17,18 +17,18 @@ using namespace std;
 namespace msl
 {
 
-	class PathPlannerQuery
-	{
-	public:
-		PathPlannerQuery();
-		virtual ~PathPlannerQuery();
-		bool blockOppPenaltyArea;
-		bool blockOppGoalArea;
-		bool blockOwnPenaltyArea;
-		bool blockOwnGoalArea;
-		bool block3MetersAroundBall;
-		shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> additionalPoints;
-	};
+    class PathPlannerQuery
+    {
+    public:
+        PathPlannerQuery();
+        virtual ~PathPlannerQuery();
+        bool blockOppPenaltyArea;
+        bool blockOppGoalArea;
+        bool blockOwnPenaltyArea;
+        bool blockOwnGoalArea;
+        bool block3MetersAroundBall;
+        shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> additionalPoints;
+    };
 
 } /* namespace msl */
 

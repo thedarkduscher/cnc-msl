@@ -37,15 +37,15 @@ TCODLIB_API bool TCOD_line(int xFrom, int yFrom, int xTo, int yTo, TCOD_line_lis
 
 /* thread-safe versions */
 typedef struct {
-	int stepx;
-	int stepy;
-	int e;
-	int deltax;
-	int deltay;
-	int origx; 
-	int origy; 
-	int destx; 
-	int desty; 
+    int stepx;
+    int stepy;
+    int e;
+    int deltax;
+    int deltay;
+    int origx;
+    int origy;
+    int destx;
+    int desty;
 } TCOD_bresenham_data_t;
 
 TCODLIB_API void TCOD_line_init_mt(int xFrom, int yFrom, int xTo, int yTo, TCOD_bresenham_data_t *data);

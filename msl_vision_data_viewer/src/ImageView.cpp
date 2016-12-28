@@ -40,7 +40,7 @@ void int_handler(int sig)
         printf("[%i] Ouch - shot in the ...\n", mypid);
         printf("[%i] exit\n", mypid);
         sh->sendVisionControl((int) 'l', 0);
-	sh->sendVisionControl((int) 'o', 0);
+    sh->sendVisionControl((int) 'o', 0);
         delete sh;
         ros::shutdown();
         exit(2);
@@ -53,10 +53,10 @@ void int_handler(int sig)
 
 
 int main(int argc,char *argv[]) {
-	int mb=1;
-	sh = new SpicaHelper();
-	sh->initialize("CNImageViewer", true);
-	sh->receiverID = 0;
+    int mb=1;
+    sh = new SpicaHelper();
+    sh->initialize("CNImageViewer", true);
+    sh->receiverID = 0;
 
         if(argc > 1){
                 for(int i = 1; i < argc; i++){
@@ -82,43 +82,43 @@ int main(int argc,char *argv[]) {
                 cin >> sh->receiverID;
         }
 
-	int currentKey=EOF;
-	char buf[1024*1024];
-    
-	cvNamedWindow("CameraImage", 1); 
-	void* windowHandle = cvGetWindowHandle("CameraImage");
-	cvMoveWindow("CameraImage", 100, 100);
+    int currentKey=EOF;
+    char buf[1024*1024];
 
-	signal(SIGINT, int_handler);
-	sh->sendVisionControl((int)'L', 0);
-	while(ros::ok()) {
-		if(sh->vidirty) {
-			for(int i=0; i<sh->imageData.size(); i++) {
-				buf[i] = sh->imageData[i];
-			}
+    cvNamedWindow("CameraImage", 1);
+    void* windowHandle = cvGetWindowHandle("CameraImage");
+    cvMoveWindow("CameraImage", 100, 100);
 
-			stringstream text;
-			for(int i=0; i<sh->params.size(); i++) {
-				text << sh->params.at(i);
-				text << " ";
-			}
-			if(sh->params.size()>0) cout << "Min / Max: " << text.str() << endl;
+    signal(SIGINT, int_handler);
+    sh->sendVisionControl((int)'L', 0);
+    while(ros::ok()) {
+        if(sh->vidirty) {
+            for(int i=0; i<sh->imageData.size(); i++) {
+                buf[i] = sh->imageData[i];
+            }
 
-			cv::Mat m(sh->width, sh->height, CV_8UC1, buf);
-			IplImage img = imdecode(m, 0);
-			cvShowImage(cvGetWindowName(windowHandle), &img); 
-			//cv::displayStatusBar(cvGetWindowName(windowHandle), text.c_str(), 4000);
+            stringstream text;
+            for(int i=0; i<sh->params.size(); i++) {
+                text << sh->params.at(i);
+                text << " ";
+            }
+            if(sh->params.size()>0) cout << "Min / Max: " << text.str() << endl;
 
-			sh->vidirty = false;
-		}
-		//currentKey = KeyHelper::checkKeyPress();
-		currentKey = cvWaitKey(10);
-		//if(currentKey!=EOF && currentKey > 0) {
-		if(currentKey>0) {
-			sh->sendVisionControl(currentKey, 0);
-		}
-	}
-	sh->sendVisionControl((int) 'o', 0);
-	sh->sendVisionControl((int) 'l', 0);
+            cv::Mat m(sh->width, sh->height, CV_8UC1, buf);
+            IplImage img = imdecode(m, 0);
+            cvShowImage(cvGetWindowName(windowHandle), &img);
+            //cv::displayStatusBar(cvGetWindowName(windowHandle), text.c_str(), 4000);
+
+            sh->vidirty = false;
+        }
+        //currentKey = KeyHelper::checkKeyPress();
+        currentKey = cvWaitKey(10);
+        //if(currentKey!=EOF && currentKey > 0) {
+        if(currentKey>0) {
+            sh->sendVisionControl(currentKey, 0);
+        }
+    }
+    sh->sendVisionControl((int) 'o', 0);
+    sh->sendVisionControl((int) 'l', 0);
 }
 

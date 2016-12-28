@@ -39,124 +39,124 @@
  @PageDesc This tool allows to generate random names out of custom made syllable sets.
  */
 class TCODLIB_API TCODNamegen {
-	public:
-		/**
-		@PageName namegen_init
-		@PageFather namegen
-		@PageTitle Creating a generator
-		@FuncDesc In order to be able to generate names, the name generator needs to be fed proper data. It will then be ready to generate random names defined in the file(s) it is fed. Syllable set parsing is achieved via the following.
-			Note 1: Each file will be parsed once only. If, for some reason, you would like to parse the same file twice, you will need to destroy the generator first, which will empty the list of parsed files along with erasing all the data retrieved from those files.
-			
-			Note 2: The generator can be fed data multiple times if you have it in separate files. Just make sure the structure names in them aren't duplicated, otherwise they will be silently ignored.
-			
-			Note 3: In the C++ version, you are not obliged to specify the random number generator. If you skip it in the function call, the generator will assume you would like to use an instance of the default generator.
+    public:
+        /**
+        @PageName namegen_init
+        @PageFather namegen
+        @PageTitle Creating a generator
+        @FuncDesc In order to be able to generate names, the name generator needs to be fed proper data. It will then be ready to generate random names defined in the file(s) it is fed. Syllable set parsing is achieved via the following.
+            Note 1: Each file will be parsed once only. If, for some reason, you would like to parse the same file twice, you will need to destroy the generator first, which will empty the list of parsed files along with erasing all the data retrieved from those files.
 
-		@Cpp static void TCODNamegen::parse (const char * filename, TCODRandom * random = NULL)
-		@C void TCOD_namegen_parse (const char * filename, TCOD_random_t random)
-		@Py namegen_parse (filename, random = 0)
-		@C#
-			static void TCODNameGenerator::parse(string filename)
-			static void TCODNameGenerator::parse(string filename, TCODRandom random)
-		@Param filename 	The file where the desired syllable set is saved, along with its relative parh, for instance, "data/names.txt".
-		@Param random 	A random number generator object. Use NULL for the default random number generator
-		@CppEx 
-			TCODNamegen::parse("data/names.txt",TCODRandom::getInstance());
-			TCODNamegen::parse("data/names2.txt");
-		@CEx TCOD_namegen_parse("data/names.txt",TCOD_random_get_instance());
-		@PyEx libtcod.namegen_parse('data/names.txt')
-		*/
-		static void parse (const char * filename, TCODRandom * random = NULL);
+            Note 2: The generator can be fed data multiple times if you have it in separate files. Just make sure the structure names in them aren't duplicated, otherwise they will be silently ignored.
 
-		/**
-		@PageName namegen_init
-		@FuncTitle Destroying a generator
-		@FuncDesc To release the resources used by a name generator, you may call:
-			This will free all memory used by the generator. In order to generate a name again, you have to parse a file again. 
-		@Cpp static void TCODNamegen::destroy (void)
-		@C void TCOD_namegen_destroy (void)
-		@Py namegen_destroy ()
-		@C# static void TCODNameGenerator::destroy()
-		*/
-		static void destroy (void);
+            Note 3: In the C++ version, you are not obliged to specify the random number generator. If you skip it in the function call, the generator will assume you would like to use an instance of the default generator.
 
-		/**
-		@PageName namegen_generate
-		@PageTitle Generating a name
-		@PageFather namegen
-		@FuncTitle Generating a default name
-		@FuncDesc The following will output a random name generated using one of the generation rules specified in the syllable set:
-			Should you choose to allocate memory for the output, you need to remember to deallocate it once you don't need the name anymore using the free() function. This applies to C++ as well (delete won't work - you have to use free()).
-			
-			On the other hand, should you choose not to allocate memory, be aware that subsequent calls will overwrite the previously returned pointer, so make sure to copy the output using strcpy(), strdup() or other means of your choosing.
-			
-			The name you specify needs to be in one of the files the generator has previously parsed (see Creating a generator). If such a name doesn't exist, a warning will be displayed and NULL will be returned.
-		@Cpp static char * TCODNamegen::generate (char * name, bool allocate = false)
-		@C char * TCOD_namegen_generate (char * name, bool allocate)
-		@Py namegen_generate (name, allocate = 0)
-		@C# string TCODNameGenerator::generate (string name)
-		@Param name 	The structure name you wish to refer to, for instance, "celtic female".
-			For more about how structure names work, please refer to <a href="namegen_file.html">those</a> <a href="parser_format.html">chapters</a>.
-		@Param allocate 	Whether memory should be allocated for the output or not.
-		@CppEx 
-			TCODNamegen::parse("data/names.txt",TCODRandom::getInstance());
-			char * myName = TCODNamegen::generate("fantasy female");
-		@CEx 
-			TCOD_namegen_parse("data/names.txt",TCOD_random_get_instance());
-			char * my_name = TCOD_namegen_generate("Celtic male",false);
-		@PyEx 
-			libtcod.namegen_parse('data/names.txt')
-			name = libtcod.namegen_generate('Nordic female')
-		*/
-		static char * generate (char * name, bool allocate = false);
+        @Cpp static void TCODNamegen::parse (const char * filename, TCODRandom * random = NULL)
+        @C void TCOD_namegen_parse (const char * filename, TCOD_random_t random)
+        @Py namegen_parse (filename, random = 0)
+        @C#
+            static void TCODNameGenerator::parse(string filename)
+            static void TCODNameGenerator::parse(string filename, TCODRandom random)
+        @Param filename     The file where the desired syllable set is saved, along with its relative parh, for instance, "data/names.txt".
+        @Param random   A random number generator object. Use NULL for the default random number generator
+        @CppEx
+            TCODNamegen::parse("data/names.txt",TCODRandom::getInstance());
+            TCODNamegen::parse("data/names2.txt");
+        @CEx TCOD_namegen_parse("data/names.txt",TCOD_random_get_instance());
+        @PyEx libtcod.namegen_parse('data/names.txt')
+        */
+        static void parse (const char * filename, TCODRandom * random = NULL);
 
-		/**
-		@PageName namegen_generate
-		@FuncTitle Generating a custom name
-		@FuncDesc It is also possible to generate a name using custom generation rules. This overrides the random choice of a generation rule from the syllable set. Please refer to chapter 16.5 to learn about the name generation rules syntax.
-		@Cpp static char * TCODNamegen::generateCustom (char * name, char * rule, bool allocate = false)
-		@C char * TCOD_namegen_generate_custom (char * name, char * rule, bool allocate)
-		@Py namegen_generate_custom (name, rule, allocate = 0)
-		@C# string TCODNameGenerator::generateCustom (string name, string rule)
-		@Param name 	The structure name you wish to refer to, for instance, "celtic female".
-			For more about how structure names work, please refer to <a href="namegen_file.html">those</a> <a href="parser_format.html">chapters</a>.
-		@Param rule 	The name generation rule. See <a href="namegen_file.html">this chapter</a> for more details.
-		@Param allocate 	Whether memory should be allocated for the output or not.
-		@CppEx 
-			TCODNamegen::parse("data/names.txt",TCODRandom::getInstance());
-			char * myName = TCODNamegen::generateCustom("Nordic male","$s$e");
-		@CEx 
-			TCOD_namegen_parse("data/names.txt",TCOD_random_get_instance());
-			char * my_name = TCOD_namegen_generate_custom("Mesopotamian female","$s$e",false);
-		@PyEx 
-			libtcod.namegen_parse('data/names.txt')
-			name = libtcod.namegen_generate_custom('Nordic female','$s$e')
-		*/
-		static char * generateCustom (char * name, char * rule, bool allocate = false);
+        /**
+        @PageName namegen_init
+        @FuncTitle Destroying a generator
+        @FuncDesc To release the resources used by a name generator, you may call:
+            This will free all memory used by the generator. In order to generate a name again, you have to parse a file again.
+        @Cpp static void TCODNamegen::destroy (void)
+        @C void TCOD_namegen_destroy (void)
+        @Py namegen_destroy ()
+        @C# static void TCODNameGenerator::destroy()
+        */
+        static void destroy (void);
 
-		/**
-		@PageName namegen_generate
-		@FuncTitle Retrieving available set names
-		@FuncDesc If you wish to check the sylable set names that are currently available, you may call:
-		This will create a list with all the available syllable set names. Remember to delete that list after you don't need it anymore!
-		@Cpp static TCODList TCODNamegen::getSets ()
-		@C TCOD_list_t TCOD_namegen_get_sets ()
-		@Py namegen_get_sets ()
-		@C# static IEnumerable<string> TCODNameGenerator::getSets()
-		*/
-		static TCOD_list_t getSets (void);
+        /**
+        @PageName namegen_generate
+        @PageTitle Generating a name
+        @PageFather namegen
+        @FuncTitle Generating a default name
+        @FuncDesc The following will output a random name generated using one of the generation rules specified in the syllable set:
+            Should you choose to allocate memory for the output, you need to remember to deallocate it once you don't need the name anymore using the free() function. This applies to C++ as well (delete won't work - you have to use free()).
 
-		/**
-		@PageName namegen_file
-		@PageFather namegen
-		@PageTitle Syllable set configuration
-		@PageDesc Configuring the syllable set is vital to obtaining high quality randomly generated names. Please refer to the following subchapters for detailed information:
-		*/
+            On the other hand, should you choose not to allocate memory, be aware that subsequent calls will overwrite the previously returned pointer, so make sure to copy the output using strcpy(), strdup() or other means of your choosing.
 
-		/**
-		@PageName namegen_file_1
-		@PageFather namegen_file
-		@PageTitle  Syllable set basic structure
-		@PageDesc The syllable sets need to be written in one or more text files that will be opened and parsed by the generator.
+            The name you specify needs to be in one of the files the generator has previously parsed (see Creating a generator). If such a name doesn't exist, a warning will be displayed and NULL will be returned.
+        @Cpp static char * TCODNamegen::generate (char * name, bool allocate = false)
+        @C char * TCOD_namegen_generate (char * name, bool allocate)
+        @Py namegen_generate (name, allocate = 0)
+        @C# string TCODNameGenerator::generate (string name)
+        @Param name     The structure name you wish to refer to, for instance, "celtic female".
+            For more about how structure names work, please refer to <a href="namegen_file.html">those</a> <a href="parser_format.html">chapters</a>.
+        @Param allocate     Whether memory should be allocated for the output or not.
+        @CppEx
+            TCODNamegen::parse("data/names.txt",TCODRandom::getInstance());
+            char * myName = TCODNamegen::generate("fantasy female");
+        @CEx
+            TCOD_namegen_parse("data/names.txt",TCOD_random_get_instance());
+            char * my_name = TCOD_namegen_generate("Celtic male",false);
+        @PyEx
+            libtcod.namegen_parse('data/names.txt')
+            name = libtcod.namegen_generate('Nordic female')
+        */
+        static char * generate (char * name, bool allocate = false);
+
+        /**
+        @PageName namegen_generate
+        @FuncTitle Generating a custom name
+        @FuncDesc It is also possible to generate a name using custom generation rules. This overrides the random choice of a generation rule from the syllable set. Please refer to chapter 16.5 to learn about the name generation rules syntax.
+        @Cpp static char * TCODNamegen::generateCustom (char * name, char * rule, bool allocate = false)
+        @C char * TCOD_namegen_generate_custom (char * name, char * rule, bool allocate)
+        @Py namegen_generate_custom (name, rule, allocate = 0)
+        @C# string TCODNameGenerator::generateCustom (string name, string rule)
+        @Param name     The structure name you wish to refer to, for instance, "celtic female".
+            For more about how structure names work, please refer to <a href="namegen_file.html">those</a> <a href="parser_format.html">chapters</a>.
+        @Param rule     The name generation rule. See <a href="namegen_file.html">this chapter</a> for more details.
+        @Param allocate     Whether memory should be allocated for the output or not.
+        @CppEx
+            TCODNamegen::parse("data/names.txt",TCODRandom::getInstance());
+            char * myName = TCODNamegen::generateCustom("Nordic male","$s$e");
+        @CEx
+            TCOD_namegen_parse("data/names.txt",TCOD_random_get_instance());
+            char * my_name = TCOD_namegen_generate_custom("Mesopotamian female","$s$e",false);
+        @PyEx
+            libtcod.namegen_parse('data/names.txt')
+            name = libtcod.namegen_generate_custom('Nordic female','$s$e')
+        */
+        static char * generateCustom (char * name, char * rule, bool allocate = false);
+
+        /**
+        @PageName namegen_generate
+        @FuncTitle Retrieving available set names
+        @FuncDesc If you wish to check the sylable set names that are currently available, you may call:
+        This will create a list with all the available syllable set names. Remember to delete that list after you don't need it anymore!
+        @Cpp static TCODList TCODNamegen::getSets ()
+        @C TCOD_list_t TCOD_namegen_get_sets ()
+        @Py namegen_get_sets ()
+        @C# static IEnumerable<string> TCODNameGenerator::getSets()
+        */
+        static TCOD_list_t getSets (void);
+
+        /**
+        @PageName namegen_file
+        @PageFather namegen
+        @PageTitle Syllable set configuration
+        @PageDesc Configuring the syllable set is vital to obtaining high quality randomly generated names. Please refer to the following subchapters for detailed information:
+        */
+
+        /**
+        @PageName namegen_file_1
+        @PageFather namegen_file
+        @PageTitle  Syllable set basic structure
+        @PageDesc The syllable sets need to be written in one or more text files that will be opened and parsed by the generator.
 
 The data uses a standard TCODParser file and data should be inserted according to the general rules of creating a configuration file. For more information, please refer to <a href="parser_format.html">The libtcod config file format</a>.
 
@@ -175,13 +175,13 @@ syllablesPost
 </p></div>
 
 All of those strings are considered optional. However, if you don't define a string, but reference it in the name generation rules, you will see a warning displayed on stderr about missing data.
-		*/
+        */
 
-		/**
-		@PageName namegen_file_2
-		@PageFather namegen_file
-		@PageTitle  Illegal strings
-		@PageDesc Another optional property is
+        /**
+        @PageName namegen_file_2
+        @PageFather namegen_file
+        @PageTitle  Illegal strings
+        @PageDesc Another optional property is
 <div class="code"><p>illegal</p></div>
 
 This property contains strings that are considered illegal and thus not desired in your names. Should a generated name contain any of the tokens specified in this string, it will be discarded and replaced by a new one. Illegal strings may be as short as single characters or as long as entire names. However, it is best to create a syllable set that generates very few names that sound bad. Otherwise, the illegal list might become very long.
@@ -201,13 +201,13 @@ It will generate a new name in the following cases:
     * three-character (or more) repetitions, whether adjacent or not ("Bombombur", "Dagbjoerdag", "Gwaerdygwaern")
 
 Remember that all of this is case-insensitive, so you don't need to care about uppercase/lowercase distinction in your illegal strings.
-		*/
+        */
 
-		/**
-		@PageName namegen_file_3
-		@PageFather namegen_file
-		@PageTitle Rules
-		@PageDesc There's one last string that's contained within the structure:
+        /**
+        @PageName namegen_file_3
+        @PageFather namegen_file
+        @PageTitle Rules
+        @PageDesc There's one last string that's contained within the structure:
 <div class="code"><p>rules</p></div>
 
 It is mandatory, so not defining it will trigger an error. It defines how the generator should join the supplied data in order to generate a name. This string uses a syntax of its own, which is also used when specifying a rule when generating a custom name (see chapter 16.2).
@@ -227,13 +227,13 @@ The rules are parsed pretty much the same way as all other strings, so all rules
 
 <tr class="hilite"><td>%INT</td><td>%50, %25</td><td>Frequency marker. Denotes the per cent chance for the rule to be accepted if it's picked.<br>If the rule is not accepted, another roll is made to choose a name generation rule.<br>It's used to reduce the frequency a given rule is chosen with.<br>This marker may only appear at the beginning of a rule.</td></tr>
 </tbody></table>
-		*/
+        */
 
-		/**
-		@PageName namegen_file_4
-		@PageFather namegen_file
-		@PageTitle Example structure
-		@PageDesc Consider this example structure. It does not contain syllables, but rather full names.
+        /**
+        @PageName namegen_file_4
+        @PageFather namegen_file
+        @PageTitle Example structure
+        @PageDesc Consider this example structure. It does not contain syllables, but rather full names.
 <div class="code"><p>name "king" {
   syllablesStart = "Alexander, Augustus, Casimir, Henry, John, Louis, Sigismund,"
     "Stanislao, Stephen, Wenceslaus"
@@ -284,7 +284,7 @@ Augustus IV
 Alexander V
 Augustus Probus
 </p></div>
-		*/
+        */
 };
 
 #endif

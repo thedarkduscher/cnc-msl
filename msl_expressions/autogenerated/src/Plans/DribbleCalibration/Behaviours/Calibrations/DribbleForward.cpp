@@ -9,19 +9,19 @@
 
 DribbleForward::DribbleForward()
 {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 DribbleForward::~DribbleForward()
 {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 MotionControl DribbleForward::move(int trans)
 {
-	MotionControl mc;
-	return mCon.move(mCon.Forward, trans);
+    MotionControl mc;
+    return mCon.move(mCon.Forward, trans);
 
 }
 

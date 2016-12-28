@@ -3,7 +3,7 @@
 //@{
 /// \file ais_gpt.h
 ///
-/// \brief 	Header File for the GPT functions
+/// \brief  Header File for the GPT functions
 ///
 /// \author Jan Paulus
 ///
@@ -20,12 +20,12 @@
 
 #include "ais_typedef.h"
 
-#define half 0x7FFF					// half of the full 16 Bit Timer
+#define half 0x7FFF                 // half of the full 16 Bit Timer
 
-sbit dp_T3EUD  = DP3^4;      /**< Direction register 3.4 for T3EUD*/ 
-sbit dp_T4IN  = DP3^5;       /**< Direction register 3.5 for T4IN*/ 
-sbit dp_T3IN  = DP3^6;       /**< Direction register 3.6 for T3IN*/ 
-sbit dp_T2IN  = DP3^7;       /**< Direction register 3.7 for T2IN*/ 
+sbit dp_T3EUD  = DP3^4;      /**< Direction register 3.4 for T3EUD*/
+sbit dp_T4IN  = DP3^5;       /**< Direction register 3.5 for T4IN*/
+sbit dp_T3IN  = DP3^6;       /**< Direction register 3.6 for T3IN*/
+sbit dp_T2IN  = DP3^7;       /**< Direction register 3.7 for T2IN*/
 
 void init_cycletime_counter(void);
 

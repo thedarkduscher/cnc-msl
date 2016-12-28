@@ -19,57 +19,57 @@ using namespace std;
 namespace msl
 {
 
-	class MSLWorldModel;
-	class Kicker
-	{
-	public:
-		Kicker(MSLWorldModel* wm);
-		virtual ~Kicker();
-		bool init();
-		int getKickPowerPass(double dist);
-		int getKickPowerSlowPass(double dist);
-		int getKickerCount();
-		int getKickPower(double dist, double height, double velo);
-		bool mayShoot();
-		shared_ptr<geometry::CNPoint2D> getFreeGoalVector();
-		double minFree(double angle, double width, shared_ptr<vector<double>> dstscan);
-		double getPassKickpower(double dist, double arrivalTime);
-		double getPassVelocity(double kickpower);
-		double getKickPowerForLobShot(double dist, double height, double heightTolerance = 30.0);
-		double getPreciseShotMaxDistance();
-		double getPreciseShotMaxTolerance();
-		double getPreciseShotMinDistance();
-		int getShortPassPower();
-		bool lowShovelSelected;
-		static double kickerAngle;
+    class MSLWorldModel;
+    class Kicker
+    {
+    public:
+        Kicker(MSLWorldModel* wm);
+        virtual ~Kicker();
+        bool init();
+        int getKickPowerPass(double dist);
+        int getKickPowerSlowPass(double dist);
+        int getKickerCount();
+        int getKickPower(double dist, double height, double velo);
+        bool mayShoot();
+        shared_ptr<geometry::CNPoint2D> getFreeGoalVector();
+        double minFree(double angle, double width, shared_ptr<vector<double>> dstscan);
+        double getPassKickpower(double dist, double arrivalTime);
+        double getPassVelocity(double kickpower);
+        double getKickPowerForLobShot(double dist, double height, double heightTolerance = 30.0);
+        double getPreciseShotMaxDistance();
+        double getPreciseShotMaxTolerance();
+        double getPreciseShotMinDistance();
+        int getShortPassPower();
+        bool lowShovelSelected;
+        static double kickerAngle;
 
-		void processKickConstrolMsg(msl_actuator_msgs::KickControl& km);
-		shared_ptr<msl_actuator_msgs::KickControl> getKickConstrolMsg(int index = 0);
+        void processKickConstrolMsg(msl_actuator_msgs::KickControl& km);
+        shared_ptr<msl_actuator_msgs::KickControl> getKickConstrolMsg(int index = 0);
 
-	private:
-		MSLWorldModel* wm;
-	protected:
-		supplementary::SystemConfig* sc ;
-		double TWO_THIRD_PI;
-		int kickerCount;
-		double ballisticCurveOffset;
-		double minVoltage;
-		double maxVoltage;
-		double powerMult;
+    private:
+        MSLWorldModel* wm;
+    protected:
+        supplementary::SystemConfig* sc ;
+        double TWO_THIRD_PI;
+        int kickerCount;
+        double ballisticCurveOffset;
+        double minVoltage;
+        double maxVoltage;
+        double powerMult;
 
-		double preciseShotMaxDistance;
-		double preciseShotMinDistance;
-		double preciseShotMaxTolerance;
-		int shortPassPower;
+        double preciseShotMaxDistance;
+        double preciseShotMinDistance;
+        double preciseShotMaxTolerance;
+        int shortPassPower;
 
-		KickCurve* kick2GoalCurve;
-		KickCurve* kickHighPass;
-		KickCurve* kickLowPass;
-		vector<shared_ptr<geometry::CNPoint2D>> validGoalPoints ;
+        KickCurve* kick2GoalCurve;
+        KickCurve* kickHighPass;
+        KickCurve* kickLowPass;
+        vector<shared_ptr<geometry::CNPoint2D>> validGoalPoints ;
 
-		RingBuffer<InformationElement<msl_actuator_msgs::KickControl>> kickControlMsgs;
-		int mod(int x, int y);
-	};
+        RingBuffer<InformationElement<msl_actuator_msgs::KickControl>> kickControlMsgs;
+        int mod(int x, int y);
+    };
 
 } /* namespace msl */
 

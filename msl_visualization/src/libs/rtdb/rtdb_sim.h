@@ -29,12 +29,12 @@ extern "C" {
 
 #include "rtdbdefs.h"
 
-//	*************************
-//	DB_init_all: Aloca acesso a base de dados
+//  *************************
+//  DB_init_all: Aloca acesso a base de dados
 //
-//	Saida:
-//		0 = OK
-//		-1 = erro
+//  Saida:
+//      0 = OK
+//      -1 = erro
 //
 int DB_init_all (int _second_rtdb);
 

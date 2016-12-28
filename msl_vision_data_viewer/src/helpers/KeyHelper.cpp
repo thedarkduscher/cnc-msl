@@ -20,19 +20,19 @@ int KeyHelper::checkKeyPress()
 
         tcsetattr(0, TCSANOW, &new_settings);
         int n = getchar();
-	tcsetattr(0, TCSANOW, &initial_settings);
-	key = n;
-	return key;
+    tcsetattr(0, TCSANOW, &initial_settings);
+    key = n;
+    return key;
 }
 
 
 bool KeyHelper::checkKey(unsigned char k) {
 
-	if(key != EOF)
-	{
-		if(key==k) {
-			return true;
-		}
-    	}
-	return false;
+    if(key != EOF)
+    {
+        if(key==k) {
+            return true;
+        }
+        }
+    return false;
 }

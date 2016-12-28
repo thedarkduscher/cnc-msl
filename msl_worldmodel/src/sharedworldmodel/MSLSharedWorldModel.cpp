@@ -15,21 +15,21 @@ namespace msl {
 
 MSLSharedWorldModel::MSLSharedWorldModel(MSLWorldModel* wm) {
 
-	this->wm = wm;
-	timer = n.createTimer(ros::Duration(0.1), &MSLSharedWorldModel::sendSharedWorldModelData, this);
+    this->wm = wm;
+    timer = n.createTimer(ros::Duration(0.1), &MSLSharedWorldModel::sendSharedWorldModelData, this);
 
-	sc = supplementary::SystemConfig::getInstance();
-	ownID = sc->getOwnRobotID();
+    sc = supplementary::SystemConfig::getInstance();
+    ownID = sc->getOwnRobotID();
 
 
 }
 
 MSLSharedWorldModel::~MSLSharedWorldModel() {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 void MSLSharedWorldModel::sendSharedWorldModelData(const ros::TimerEvent& e) {
-	wm->sendSharedWorldModelData();
+    wm->sendSharedWorldModelData();
 }
 
 } /* namespace msl */

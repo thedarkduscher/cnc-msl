@@ -3,7 +3,7 @@
 //@{
 /// \file ais_eeprom.h
 ///
-/// \brief 	Header File for eeprom Module
+/// \brief  Header File for eeprom Module
 ///
 /// \author Pascal Langenberg
 /// \version 0.1

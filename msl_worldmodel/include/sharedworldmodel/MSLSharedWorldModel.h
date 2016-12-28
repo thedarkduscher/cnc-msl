@@ -18,19 +18,19 @@ class MSLWorldModel;
 class MSLSharedWorldModel {
 
 public:
-	MSLSharedWorldModel(MSLWorldModel* wm);
-	virtual ~MSLSharedWorldModel();
-	void sendSharedWorldModelData(const ros::TimerEvent& e);
+    MSLSharedWorldModel(MSLWorldModel* wm);
+    virtual ~MSLSharedWorldModel();
+    void sendSharedWorldModelData(const ros::TimerEvent& e);
 
 private:
-	int ownID;
+    int ownID;
 
-	MSLWorldModel* wm;
-	ros::Timer timer;
-	ros::NodeHandle n;
+    MSLWorldModel* wm;
+    ros::Timer timer;
+    ros::NodeHandle n;
 
 
-	supplementary::SystemConfig* sc;
+    supplementary::SystemConfig* sc;
 };
 
 } /* namespace msl */

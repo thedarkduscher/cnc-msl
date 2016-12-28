@@ -3,7 +3,7 @@
 //@{
 /// \file ais_system.h
 ///
-/// \brief 	Various System Functions / System configuration like Cycle Time etc.
+/// \brief  Various System Functions / System configuration like Cycle Time etc.
 ///
 /// \author Adam Cwientzek
 ///
@@ -19,10 +19,10 @@
 #define _AIS_SYSTEM_H_
 
 // Commands
-#define _BASECMD_ERR_BUFFER_	0x02
-#define _BASECMD_ERR_UNKNOWN_	0x05
-#define _BASECMD_VER_			0x10 
-#define _BASECMD_ECHO_			0x11 
+#define _BASECMD_ERR_BUFFER_    0x02
+#define _BASECMD_ERR_UNKNOWN_   0x05
+#define _BASECMD_VER_           0x10
+#define _BASECMD_ECHO_          0x11
 
 
 

@@ -16,22 +16,22 @@
 
 
 class ShovelSelect {
-	private:
-		BlackLib::BlackPWM	*pwm;
-		const int	period = 20000000;
+    private:
+        BlackLib::BlackPWM  *pwm;
+        const int   period = 20000000;
 
-		bool		enabled, init, statePassing;
-		int			kickPWM = 1600000, passPWM = 1300000;
-		int			timeout;
-		timeval		ping;
+        bool        enabled, init, statePassing;
+        int         kickPWM = 1600000, passPWM = 1300000;
+        int         timeout;
+        timeval     ping;
 
 
-	public:
-				ShovelSelect(BlackLib::pwmName pwm_P);
-				~ShovelSelect();
+    public:
+                ShovelSelect(BlackLib::pwmName pwm_P);
+                ~ShovelSelect();
 
-		bool	checkTimeout(timeval time);
-		bool	setShovel(bool passing, timeval time_now);
+        bool    checkTimeout(timeval time);
+        bool    setShovel(bool passing, timeval time_now);
 };
 
 

@@ -98,7 +98,7 @@ namespace alica
     /*PROTECTED REGION ID(methods1469284294147) ENABLED START*/ //Add additional methods here
     bool CalibrationBallHolding::ballIsRotating()
     {
-//		shared_ptr<geometry::CNPoint2D> opticalFlow = wm->rawSensorData->getOpticalFlow(0);
+//      shared_ptr<geometry::CNPoint2D> opticalFlow = wm->rawSensorData->getOpticalFlow(0);
         double averageXValue = dcc.getAverageOpticalFlowXValue(opQueue);
 
         cout << "opticalFlow->x: " << averageXValue << endl;

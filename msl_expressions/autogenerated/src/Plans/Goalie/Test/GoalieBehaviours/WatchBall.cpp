@@ -13,17 +13,17 @@ namespace alica
     /*PROTECTED REGION ID(staticVars1447863466691) ENABLED START*/ //initialise static variables here
     /*
      *
-     *			 _______________________________
-     *			|								|
-     *			| <---------- 2000mm ---------> |
-     *			|   ._.		   ._.		  ._.	|
-     *			| \/   \/	 \/   \/    \/   \/ |
-     *	 _______| |__0__| _ _|__1__|_ _ |__2__| |__________
-     *				pos		   pos		  pos
-     *			  \__ __/
-     *				 V
-     *			110+720+110
-     *			   920mm
+     *           _______________________________
+     *          |                               |
+     *          | <---------- 2000mm ---------> |
+     *          |   ._.        ._.        ._.   |
+     *          | \/   \/    \/   \/    \/   \/ |
+     *   _______| |__0__| _ _|__1__|_ _ |__2__| |__________
+     *              pos        pos        pos
+     *            \__ __/
+     *               V
+     *          110+720+110
+     *             920mm
      */
     /*PROTECTED REGION END*/
     WatchBall::WatchBall() :
@@ -143,7 +143,7 @@ namespace alica
             if (egoBall != nullptr && alloBall->x > alloFieldCntr->x + 1000)
             {
                 // todo: remove
-//				cout << "[WatchBall] Ball in opp side, goalie moves with half translation" << endl;
+//              cout << "[WatchBall] Ball in opp side, goalie moves with half translation" << endl;
                 tempPFactor = pTrans / 2;
             }
 
@@ -202,7 +202,7 @@ namespace alica
                 {
                     if (!(diffpp >= diffp || diffpp + buffer >= diffp || diffpp - buffer >= diffp))
                     {
-//						cout << "[WatchBall] corner detected! cond1" << endl;
+//                      cout << "[WatchBall] corner detected! cond1" << endl;
                         break;
                     }
                 }
@@ -210,7 +210,7 @@ namespace alica
                 {
                     if (!(diffpp <= diffp || diffpp + buffer <= diffp || diffpp - buffer <= diffp))
                     {
-//						cout << "[WatchBall] corner detected! cond2" << endl;
+//                      cout << "[WatchBall] corner detected! cond2" << endl;
                         break;
                     }
                 }
@@ -266,7 +266,7 @@ namespace alica
             _slope = nomi / denom;
             _yInt = avgBall->y - _slope * avgBall->x;
             calcTargetY = _slope * alloGoalMid->x + _yInt;
-//			cout << "[WatchBall] -LinearRegression- calcTargetY: " << calcTargetY << endl;
+//          cout << "[WatchBall] -LinearRegression- calcTargetY: " << calcTargetY << endl;
         }
         else
         {
@@ -292,23 +292,23 @@ namespace alica
 //            if (closestObstacle != nullptr)
 //            {
 //
-//			/*
-//			 * Goalie drives to calculated Impact point by using obstacle in front of ball and ball position itself
-//			 */
+//          /*
+//           * Goalie drives to calculated Impact point by using obstacle in front of ball and ball position itself
+//           */
 
-//				cout << "[WatchBall] -Obstacle- Variance " << variance << endl;
+//              cout << "[WatchBall] -Obstacle- Variance " << variance << endl;
 //                _slope = (closestObstacle->y - ballPositions->getLast(0)->y)
 //                        / (closestObstacle->x - ballPositions->getLast(0)->x);
 //                _yInt = ballPositions->getLast(0)->y - _slope * ballPositions->getLast(0)->x;
 //                calcTargetY = _slope * alloGoalMid->x + _yInt;
-//				cout << "[WatchBall] -Obstacle- calcTargetY : " << calcTargetY << endl;
+//              cout << "[WatchBall] -Obstacle- calcTargetY : " << calcTargetY << endl;
 //            }
 //            else
 //            {
 //
-//			/*
-//			 * Goalie drives to ball x position, meaning he just follows the ball
-//			 */
+//          /*
+//           * Goalie drives to ball x position, meaning he just follows the ball
+//           */
 
             cout << "[WatchBall] -BallY- Variance   : " << variance << endl;
             calcTargetY = ballPositions->getLast(0)->y;
@@ -322,17 +322,17 @@ namespace alica
 
         if (targetY > alloGoalLeft->y)
         {
-//			cout << "[WatchBall] fitTarget left: " << alloGoalLeft->y << endl;
+//          cout << "[WatchBall] fitTarget left: " << alloGoalLeft->y << endl;
             return alloGoalLeft->y;
         }
         else if (targetY < alloGoalRight->y)
         {
-//			cout << "[WatchBall] fitTarget right: " << alloGoalRight->y << endl;
+//          cout << "[WatchBall] fitTarget right: " << alloGoalRight->y << endl;
             return alloGoalRight->y;
         }
         else
         {
-//			cout << "[WatchBall] fitTarget else: " << targetY << endl;
+//          cout << "[WatchBall] fitTarget else: " << targetY << endl;
             return targetY;
         }
     }
@@ -370,15 +370,15 @@ namespace alica
         mc.motion.rotation = pRot * angleErr + dRot * geometry::normalizeAngle(angleErr - lastRotErr);
         lastRotErr = angleErr;
 
-//		double angleAlignPoint = ownPos->getPoint()->angleToPoint(alignPoint) / M_PI * 180;
-//		cout << "[WatchBall] alignPAngle: " << angleAlignPoint << endl;
-//		cout << "[WatchBall] ballAngle  : " << ballAngle << endl;
-//		cout << "[WatchBall] rotationLim: " << rotationLimit << endl;
-//		cout << "[WatchBall] alloBall   : " << alloBall->x << " " << alloBall->y << endl;
-//		cout << "[WatchBall] alloAPoint : " << alignPoint->x << " " << alignPoint->y << endl;
-//		cout << "[WatchBall] alloOwnPos : " << ownPos->x << " " << ownPos->y << endl;
-//		cout << "[WatchBall] rotation   : " << mc.motion.rotation << endl;
-//		cout << "[WatchBall] theta      :" << ownPos->theta / M_PI * 180 << endl << endl;
+//      double angleAlignPoint = ownPos->getPoint()->angleToPoint(alignPoint) / M_PI * 180;
+//      cout << "[WatchBall] alignPAngle: " << angleAlignPoint << endl;
+//      cout << "[WatchBall] ballAngle  : " << ballAngle << endl;
+//      cout << "[WatchBall] rotationLim: " << rotationLimit << endl;
+//      cout << "[WatchBall] alloBall   : " << alloBall->x << " " << alloBall->y << endl;
+//      cout << "[WatchBall] alloAPoint : " << alignPoint->x << " " << alignPoint->y << endl;
+//      cout << "[WatchBall] alloOwnPos : " << ownPos->x << " " << ownPos->y << endl;
+//      cout << "[WatchBall] rotation   : " << mc.motion.rotation << endl;
+//      cout << "[WatchBall] theta      :" << ownPos->theta / M_PI * 180 << endl << endl;
     }
 /*PROTECTED REGION END*/
 } /* namespace alica */

@@ -102,114 +102,114 @@ int robotIds [6] = {1, 8, 9, 10, 11, 100};
 
 RobotVisualization::RobotVisualization(RobotInfo* robot, FieldWidget3D* field) : robot(robot), field(field)
 {
-	id = 0;
-	senderId = 0;
-	visible = false;
+    id = 0;
+    senderId = 0;
+    visible = false;
 }
 
 RobotVisualization::~RobotVisualization()
 {
-	// nothing to do here
-	// test
+    // nothing to do here
+    // test
 }
 
 vtkSmartPointer<vtkActor> RobotVisualization::getObject()
 {
-	return object;
+    return object;
 }
 
 void RobotVisualization::setObject(vtkSmartPointer<vtkActor> object)
 {
-	this->object = object;
+    this->object = object;
 }
 
 void RobotVisualization::setNameActor(vtkSmartPointer<vtkActor> nameActor)
 {
-	this->nameActor = nameActor;
+    this->nameActor = nameActor;
 }
 
 vtkSmartPointer<vtkActor> RobotVisualization::getNameActor()
 {
-	return this->nameActor;
+    return this->nameActor;
 }
 
 vtkSmartPointer<vtkActor> RobotVisualization::getTop()
 {
-	return top;
+    return top;
 }
 
 void RobotVisualization::setTop(vtkSmartPointer<vtkActor> top)
 {
-	this->top = top;
+    this->top = top;
 }
 int RobotVisualization::getId()
 {
-	return id;
+    return id;
 }
 
 void RobotVisualization::setId(int id)
 {
-	this->id = id;
+    this->id = id;
 }
 
  std::string RobotVisualization::getName()
 {
-	return name;
+    return name;
 }
 
 void RobotVisualization::setName(std::string name)
 {
-	this->name = name;
+    this->name = name;
 }
 
 int RobotVisualization::getSenderId()
 {
-	return senderId;
+    return senderId;
 }
 
 void RobotVisualization::setSenderId(int senderId)
 {
-	this->senderId = senderId;
+    this->senderId = senderId;
 }
 
 vtkActor* RobotVisualization::getBall()
 {
-	return ball;
+    return ball;
 }
 
 void RobotVisualization::setBall(vtkActor* ball)
 {
-	this->ball = ball;
+    this->ball = ball;
 }
 
 vtkSmartPointer<vtkLineSource> RobotVisualization::getBallVelocity()
 {
-	return ballVelocity;
+    return ballVelocity;
 }
 
 void RobotVisualization::setBallVelocity(vtkSmartPointer<vtkLineSource> ballVelocity)
 {
-	this->ballVelocity = ballVelocity;
+    this->ballVelocity = ballVelocity;
 }
 
 vtkSmartPointer<vtkActor> RobotVisualization::getBallVelocityActor()
 {
-	return ballVelocityActor;
+    return ballVelocityActor;
 }
 
 void RobotVisualization::setBallVelocityActor(vtkSmartPointer<vtkActor> ballVelocityActor)
 {
-	this->ballVelocityActor = ballVelocityActor;
+    this->ballVelocityActor = ballVelocityActor;
 }
 
 vtkSmartPointer<vtkActor> RobotVisualization::getSharedBall()
 {
-	return sharedBall;
+    return sharedBall;
 }
 
 void RobotVisualization::setSharedBall(vtkSmartPointer<vtkActor> sharedBall)
 {
-	this->sharedBall = sharedBall;
+    this->sharedBall = sharedBall;
 }
 
 void RobotVisualization::remove(vtkRenderer *renderer)
@@ -335,9 +335,9 @@ void RobotVisualization::init(vtkRenderer *renderer, int id)
         /*
         if (!this->robot->getVisStatus())
         {
-        	rColor = 0.7;
-        	gColor = 0.7;
-        	bColor = 1.0;
+            rColor = 0.7;
+            gColor = 0.7;
+            bColor = 1.0;
         }
         */
 
@@ -483,7 +483,7 @@ void RobotVisualization::updatePosition(vtkRenderer *renderer)
         this->object->SetOrientation(0, 0, robot->getSharedWorldInfo()->odom.position.angle * (180.0 / (double)M_PI) + 90);
 
         if (this->robot->getVisStatus()) this->top->SetVisibility(true);
-        	else this->top->SetVisibility(false);
+            else this->top->SetVisibility(false);
         this->object->SetVisibility(true);
         this->nameActor->SetVisibility(true);
 }
@@ -555,25 +555,25 @@ void RobotVisualization::updateObjects(vtkRenderer *renderer)
                 bool aTeammate = false;
                 for (int i=0;i<6;i++)
                 {
-                	if (abs(robotPos[robotIds[i]][0]-pos.first) < 0.4 &&
-							abs(robotPos[robotIds[i]][1]-pos.second) < .4) aTeammate = true;
+                    if (abs(robotPos[robotIds[i]][0]-pos.first) < 0.4 &&
+                            abs(robotPos[robotIds[i]][1]-pos.second) < .4) aTeammate = true;
                 }
 
                 if (!aTeammate && this->robot->getVisStatus())
                 {
-                	if (objectCount < this->objectsBox.size())
-                	{
+                    if (objectCount < this->objectsBox.size())
+                    {
                         this->objectsBox.at(objectCount)->SetPosition(pos.first, pos.second, 0.2);
                         this->objectsBox.at(objectCount)->SetVisibility(true);
                         this->objectsTop.at(objectCount)->SetPosition(pos.first, pos.second, 0.4);
-    					this->objectsTop.at(objectCount)->SetVisibility(true);
-                	}
-                	else
-                	{
+                        this->objectsTop.at(objectCount)->SetVisibility(true);
+                    }
+                    else
+                    {
                         drawObjectBox(renderer, pos.first, pos.second, 0, aTeammate);
                         drawObjectTop(renderer, pos.first, pos.second, 0);
-                	}
-                	objectCount++;
+                    }
+                    objectCount++;
                 }
         }
 

@@ -27,16 +27,16 @@
 #include "ballTracking/TrackingTypes.h"
 
 class ObjectTracker {
-	public:
-		ObjectTracker();
-		~ObjectTracker();
-		static ObjectTracker * getInstance();
-		MovingObject trackObject(ObservedPoint * points, int length, int startIndex, int lastIndex, double rotVelocity);
+    public:
+        ObjectTracker();
+        ~ObjectTracker();
+        static ObjectTracker * getInstance();
+        MovingObject trackObject(ObservedPoint * points, int length, int startIndex, int lastIndex, double rotVelocity);
 
-	private:
-		static ObjectTracker * instance_;
-		void init();
-		void cleanup();
+    private:
+        static ObjectTracker * instance_;
+        void init();
+        void cleanup();
 };
 
 #endif

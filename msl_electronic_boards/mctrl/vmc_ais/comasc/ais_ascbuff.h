@@ -3,7 +3,7 @@
 //@{
 /// \file ais_ascbuff.h
 ///
-/// \brief 	Internal communication buffer for serial communication
+/// \brief  Internal communication buffer for serial communication
 ///
 /// \author Adam Cwientzek
 ///
@@ -17,38 +17,38 @@
 #define _AIS_ASCBUFF_H_
 
 // Main buffer settings
-#define ABF_NUMBER_OF		2		// How many Buffers do exist ?
-#define ABF_READ			0		// Name Buffer for better use
-#define ABF_WRITE			1		// !!! have to be serially numbered !!!
+#define ABF_NUMBER_OF       2       // How many Buffers do exist ?
+#define ABF_READ            0       // Name Buffer for better use
+#define ABF_WRITE           1       // !!! have to be serially numbered !!!
 
-// Limits / Sizes 
-#define ABF_SIZE			10		// Size of Buffers (all Buffers have the same size
-#define ABF_MSGSIZE			50		// Size of Message in Buffer (all same size)
-
-
+// Limits / Sizes
+#define ABF_SIZE            10      // Size of Buffers (all Buffers have the same size
+#define ABF_MSGSIZE         50      // Size of Message in Buffer (all same size)
 
 
-/// \brief buffer element 
+
+
+/// \brief buffer element
 typedef struct _ABF_ELEMENT_ {
-	char writing;
-	char reading;
-	char valid;
-	char msglen;
-	char msgpos;
-	char message[ABF_MSGSIZE];   
+    char writing;
+    char reading;
+    char valid;
+    char msglen;
+    char msgpos;
+    char message[ABF_MSGSIZE];
 };
 
 
 /// \brief Main Buffer structure
 typedef struct _ABF_BUFFER_ {
-	/// buffer Element
-	struct _ABF_ELEMENT_ element[ABF_SIZE];
-	/// Pointer (Index) to actual read element
-	char ptr_read;
-	/// Pointer (Index) to actual write element
-	char ptr_write;
-	/// Buffer overrun flag
-	char overrrun;
+    /// buffer Element
+    struct _ABF_ELEMENT_ element[ABF_SIZE];
+    /// Pointer (Index) to actual read element
+    char ptr_read;
+    /// Pointer (Index) to actual write element
+    char ptr_write;
+    /// Buffer overrun flag
+    char overrrun;
 };
 
 
@@ -65,7 +65,7 @@ char abuf_startread(char btype);
 char abuf_stopread(char btype);
 char abuf_startwrite(char btype);
 char abuf_stopwrite(char btype);
-char abuf_eom(char btype);		 
+char abuf_eom(char btype);
 char abuf_readbyte(char btype);
 char abuf_writebyte(char btype, char data);
 char abuf_isvalid(char btype);

@@ -14,9 +14,9 @@
 #define LOG_EVENT_END_OF_WORK      8 // subject: none  data: none
 
 #ifdef CN_NO_LOG
-	#define cn_log(e, s, d)
+    #define cn_log(e, s, d)
 #else
-	#define cn_log(e, s, d)	_cn_log((e), (s), (d))
+    #define cn_log(e, s, d) _cn_log((e), (s), (d))
 #endif
 
 void init_logging(void);

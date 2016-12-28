@@ -36,95 +36,95 @@ extern "C" {
 
 /* a cell in the console */
 typedef struct {
-	int c;		/* character ascii code */
-	int cf;		/* character number in font */
-	TCOD_color_t fore;	/* foreground color */
-	TCOD_color_t back;	/* background color */
-	uint8 dirt;	/* cell modified since last flush ? */
+    int c;      /* character ascii code */
+    int cf;     /* character number in font */
+    TCOD_color_t fore;  /* foreground color */
+    TCOD_color_t back;  /* background color */
+    uint8 dirt; /* cell modified since last flush ? */
 } char_t;
 
 /* TCODConsole non public data */
 typedef struct {
-	char_t *buf; /* current console */
-	char_t *oldbuf; /* console for last frame */
-	/* console width and height (in characters,not pixels) */
-	int w,h;
-	/* default background operator for print & print_rect functions */
-	TCOD_bkgnd_flag_t bkgnd_flag;
-	/* default alignment for print & print_rect functions */
-	TCOD_alignment_t alignment;
-	/* foreground (text), background and key colors */
-	TCOD_color_t fore,back,key;
-	uint8 fade;
-	bool haskey; /* a key color has been defined */
+    char_t *buf; /* current console */
+    char_t *oldbuf; /* console for last frame */
+    /* console width and height (in characters,not pixels) */
+    int w,h;
+    /* default background operator for print & print_rect functions */
+    TCOD_bkgnd_flag_t bkgnd_flag;
+    /* default alignment for print & print_rect functions */
+    TCOD_alignment_t alignment;
+    /* foreground (text), background and key colors */
+    TCOD_color_t fore,back,key;
+    uint8 fade;
+    bool haskey; /* a key color has been defined */
 } TCOD_console_data_t;
 
 /* fov internal stuff */
 typedef struct {
-	bool transparent:1;
-	bool walkable:1;
-	bool fov:1;
+    bool transparent:1;
+    bool walkable:1;
+    bool fov:1;
 } cell_t;
 typedef struct {
-	int width;
-	int height;
-	int nbcells;
-	cell_t *cells;
+    int width;
+    int height;
+    int nbcells;
+    cell_t *cells;
 } map_t;
 
 /* pseudorandom number generator toolkit */
 typedef struct {
-	/* algorithm identifier */
-	TCOD_random_algo_t algo;
-	/* distribution */
-	TCOD_distribution_t distribution;
-	/* Mersenne Twister stuff */
-	uint32 mt[624];
-	int cur_mt;
-	/* Complementary-Multiply-With-Carry stuff */
-	/* shared with Generalised Feedback Shift Register */
-	uint32 Q[4096], c;
+    /* algorithm identifier */
+    TCOD_random_algo_t algo;
+    /* distribution */
+    TCOD_distribution_t distribution;
+    /* Mersenne Twister stuff */
+    uint32 mt[624];
+    int cur_mt;
+    /* Complementary-Multiply-With-Carry stuff */
+    /* shared with Generalised Feedback Shift Register */
+    uint32 Q[4096], c;
     int cur;
 } mersenne_data_t;
 
 typedef struct {
-	/* number of characters in the bitmap font */
-	int fontNbCharHoriz;
-	int fontNbCharVertic;
-	/* font type and layout */
-	bool font_tcod_layout;
-	bool font_in_row;
-	bool font_greyscale;
-	/* character size in font */
-	int font_width;
-	int font_height;
-	char font_file[512];
-	char window_title[512];
-	/* ascii code to tcod layout converter */
-	int *ascii_to_tcod;
-	/* whether each character in the font is a colored tile */
-	bool *colored;
-	/* the root console */
-	TCOD_console_data_t *root;
-	/* nb chars in the font */
-	int max_font_chars;
-	/* fullscreen data */
-	bool fullscreen;
-	int fullscreen_offsetx;
-	int fullscreen_offsety;
-	/* asked by the user */
-	int fullscreen_width;
-	int fullscreen_height;
-	/* actual resolution */
-	int actual_fullscreen_width;
-	int actual_fullscreen_height;
-	/* renderer to use */
-	TCOD_renderer_t renderer;
-	/* user post-processing callback */
-	SDL_renderer_t sdl_cbk;
-	/* fading data */
-	TCOD_color_t fading_color;
-	uint8 fade;
+    /* number of characters in the bitmap font */
+    int fontNbCharHoriz;
+    int fontNbCharVertic;
+    /* font type and layout */
+    bool font_tcod_layout;
+    bool font_in_row;
+    bool font_greyscale;
+    /* character size in font */
+    int font_width;
+    int font_height;
+    char font_file[512];
+    char window_title[512];
+    /* ascii code to tcod layout converter */
+    int *ascii_to_tcod;
+    /* whether each character in the font is a colored tile */
+    bool *colored;
+    /* the root console */
+    TCOD_console_data_t *root;
+    /* nb chars in the font */
+    int max_font_chars;
+    /* fullscreen data */
+    bool fullscreen;
+    int fullscreen_offsetx;
+    int fullscreen_offsety;
+    /* asked by the user */
+    int fullscreen_width;
+    int fullscreen_height;
+    /* actual resolution */
+    int actual_fullscreen_width;
+    int actual_fullscreen_height;
+    /* renderer to use */
+    TCOD_renderer_t renderer;
+    /* user post-processing callback */
+    SDL_renderer_t sdl_cbk;
+    /* fading data */
+    TCOD_color_t fading_color;
+    uint8 fade;
 } TCOD_internal_context_t;
 
 extern TCOD_internal_context_t TCOD_ctx;
@@ -217,7 +217,7 @@ void TCOD_sys_term();
 #ifndef NO_UNICODE
 wchar_t *TCOD_console_vsprint_utf(const wchar_t *fmt, va_list ap);
 int TCOD_console_print_internal_utf(TCOD_console_t con,int x,int y, int rw, int rh, TCOD_bkgnd_flag_t flag,
-	TCOD_alignment_t align, wchar_t *msg, bool can_split, bool count_only);
+    TCOD_alignment_t align, wchar_t *msg, bool can_split, bool count_only);
 #endif
 
 /* image manipulation */

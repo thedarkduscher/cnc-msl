@@ -29,70 +29,70 @@ extern "C" {
 
 #include "rtdbdefs.h"
 
-//	*************************
-//	DB_init: Aloca acesso a base de dados
+//  *************************
+//  DB_init: Aloca acesso a base de dados
 //
-//	Saida:
-//		0 = OK
-//		-1 = erro
+//  Saida:
+//      0 = OK
+//      -1 = erro
 //
 int DB_init (void);
 
 
-//	*************************
-//	DB_free: Liberta acesso a base de dados
+//  *************************
+//  DB_free: Liberta acesso a base de dados
 //
 void DB_free (void);
 
 
-//	*************************
-//	DB_put: Escreve na base de dados do proprio agente
+//  *************************
+//  DB_put: Escreve na base de dados do proprio agente
 //
-//	Entrada:
-//		int _id = identificador da 'variavel'
-//		void *_value = ponteiro com os dados
-//	Saida:
-//		0 = OK
-//		-1 = erro
+//  Entrada:
+//      int _id = identificador da 'variavel'
+//      void *_value = ponteiro com os dados
+//  Saida:
+//      0 = OK
+//      -1 = erro
 //
 int DB_put (int _id, void *_value);
 
 
-//	*************************
-//	DB_get: Le da base de dados
+//  *************************
+//  DB_get: Le da base de dados
 //
-//	Entrada:
-//		int _agent = numero do agente
-//		int _id = identificador da 'variavel'
-//		void *_value = ponteiro para onde sao copiados os dados
-//	Saida:
-//		int life = tempo de vida da 'variavel' em ms
-//			-1 se erro
+//  Entrada:
+//      int _agent = numero do agente
+//      int _id = identificador da 'variavel'
+//      void *_value = ponteiro para onde sao copiados os dados
+//  Saida:
+//      int life = tempo de vida da 'variavel' em ms
+//          -1 se erro
 //
 int DB_get (int _from_agent, int _id, void *_value);
 
 
-//	*************************
-//	Whoami: identifica o agente onde esta a correr
+//  *************************
+//  Whoami: identifica o agente onde esta a correr
 //
-//	Saida:
-//		int agent_number = numero do agente
+//  Saida:
+//      int agent_number = numero do agente
 //
 int Whoami(void);
 
-//	*************************
-//	DB_put_in: write in RTDB
-//		note: it can write in any area (use with caution!)
+//  *************************
+//  DB_put_in: write in RTDB
+//      note: it can write in any area (use with caution!)
 //
-//	imput:
-//		int _agent
-//		int _to_agent = agent number
-//		int _id = identificador da 'variavel'
-//		void *_value = ponteiro com os dados
-//		int life = tempo de vida da 'variavel' em ms
-//	Saida:
-//		int size = size of record data
-//		-1 = erro
+//  imput:
+//      int _agent
+//      int _to_agent = agent number
+//      int _id = identificador da 'variavel'
+//      void *_value = ponteiro com os dados
+//      int life = tempo de vida da 'variavel' em ms
+//  Saida:
+//      int size = size of record data
+//      -1 = erro
 //
 int DB_put_in (int _agent, int _to_agent, int _id, void *_value, int life);
 

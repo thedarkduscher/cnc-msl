@@ -30,78 +30,78 @@ using namespace std;
 namespace msl
 {
 
-	class SearchNode
-	{
-	public:
-//		SearchNode();
-		SearchNode(VoronoiDiagram::Halfedge_around_vertex_circulator edge, double cost, double heuristic, shared_ptr<SearchNode> predecessor);
-		SearchNode(shared_ptr<Vertex> vertex, double cost, double heuristic, shared_ptr<SearchNode> predecessor);
-		virtual ~SearchNode();
-		/**
-		 * gets the cost
-		 * @return double
-		 */
-		double getCost();
-		/**
-		 * sets the cost
-		 * @param cost double
-		 */
-		void setCost(double cost);
+    class SearchNode
+    {
+    public:
+//      SearchNode();
+        SearchNode(VoronoiDiagram::Halfedge_around_vertex_circulator edge, double cost, double heuristic, shared_ptr<SearchNode> predecessor);
+        SearchNode(shared_ptr<Vertex> vertex, double cost, double heuristic, shared_ptr<SearchNode> predecessor);
+        virtual ~SearchNode();
+        /**
+         * gets the cost
+         * @return double
+         */
+        double getCost();
+        /**
+         * sets the cost
+         * @param cost double
+         */
+        void setCost(double cost);
 
-		/**
-		 * gets the heuristic
-		 * @return double
-		 */
-		double getHeuristic();
-		/**
-		 * sets the heuristic
-		 * @param heuristic double
-		 */
-		void setHeuristic(double heuristic);
-		/**
-		 * gets the predecessor node
-		 * @return shared_ptr<SearchNode>
-		 */
-		shared_ptr<SearchNode> getPredecessor();
-		/**
-		 * sets the predecessor node
-		 * @param predecessor shared_ptr<SearchNode>
-		 */
-		void setPredecessor(shared_ptr<SearchNode> predecessor);
-		/**
-		 * gets the vertex
-		 * @return shared_ptr<VoronoiDiagram::Vertex>
-		 */
-		VoronoiDiagram::Halfedge_around_vertex_circulator getEdge();
-		/**
-		 * sets the vertex
-		 * @param vertex shared_ptr<VoronoiDiagram::Vertex>
-		 */
-		void setEdge(VoronoiDiagram::Halfedge_around_vertex_circulator edge);
-		/**
-		 * compares two SearchNodes, true if first has lower cost
-		 * @param first shared_ptr<SearchNode>
-		 * @param second shared_ptr<SearchNode>
-		 * @return bool
-		 */
-		static bool compare(shared_ptr<SearchNode> first, shared_ptr<SearchNode> second);
+        /**
+         * gets the heuristic
+         * @return double
+         */
+        double getHeuristic();
+        /**
+         * sets the heuristic
+         * @param heuristic double
+         */
+        void setHeuristic(double heuristic);
+        /**
+         * gets the predecessor node
+         * @return shared_ptr<SearchNode>
+         */
+        shared_ptr<SearchNode> getPredecessor();
+        /**
+         * sets the predecessor node
+         * @param predecessor shared_ptr<SearchNode>
+         */
+        void setPredecessor(shared_ptr<SearchNode> predecessor);
+        /**
+         * gets the vertex
+         * @return shared_ptr<VoronoiDiagram::Vertex>
+         */
+        VoronoiDiagram::Halfedge_around_vertex_circulator getEdge();
+        /**
+         * sets the vertex
+         * @param vertex shared_ptr<VoronoiDiagram::Vertex>
+         */
+        void setEdge(VoronoiDiagram::Halfedge_around_vertex_circulator edge);
+        /**
+         * compares two SearchNodes, true if first has lower cost
+         * @param first shared_ptr<SearchNode>
+         * @param second shared_ptr<SearchNode>
+         * @return bool
+         */
+        static bool compare(shared_ptr<SearchNode> first, shared_ptr<SearchNode> second);
 
-		shared_ptr<geometry::CNPoint2D> getPoint();
+        shared_ptr<geometry::CNPoint2D> getPoint();
 
-		VoronoiDiagram::Halfedge_around_vertex_circulator getIncidentEdges();
+        VoronoiDiagram::Halfedge_around_vertex_circulator getIncidentEdges();
 
-		bool matches(shared_ptr<Vertex> vertex);
+        bool matches(shared_ptr<Vertex> vertex);
 
-	private:
-		shared_ptr<SearchNode> predecessor;
+    private:
+        shared_ptr<SearchNode> predecessor;
 
-		double cost;
-		double heuristic;
-		VoronoiDiagram::Halfedge_around_vertex_circulator edge;
+        double cost;
+        double heuristic;
+        VoronoiDiagram::Halfedge_around_vertex_circulator edge;
 
-		bool initialEdge;
-		shared_ptr<Vertex> vertex;
-	};
+        bool initialEdge;
+        shared_ptr<Vertex> vertex;
+    };
 
 } /* namespace alicaTests */
 

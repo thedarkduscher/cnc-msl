@@ -29,10 +29,10 @@
 #define SERIAL_BUFFER_COUNT 2
 
 typedef struct cn_send_buffer {
- uchar tosend[MAXPACKAGESIZE];  
+ uchar tosend[MAXPACKAGESIZE];
  uchar length;
  uchar send_counter;
- ubyte empty;  
+ ubyte empty;
 }  send_buffer;
 
 // START, COUNTER, GROUP, CMD, DATA (0-24), [REQ], CRC, END

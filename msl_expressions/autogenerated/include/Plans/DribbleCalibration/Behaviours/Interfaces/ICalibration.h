@@ -14,13 +14,13 @@
 class ICalibration
 {
 public:
-//	virtual ~ICalibration();
-	MovementContainer mCon;
-//	DribbleCalibrationContainer dcc;
+//  virtual ~ICalibration();
+    MovementContainer mCon;
+//  DribbleCalibrationContainer dcc;
 
-	virtual MotionControl move(int trans) = 0;
-	virtual void adaptParams() = 0;
-	virtual void writeConfigParameters() = 0;
+    virtual MotionControl move(int trans) = 0;
+    virtual void adaptParams() = 0;
+    virtual void writeConfigParameters() = 0;
 };
 
 

@@ -18,9 +18,9 @@
 
 #include "ais_typedef.h"
 
-#define _OMSG_RUN_		1
-#define _OMSG_EMSTOP_	2
-#define _OMSG_ERRBUF_ 	3
+#define _OMSG_RUN_      1
+#define _OMSG_EMSTOP_   2
+#define _OMSG_ERRBUF_   3
 
 
 void output_msg(VMC_UCHAR_8 message);

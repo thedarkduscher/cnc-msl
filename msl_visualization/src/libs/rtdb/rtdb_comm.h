@@ -30,31 +30,31 @@ extern "C" {
 #include "rtdb_api.h"
 
 
-//	*************************
-//	DB_comm_put: Escreve na base de dados - apenas para outros agentes!
+//  *************************
+//  DB_comm_put: Escreve na base de dados - apenas para outros agentes!
 //
-//	Entrada:
-//		int _agent = numero do agente
-//		int _id = identificador da 'variavel'
-//		void *_value = ponteiro com os dados
-//		int life = tempo de vida da 'variavel' em ms
-//	Saida:
-//		0 = OK
-//		-1 = erro
+//  Entrada:
+//      int _agent = numero do agente
+//      int _id = identificador da 'variavel'
+//      void *_value = ponteiro com os dados
+//      int life = tempo de vida da 'variavel' em ms
+//  Saida:
+//      0 = OK
+//      -1 = erro
 //
 int DB_comm_put (int _agent, int _id, int _size, void *_value, int life);
 
 
-//	*************************
-//	DB_comm_ini: 
+//  *************************
+//  DB_comm_ini:
 //
-//	Entrada:
-//		int _id = array com identificadores da 'variavel'
-//		int _size = array com temanhos da 'variavel'
-//		int _period = array com periodos da 'variavel'
-//	Saida:
-//		int n_shared_recs = numero de 'variaveis' shared
-//		-1 = erro
+//  Entrada:
+//      int _id = array com identificadores da 'variavel'
+//      int _size = array com temanhos da 'variavel'
+//      int _period = array com periodos da 'variavel'
+//  Saida:
+//      int n_shared_recs = numero de 'variaveis' shared
+//      -1 = erro
 //
 int DB_comm_ini(RTDBconf_var *rec);
 

@@ -3,14 +3,14 @@
 class RTIMUBBB
 {
 public:
-	RTIMUBBB();
-	~RTIMUBBB();
+    RTIMUBBB();
+    ~RTIMUBBB();
 
-	void calculate();
+    void calculate();
 
 private:
-	RTIMU *imu;
-	RTIMU_DATA oldData;
+    RTIMU *imu;
+    RTIMU_DATA oldData;
 
 
 };

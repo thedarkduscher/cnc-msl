@@ -29,23 +29,23 @@
 
 class RobotInfoWidget : public QWidget, public Ui::RBInfoWG
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	RobotInfoWidget(QWidget * parent=0);
-	~RobotInfoWidget();
-	void get_robot_number(int num);
+    RobotInfoWidget(QWidget * parent=0);
+    ~RobotInfoWidget();
+    void get_robot_number(int num);
 
 
 private:
-	int my_number;
-	QTimer *UpdateTimer;
-	double Pi;
+    int my_number;
+    QTimer *UpdateTimer;
+    double Pi;
 
 
 public slots:
-	void updateInfo(void);
-	void ChangeTextSize(int size);
+    void updateInfo(void);
+    void ChangeTextSize(int size);
 };
 
 #endif

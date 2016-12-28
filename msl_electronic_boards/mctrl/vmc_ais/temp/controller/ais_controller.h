@@ -28,7 +28,7 @@ struct CTRLSTATE {
     TMC_LONG_32 oldSetRPM;
     TMC_LONG_32 ctrlDesireRPM;
     TMC_LONG_32 lastcyletime;
-	TMC_LONG_32 lastek;
+    TMC_LONG_32 lastek;
 };
 
 struct CTRLPARAM {
@@ -46,8 +46,8 @@ void ais_mctrl_reg_params(struct CmdStruct Command);
 
 void resetController(TMC_UCHAR_8 channelID);
 TMC_INT_16 controller(TMC_UCHAR_8 channelID, TMC_INT_16 desiredRPM,
-					  TMC_INT_16 actualRPM, TMC_INT_16 stellerDiff,
-					  TMC_INT_16 maxRPM, TMC_ULONG_32 last_cycle_length);
+                      TMC_INT_16 actualRPM, TMC_INT_16 stellerDiff,
+                      TMC_INT_16 maxRPM, TMC_ULONG_32 last_cycle_length);
 
 TMC_INT_16 ctrlgetnRamp(TMC_UCHAR_8 channelID);
 void ctrlsetnRamp(TMC_UCHAR_8 channelID, TMC_INT_16 value);

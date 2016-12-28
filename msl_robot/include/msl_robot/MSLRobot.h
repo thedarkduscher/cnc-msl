@@ -11,22 +11,22 @@
 
 namespace msl
 {
-	class MSLWorldModel;
-	class RobotMovement;
-	class Kicker;
-	class MSLRobot
-	{
-	public:
-		static MSLRobot* get();
+    class MSLWorldModel;
+    class RobotMovement;
+    class Kicker;
+    class MSLRobot
+    {
+    public:
+        static MSLRobot* get();
 
-		MSLWorldModel* wm;
-		RobotMovement* robotMovement;
-		Kicker* kicker;
+        MSLWorldModel* wm;
+        RobotMovement* robotMovement;
+        Kicker* kicker;
 
-	private:
-		MSLRobot();
-		virtual ~MSLRobot();
-	};
+    private:
+        MSLRobot();
+        virtual ~MSLRobot();
+    };
 
 } /* namespace msl */
 

@@ -6,17 +6,17 @@
 
 class TestGPIOLeds
 {
-	private:
-		BeagleGPIO *gp;
-		BeaglePins *blockLed;
-	public:
-		TestGPIOLeds();
-		virtual ~TestGPIOLeds();
-		virtual void loop()
-		{
-			loop(-1);
-		};
-		virtual void loop(int iterations);
+    private:
+        BeagleGPIO *gp;
+        BeaglePins *blockLed;
+    public:
+        TestGPIOLeds();
+        virtual ~TestGPIOLeds();
+        virtual void loop()
+        {
+            loop(-1);
+        };
+        virtual void loop(int iterations);
 };
 
 #endif /* TESTGPIOLEDS_H_ */

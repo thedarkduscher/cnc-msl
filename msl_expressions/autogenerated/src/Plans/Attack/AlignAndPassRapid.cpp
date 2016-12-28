@@ -71,8 +71,8 @@ namespace alica
         alloPos = this->wm->rawSensorData->getOwnPositionVision();
         if (alloPos == nullptr)
         {
-//			mc = DriveHelper.DriveRandomly(500,WM);
-//			Send(mc);
+//          mc = DriveHelper.DriveRandomly(500,WM);
+//          Send(mc);
             cout << "AAPR: OwnPos is null" << endl;
             ;
             return;

@@ -17,22 +17,22 @@
 namespace alica
 {
 
-	class BallXIntervall : public USummand
-	{
-	public:
-		BallXIntervall(double weight, string name, long id, vector<long> relevantEntryPointIds, double minX, double maxX, double tolerance);
-		virtual ~BallXIntervall();
+    class BallXIntervall : public USummand
+    {
+    public:
+        BallXIntervall(double weight, string name, long id, vector<long> relevantEntryPointIds, double minX, double maxX, double tolerance);
+        virtual ~BallXIntervall();
 
-		void cacheEvalData();
-		virtual UtilityInterval eval(IAssignment* ass);
-		string toString();
+        void cacheEvalData();
+        virtual UtilityInterval eval(IAssignment* ass);
+        string toString();
 
-	private:
-		double minX;
-		double maxX;
-		double tolerance;
-		shared_ptr< geometry::CNPoint2D > alloBall;
-	};
+    private:
+        double minX;
+        double maxX;
+        double tolerance;
+        shared_ptr< geometry::CNPoint2D > alloBall;
+    };
 
 } /* namespace msl */
 

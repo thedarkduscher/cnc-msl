@@ -19,41 +19,41 @@
 
 
 class BallHandle {
-	private:
-		BlackLib::BlackPWM	*pwm;
-		BlackLib::BlackGPIO	*dir, *reset, *ff1, *ff2;
+    private:
+        BlackLib::BlackPWM  *pwm;
+        BlackLib::BlackGPIO *dir, *reset, *ff1, *ff2;
 
-		BlackLib::digitalValue	direction			= static_cast<BlackLib::digitalValue>(left);
-		BlackLib::digitalValue	direction_desired	= static_cast<BlackLib::digitalValue>(left);
+        BlackLib::digitalValue  direction           = static_cast<BlackLib::digitalValue>(left);
+        BlackLib::digitalValue  direction_desired   = static_cast<BlackLib::digitalValue>(left);
 
-		bool			enabled = false;
-		const int		period = 10000;
-		int				speed = 0, speed_desired = 0;
-		timeval			last_ping;
+        bool            enabled = false;
+        const int       period = 10000;
+        int             speed = 0, speed_desired = 0;
+        timeval         last_ping;
 
-	public:
-		enum errorList {
-			none			= 0,
-			bypass			= 1,
-			temperature		= 2,
-			voltage			= 3
-		};
+    public:
+        enum errorList {
+            none            = 0,
+            bypass          = 1,
+            temperature     = 2,
+            voltage         = 3
+        };
 
-		enum directionList {
-			left			= 0,
-			right			= 1
-		};
-
-
-				BallHandle(BlackLib::pwmName pwm_P, BlackLib::gpioName dir_P, BlackLib::gpioName reset_P, BlackLib::gpioName ff1_P, BlackLib::gpioName ff2_P);
-				~BallHandle();
+        enum directionList {
+            left            = 0,
+            right           = 1
+        };
 
 
-		void	setBallHandling(int8_t value);
-		void	checkTimeout();
-		void	controlBallHandling();
+                BallHandle(BlackLib::pwmName pwm_P, BlackLib::gpioName dir_P, BlackLib::gpioName reset_P, BlackLib::gpioName ff1_P, BlackLib::gpioName ff2_P);
+                ~BallHandle();
 
-		int		getError();
+
+        void    setBallHandling(int8_t value);
+        void    checkTimeout();
+        void    controlBallHandling();
+
+        int     getError();
 };
 
 

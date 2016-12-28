@@ -46,18 +46,18 @@ struct LinePoint{
 
 class LocalizeDebug{
 
-	public:
-		LocalizeDebug();
-		~LocalizeDebug();
+    public:
+        LocalizeDebug();
+        ~LocalizeDebug();
 
-		 vector<pair<double,double> > drawFieldForParticle(Particle particle, int number = 0);
+         vector<pair<double,double> > drawFieldForParticle(Particle particle, int number = 0);
 
-	private:
-	
-		double Lines[17][2][2];
+    private:
 
-		void init();
-		void cleanup();
+        double Lines[17][2][2];
+
+        void init();
+        void cleanup();
 
 
 

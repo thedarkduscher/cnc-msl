@@ -37,12 +37,12 @@ namespace alica
             return;
         }
 
-//		if (lastProcessedCmd == joy) // only process new commands from WM
-//		{
-//			msl_actuator_msgs::MotionControl mc;
-//			send(mc);
-//			return;
-//		}
+//      if (lastProcessedCmd == joy) // only process new commands from WM
+//      {
+//          msl_actuator_msgs::MotionControl mc;
+//          send(mc);
+//          return;
+//      }
 
         //cout << "Joystick-Beh: " << *joy << endl;
         if (!std::isnan(joy->motion.translation) && !std::isnan(joy->motion.rotation) && !std::isnan(joy->motion.angle))

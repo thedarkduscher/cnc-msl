@@ -2,8 +2,8 @@
 #define SOLVERTYPE_H_
 
 enum SolverType {
-	DUMMYSOLVER,
-	GRADIENTSOLVER
+    DUMMYSOLVER,
+    GRADIENTSOLVER
 };
 
 #endif

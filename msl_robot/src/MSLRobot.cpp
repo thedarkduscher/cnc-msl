@@ -12,23 +12,23 @@
 
 namespace msl
 {
-	MSLRobot* MSLRobot::get()
-	{
-		static MSLRobot instance;
-		return &instance;
-	}
+    MSLRobot* MSLRobot::get()
+    {
+        static MSLRobot instance;
+        return &instance;
+    }
 
-	MSLRobot::MSLRobot()
-	{
-		this->wm = MSLWorldModel::get();
-		this->robotMovement = new RobotMovement();
-		this->kicker = new Kicker(wm);
-	}
+    MSLRobot::MSLRobot()
+    {
+        this->wm = MSLWorldModel::get();
+        this->robotMovement = new RobotMovement();
+        this->kicker = new Kicker(wm);
+    }
 
-	MSLRobot::~MSLRobot()
-	{
-		delete this->robotMovement;
-		delete this->kicker;
-	}
+    MSLRobot::~MSLRobot()
+    {
+        delete this->robotMovement;
+        delete this->kicker;
+    }
 
 } /* namespace msl */

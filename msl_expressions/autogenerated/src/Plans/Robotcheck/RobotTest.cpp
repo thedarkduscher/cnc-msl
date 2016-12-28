@@ -415,15 +415,15 @@ namespace alica
         return true;
     }
 
-//	bool RobotTest::readConfig(string parm)
-//	{
+//  bool RobotTest::readConfig(string parm)
+//  {
 //
-//		string s = ("Robotcheck.Default." + parm);
-//		char* p = s.c_str();
-//		cout << "s = " << s << endl;
-//		return (*sc)["Robotcheck"]->get<bool>(s, NULL);
+//      string s = ("Robotcheck.Default." + parm);
+//      char* p = s.c_str();
+//      cout << "s = " << s << endl;
+//      return (*sc)["Robotcheck"]->get<bool>(s, NULL);
 //
-//	}
+//  }
 
     void RobotTest::readConfigParms()
     {
@@ -499,7 +499,7 @@ namespace alica
 
     bool RobotTest::finished()
     {
-//		controllOutput();
+//      controllOutput();
         return (finDriveForward == driveForward && finDriveBack == driveBack && finRotateForward == rotateForward
                 && finRotateBack == rotateBack && finKicker == kicker && finActuatorPushLeft == actuatorPushLeft
                 && finActuatorPushRight == actuatorPushRight && finActuatorPullLeft == actuatorPullLeft

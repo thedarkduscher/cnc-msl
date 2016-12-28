@@ -70,7 +70,7 @@ namespace alica
         bool imuRobot();
         bool shovelSelectRobot(bool pass, int duration);
         void printGlasses();
-//		bool readConfig(string pram);
+//      bool readConfig(string pram);
         void readConfigParms();
         void setParms(bool b);
         void setFinParmsFalse();

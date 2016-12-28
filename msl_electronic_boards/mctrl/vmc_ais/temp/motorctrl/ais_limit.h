@@ -4,9 +4,9 @@
 /// \file ais_limit.h
 ///
 /// \brief Header File for the Current Limiter function
-/// 		
-/// 
-/// 
+///
+///
+///
 /// \author Jan Paulus
 ///
 /// \version 0.8

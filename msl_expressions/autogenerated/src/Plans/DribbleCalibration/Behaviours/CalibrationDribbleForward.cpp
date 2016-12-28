@@ -53,11 +53,11 @@ namespace alica
         /*PROTECTED REGION ID(run1469116853584) ENABLED START*/ //Add additional options here
         MotionControl mc;
         msl::RobotMovement rm;
-//		writeConfigParameters();
+//      writeConfigParameters();
         this->setSuccess(true);
-//		cout << "set succes true" << endl;
+//      cout << "set succes true" << endl;
         return;
-//		if (wm->rawSensorData->getLightBarrier())
+//      if (wm->rawSensorData->getLightBarrier())
         if (1 == 1)
         {
             getBallFlag = true;
@@ -218,7 +218,7 @@ namespace alica
         // too slow or not moving
         if (opticalFlowValues->x == 0 && lastOpticalFlowValue == 0)
         {
-//        	opQueue->clear();
+//          opQueue->clear();
             cout << " -> Too Slow" << endl;
             return TooSlow;
         }
@@ -248,8 +248,8 @@ namespace alica
 #ifdef DEBUG_DC
             cout << "Name: " << sections[i].name << " | RobotSpeed: " << sections[i].robotSpeed << " | ActuatorSpeed: "
             << sections[i].actuatorSpeed << endl;
-//			sections[i].robotSpeed += 100;
-//			sections[i].actuatorSpeed += 100;
+//          sections[i].robotSpeed += 100;
+//          sections[i].actuatorSpeed += 100;
 #endif
             i++;
         }
@@ -294,10 +294,10 @@ namespace alica
         collectDataWaitingDuration = (*sc)["DribbleCalibration"]->get<double>(
                 "DribbleCalibration.Default.CollectDataWaitingDuration", NULL);
         startTrans = (*sc)["DribbleCalibration"]->get<int>("DribbleCalibration.DribbleForward.StartTranslation", NULL);
-//		angleTolerance = (*sc)["DribbleCalibration"]->get<double>("DribbleCalibration.DribbleForward.AngleTolerance",
-//																	NULL);
-//		rotateAroundTheBall = (*sc)["DribbleCalibration"]->get<bool>(
-//				"DribbleCalibration.DribbleForward.RotateAroundTheBall", NULL);
+//      angleTolerance = (*sc)["DribbleCalibration"]->get<double>("DribbleCalibration.DribbleForward.AngleTolerance",
+//                                                                  NULL);
+//      rotateAroundTheBall = (*sc)["DribbleCalibration"]->get<bool>(
+//              "DribbleCalibration.DribbleForward.RotateAroundTheBall", NULL);
         distToObs = (*sc)["DribbleCalibration"]->get<double>("DribbleCalibration.Default.DistanceToObstacle", NULL);
 
         // actuation config Params

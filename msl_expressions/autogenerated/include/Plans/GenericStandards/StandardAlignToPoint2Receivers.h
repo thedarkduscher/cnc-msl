@@ -55,8 +55,8 @@ namespace alica
                          shared_ptr<geometry::CNPoint2D> passPoint, double passCorridorWidth,
                          shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> points);
                          bool outsideCorridore(shared_ptr<geometry::CNPoint2D> ball, shared_ptr<geometry::CNPoint2D>passPoint,
-							  double passCorridorWidth, shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> points);
-        /*PROTECTED REGION END*/			};
-		} /* namespace alica */
+                              double passCorridorWidth, shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> points);
+        /*PROTECTED REGION END*/            };
+        } /* namespace alica */
 
 #endif /* StandardAlignToPoint2Receivers_H_ */

@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
 /// \file init.h
 ///
-/// \brief 	Initialization for Custom Program
-/// 
+/// \brief  Initialization for Custom Program
+///
 /// \author Adam Cwientzek
 ///
 /// \version 0.8

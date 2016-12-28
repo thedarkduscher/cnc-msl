@@ -8,7 +8,7 @@
 int main()
 {
 
-	TestGPIOLeds leds;
-	leds.loop();
-	return 0;
+    TestGPIOLeds leds;
+    leds.loop();
+    return 0;
 }

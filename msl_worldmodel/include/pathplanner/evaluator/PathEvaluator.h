@@ -28,58 +28,58 @@ typedef VoronoiDiagram::Vertex Vertex;
 #include "pathplanner/evaluator/IPathEvaluator.h"
 
 namespace supplementary{
-	class SystemConfig;
+    class SystemConfig;
 }
 namespace geometry{
-	class CNPoint2D;
+    class CNPoint2D;
 }
 namespace msl
 {
-	class VoronoiNet;
-	class SearchNode;
-	class PathEvaluator : public IPathEvaluator
-	{
-	public:
-		PathEvaluator();
-		virtual ~PathEvaluator();
-		virtual pair<double, double> eval(shared_ptr<geometry::CNPoint2D> goal, shared_ptr<SearchNode> currentNode,
-													shared_ptr<SearchNode> nextNode, VoronoiNet* voronoi);
+    class VoronoiNet;
+    class SearchNode;
+    class PathEvaluator : public IPathEvaluator
+    {
+    public:
+        PathEvaluator();
+        virtual ~PathEvaluator();
+        virtual pair<double, double> eval(shared_ptr<geometry::CNPoint2D> goal, shared_ptr<SearchNode> currentNode,
+                                                    shared_ptr<SearchNode> nextNode, VoronoiNet* voronoi);
 
-		virtual pair<double, double> evalInitial(shared_ptr<geometry::CNPoint2D> startPos,
-													shared_ptr<geometry::CNPoint2D> goal,
-													shared_ptr<SearchNode> nextNode, VoronoiNet* voronoi,
-													shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> lastPath, shared_ptr<geometry::CNPoint2D> lastTarget);
+        virtual pair<double, double> evalInitial(shared_ptr<geometry::CNPoint2D> startPos,
+                                                    shared_ptr<geometry::CNPoint2D> goal,
+                                                    shared_ptr<SearchNode> nextNode, VoronoiNet* voronoi,
+                                                    shared_ptr<vector<shared_ptr<geometry::CNPoint2D>>> lastPath, shared_ptr<geometry::CNPoint2D> lastTarget);
 
 
-	protected:
-		/**
-		 * Diameter of a robot
-		 */
-		double robotDiameter;
-		/**
-		 * additional corridor with for the corridor check to ensure that no obstacle is near the path
-		 */
-		double additionalCorridorWidth;
-		/**
-		 * weight for inverted distance of obstacles to to voronoi edge
-		 */
-		double obstacleDistanceWeight;
-		/**
-		 * weight for the length of the path
-		 */
-		double pathLengthWeight;
-		/**
-		 * weight for angle between 2 edges
-		 */
-		double pathAngleWeight;
-		/**
-		 * weight for the deviation of path start
-		 */
-		double pathDeviationWeight;
-		ros::Publisher voronoiPub;
-		ros::NodeHandle n;
-		supplementary::SystemConfig* sc;
-	};
+    protected:
+        /**
+         * Diameter of a robot
+         */
+        double robotDiameter;
+        /**
+         * additional corridor with for the corridor check to ensure that no obstacle is near the path
+         */
+        double additionalCorridorWidth;
+        /**
+         * weight for inverted distance of obstacles to to voronoi edge
+         */
+        double obstacleDistanceWeight;
+        /**
+         * weight for the length of the path
+         */
+        double pathLengthWeight;
+        /**
+         * weight for angle between 2 edges
+         */
+        double pathAngleWeight;
+        /**
+         * weight for the deviation of path start
+         */
+        double pathDeviationWeight;
+        ros::Publisher voronoiPub;
+        ros::NodeHandle n;
+        supplementary::SystemConfig* sc;
+    };
 
 }/* namespace msl */
 

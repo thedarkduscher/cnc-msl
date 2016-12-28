@@ -76,8 +76,8 @@ namespace alica
         auto ownPos = wm->rawSensorData->getOwnPositionVision();
         if (ownPos == nullptr)
             return;
-//		Random rand = new Random();
-//		int index = (int)Math.Round(rand.NextDouble()*2.0);
+//      Random rand = new Random();
+//      int index = (int)Math.Round(rand.NextDouble()*2.0);
 
         srand(supplementary::DateTime::getUtcNowC());
         int index = (rand() % attackPosY.size());
@@ -86,7 +86,7 @@ namespace alica
         {
             currentTarget = make_shared < geometry::CNPoint2D > (wm->field->getFieldLength() / 6.0 - 1500, 0);
             //} else if (ownPos.X < field.FieldLength/2.0) {
-            //	currentTarget = new Point2D(field.FieldLength/2.0,0);
+            //  currentTarget = new Point2D(field.FieldLength/2.0,0);
         }
         else
         {

@@ -12,11 +12,11 @@ typedef struct cn_cval {
   sword kd;
   sword kdi;
   sdword lin;
-  sdword max_error_int; 
+  sdword max_error_int;
   uword dead_band;
 
   sdword smooth;
-  
+
   sword rot_err_w;
   sword rot_err_accel_w;
   sword rot_err_velo_w;
@@ -25,87 +25,87 @@ typedef struct cn_cval {
   float accelcurve_min;
   float accelcurve_range;
   sdword max_rotation_accel;
-  
+
   uword fail_safe_rpm_bound;
   uword fail_safe_pwm_bound;
   uword fail_safe_cycles;
-  
+
   uword current_error_bound;
   uword current_kp;
   uword current_ki;
   uword current_kd;
-  
+
   udword max_acceleration;
   udword max_decceleration;
   udword max_rot_force;
-  
+
 } controller_params;
 
 typedef struct cn_cartMotionVector {
-	sdword x;
-	sdword y;
-	sdword rotation;  
+    sdword x;
+    sdword y;
+    sdword rotation;
 } cart_motion_vector;
 
 typedef struct cn_motorConfig  {
-	uword maxRPM;
-	ubyte nominal_current;
-	ubyte gear_numerator;
-	ubyte gear_denumerator;
-	uword wheel_radius;		//in 0.1 mm
-	uword robot_radius;	   //in mm
-	uword encoder_ticks;
-	//uword ticks_2_rpms_denum; //ticks / ticks_2_rpms_denum = rotation per millisecond
-	udword ticks_2_rpms_factor; //ticks * ticks_2_rpms_factor = rotation per millisecond
-	udword wheel_circ_64;
-	udword wheel_circ_4;
+    uword maxRPM;
+    ubyte nominal_current;
+    ubyte gear_numerator;
+    ubyte gear_denumerator;
+    uword wheel_radius;     //in 0.1 mm
+    uword robot_radius;    //in mm
+    uword encoder_ticks;
+    //uword ticks_2_rpms_denum; //ticks / ticks_2_rpms_denum = rotation per millisecond
+    udword ticks_2_rpms_factor; //ticks * ticks_2_rpms_factor = rotation per millisecond
+    udword wheel_circ_64;
+    udword wheel_circ_4;
 
 } motor_params;
 
 typedef struct cn_controllerStatus {   //the state of the controller, more to come
-	sdword actual_rpm[3];   					//actual rotations per minute
-	sdword last_rpm[3];
-	cart_motion_vector actual_motion_vector;	//what we are travelling at, aka odometry info
-	cart_motion_vector motion_request;			//what we were told to travel at
-	cart_motion_vector motion_goal;				//what we next aim for
-	sdword rpm_goal[3];							//what we aim for in rpm, PID control signal
-	sdword pid_e[3];
-	sdword pid_eI[3];
-	sdword pid_eD[3];
-	sword pwm[3];
-	sdword rotation_error;	
+    sdword actual_rpm[3];                       //actual rotations per minute
+    sdword last_rpm[3];
+    cart_motion_vector actual_motion_vector;    //what we are travelling at, aka odometry info
+    cart_motion_vector motion_request;          //what we were told to travel at
+    cart_motion_vector motion_goal;             //what we next aim for
+    sdword rpm_goal[3];                         //what we aim for in rpm, PID control signal
+    sdword pid_e[3];
+    sdword pid_eI[3];
+    sdword pid_eD[3];
+    sword pwm[3];
+    sdword rotation_error;
 
-	sdword last_current[3];
-	sdword current_eI[3];
-	sdword maxPWM [3];
-	sdword allMaxPWM;
-	
-} controller_status;													   
+    sdword last_current[3];
+    sdword current_eI[3];
+    sdword maxPWM [3];
+    sdword allMaxPWM;
+
+} controller_status;
 
 typedef struct cn_controller_pwm_vector {
-  
-	ureg  pwm[3];
-	sbyte dir[3];
-	
+
+    ureg  pwm[3];
+    sbyte dir[3];
+
 } controller_pwm_vector;
 
-#define LOG_RPM 		0
-#define LOG_PWM 		1
-#define LOG_RPMGoal 	2
-#define LOG_Current 	3
-#define LOG_MGoal 		4
-#define LOG_MRequest 	5
-#define LOG_MaxPWM		6
-#define LOG_ErrorInt	7
-#define LOG_Motion		8
-#define LOG_MSmooth		9
-#define LOG_RPMSmooth	10
+#define LOG_RPM         0
+#define LOG_PWM         1
+#define LOG_RPMGoal     2
+#define LOG_Current     3
+#define LOG_MGoal       4
+#define LOG_MRequest    5
+#define LOG_MaxPWM      6
+#define LOG_ErrorInt    7
+#define LOG_Motion      8
+#define LOG_MSmooth     9
+#define LOG_RPMSmooth   10
 
-#define LOG_ModeMax 	10
+#define LOG_ModeMax     10
 
 typedef struct cn_log_mode {
-	bool log_enabled;
-	sbyte  log[11];
+    bool log_enabled;
+    sbyte  log[11];
 } log_mode;
 
 
@@ -179,7 +179,7 @@ void cn_controller_current_control();
 void cn_controller_control_direct();
 void cn_controller_control_pid();
 void cn_controller_recalc_derived_motor_params();
-void cn_controller_recalc_derived_controller_params();    
+void cn_controller_recalc_derived_controller_params();
 void cn_controller_set_final_pwm();
 void cn_controller_calc_odometry();
 //void cn_controller_prep_lookup();

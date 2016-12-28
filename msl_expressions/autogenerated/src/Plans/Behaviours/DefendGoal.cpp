@@ -119,7 +119,7 @@ namespace alica
         destEgo = destAllo->alloToEgo(*ownPos);
         if (destEgo->length() < wm->field->getPenaltyAreaLength())
         {
-//			mc = DriveHelper.DriveToPointAndAlignCareObstacles(destEgo,ballPos, KeeperHelper.GetSpeed(destEgo),WM);
+//          mc = DriveHelper.DriveToPointAndAlignCareObstacles(destEgo,ballPos, KeeperHelper.GetSpeed(destEgo),WM);
 
             // replaced method with new moveToPoint method
 //            mc = msl::RobotMovement::placeRobotCareBall(destEgo, ballPos, getSpeed(ballPos));

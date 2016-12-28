@@ -333,8 +333,8 @@ namespace alica
             if (opp->distanceTo(hitPoint) < keeperDistGoal)
             {
                 std::cout << "Position of evil goalkeeper " << opp->x << ", " << opp->y << std::endl;
-//            	double deltaAngleGoalie2HitPoint = opp->angleToPoint(hitPoint);
-//            	double stuff = tan(deltaAngleGoalie2HitPoint) * opp->distanceTo(ownPos);
+//              double deltaAngleGoalie2HitPoint = opp->angleToPoint(hitPoint);
+//              double stuff = tan(deltaAngleGoalie2HitPoint) * opp->distanceTo(ownPos);
                 auto egoGoalKeeper = opp->alloToEgo(*this->ownPos);
 
                 // goalkeeper on same level as attacker, handled by checkShootPossibility

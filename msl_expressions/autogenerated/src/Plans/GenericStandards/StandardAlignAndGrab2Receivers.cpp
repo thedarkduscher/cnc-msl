@@ -191,7 +191,7 @@ namespace alica
             query->egoAlignPoint = egoBallPos;
             mc = rm.moveToPoint(query);
 
-//			cout << "SAAG2R: egoBallPos->length() > 900 ROT: \t" << mc.motion.rotation << endl;
+//          cout << "SAAG2R: egoBallPos->length() > 900 ROT: \t" << mc.motion.rotation << endl;
             if (mc.motion.angle != NAN)
             {
                 send(mc);
@@ -220,7 +220,7 @@ namespace alica
 
             mc.motion.rotation = 0;
             mc.motion.translation = min(600.0, egoBallPos->length() / 1.66);
-//			cout << "SAAG2R: egoBallPos->length() > 450 ROT: \t" << mc.motion.rotation << endl;
+//          cout << "SAAG2R: egoBallPos->length() > 450 ROT: \t" << mc.motion.rotation << endl;
             if (mc.motion.angle != NAN)
             {
                 send(mc);
@@ -258,8 +258,8 @@ namespace alica
             mc.motion.angle = direction->angleTo();
             mc.motion.translation = direction->length() * 1.6;
             mc.motion.rotation = fac * rot * 1.6;
-//			cout << "SAAG2R: egoBallPos->length() > 350 && fabs(dangle) > 35.0 * M_PI / 180.0 ROT: \t"
-//					<< mc.motion.rotation << endl;
+//          cout << "SAAG2R: egoBallPos->length() > 350 && fabs(dangle) > 35.0 * M_PI / 180.0 ROT: \t"
+//                  << mc.motion.rotation << endl;
             send(mc);
             return;
         }
@@ -271,7 +271,7 @@ namespace alica
                 mc.motion.rotation = (balldangle > 0 ? 1 : -1) * 0.8;
                 mc.motion.angle = M_PI;
                 mc.motion.translation = 100;
-//				cout << "SAAG2R: fabs(balldangle) > 20.0 * M_PI / 180.0 ROT: \t" << mc.motion.rotation << endl;
+//              cout << "SAAG2R: fabs(balldangle) > 20.0 * M_PI / 180.0 ROT: \t" << mc.motion.rotation << endl;
                 send(mc);
                 return;
             }
@@ -280,7 +280,7 @@ namespace alica
                 mc.motion.rotation = balldangle * 0.5;
                 mc.motion.angle = egoBallPos->angleTo();
                 mc.motion.translation = egoBallPos->length() * 1.5;
-//				cout << "SAAG2R: fabs(balldangle) > 20.0 * M_PI / 180.0 else ROT: \t" << mc.motion.rotation << endl;
+//              cout << "SAAG2R: fabs(balldangle) > 20.0 * M_PI / 180.0 else ROT: \t" << mc.motion.rotation << endl;
                 send(mc);
                 return;
             }
@@ -316,7 +316,7 @@ namespace alica
                 this->setSuccess(true);
             }
         }
-//		cout << "SAAG2R: last mc ROT: \t" << mc.motion.rotation << endl;
+//      cout << "SAAG2R: last mc ROT: \t" << mc.motion.rotation << endl;
         send(mc);
 
         /*PROTECTED REGION END*/
@@ -420,14 +420,14 @@ namespace alica
                                                              c2p = p - c;
 
                                                              if ((a2p->x * a2b->y - a2p->y * a2b->x) / a2p->normalize()->length()< tolerance
-						&& (b2p->x * b2c->y - b2p->y * b2c->x) / b2p->normalize()->length() < tolerance
-						&& (c2p->x * c2a->y - c2p->y * c2a->x) / c2p->normalize()->length() < tolerance)
-				{
-					return false;
-				}
+                        && (b2p->x * b2c->y - b2p->y * b2c->x) / b2p->normalize()->length() < tolerance
+                        && (c2p->x * c2a->y - c2p->y * c2a->x) / c2p->normalize()->length() < tolerance)
+                {
+                    return false;
+                }
 
-			}
-			return true;
-		}
-/*PROTECTED REGION END*/			
-		} /* namespace alica */
+            }
+            return true;
+        }
+/*PROTECTED REGION END*/
+        } /* namespace alica */

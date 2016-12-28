@@ -1,9 +1,9 @@
 #include "main.h"
 
-// protocol definition			  
+// protocol definition
 #define GROUP_CONFIGURE           0x50
 #define GROUP_CONFIGURE_RESPONSE  0x51
-								  
+
 #define CMD_SET_MODE              0x10 //implemented
 #define CMD_SET_CYCLE_TIME        0x11 //implemented
 #define CMD_CURRENT_LIMIT_ON      0x12
@@ -31,12 +31,12 @@
 #define CMD_IO_PORT_CONF          0x60
 #define CMD_ROBOT_RADIUS          0x70 //implemented
 #define CMD_WHEEL_ANGLE           0x71
-#define CMD_TOGGLE_ODO_LOG		  0x72 //implemented
-#define CMD_SET_LOG_MODE		  0x73 //implemented
+#define CMD_TOGGLE_ODO_LOG        0x72 //implemented
+#define CMD_SET_LOG_MODE          0x73 //implemented
 
 
 #define GROUP_CONTROL             0x52
-								  
+
 #define CMD_SET_ALL_PWM           0x10
 #define CMD_SET_PWM               0x11
 #define CMD_SET_ALL_DIRECTION     0x12
@@ -46,10 +46,10 @@
 #define CMD_SET_MOTION_VECTOR     0x30 //implemented
 #define CMD_RESET_HARD            0x40
 #define CMD_RESET_CONTROLLER      0x41
-								  
+
 #define GROUP_REQUEST             0x54
 #define GROUP_REQUEST_RESPONSE    0x55
-								  
+
 #define CMD_MOTOR_RPM             0x10
 #define CMD_MOTOR_PWM             0x11
 #define CMD_MOTOR_VOLTAGE         0x12
@@ -63,26 +63,26 @@
 #define CMD_READ_IO               0x40
 #define CMD_SET_IO                0x41
 #define CMD_READ_ANA              0x42
-#define CMD_MOTION_VECTOR         0x60 
+#define CMD_MOTION_VECTOR         0x60
 #define CMD_AVERAGE_SLEEP_TIME    0x61
 #define CMD_PATH_VECTOR           0x62 //implemented
-#define CMD_READ_ODO_LOG		  0x63 //implemented
+#define CMD_READ_ODO_LOG          0x63 //implemented
 
-									 
+
 #define GROUP_CONTROL_CONFIG      0x56
 #define GROUP_CONTROL_CONFIG_RES  0x57
 
-#define CMD_PID_KP                0x10	//implemented
-#define CMD_PID_KI                0x11	//implemented
+#define CMD_PID_KP                0x10  //implemented
+#define CMD_PID_KI                0x11  //implemented
 #define CMD_PID_B                 0x12  //implemented
-#define CMD_PID_KD                0x13	//implemented
+#define CMD_PID_KD                0x13  //implemented
 #define CMD_PID_KDI               0x14  //implemented
 #define CMD_CONTROLLER_COMMIT     0x15  //implemented
 #define CMD_DEAD_BAND             0x2A  //implemented
 #define CMD_MAX_ERROR_INT         0x2B  //implemented
-#define CMD_PID_LIN				  0x2C  //implemented
-#define CMD_SMOOTH				  0x2D  //implemented
-#define CMD_MAX_ROTATION_ACCEL	  0x2E  //implemented
+#define CMD_PID_LIN               0x2C  //implemented
+#define CMD_SMOOTH                0x2D  //implemented
+#define CMD_MAX_ROTATION_ACCEL    0x2E  //implemented
 #define CMD_ROTATION_ERR_W        0x31  //implemented
 #define CMD_ROTATION_ERR_ACCEL_W  0x32  //implemented
 #define CMD_ROTATION_ERR_VELO_W   0x33  //implemented
@@ -90,18 +90,18 @@
 #define CMD_ACCEL_BOUND_CURVE_MAX 0x41  //implemented
 #define CMD_ACCEL_CURVE_DEGREE    0x42
 #define CMD_FAIL_SAFE_VALUES      0x50  //implememted
-#define CMD_CURRENT_ERROR_BOUND	  0x60  //implememted
-#define CMD_CURRENT_KP			  0x61  //implememted
-#define CMD_CURRENT_KI			  0x62  //implememted
-#define CMD_CURRENT_KD			  0x63  //implememted
-#define CMD_MAX_WHEEL_ACCEL		  0x64  //implememted
-#define CMD_MAX_WHEEL_DECCEL	  0x65  //implememted
- 
+#define CMD_CURRENT_ERROR_BOUND   0x60  //implememted
+#define CMD_CURRENT_KP            0x61  //implememted
+#define CMD_CURRENT_KI            0x62  //implememted
+#define CMD_CURRENT_KD            0x63  //implememted
+#define CMD_MAX_WHEEL_ACCEL       0x64  //implememted
+#define CMD_MAX_WHEEL_DECCEL      0x65  //implememted
+
 
 #define GROUP_ERROR_RESPONSE      0x59
 
 #define CMD_UNKNOWN_ERROR         0x01
-#define CMD_UNKNOWN_CMD			  0x02
+#define CMD_UNKNOWN_CMD           0x02
 #define CMD_PARAMETER_ERROR       0x10
 #define CMD_OUT_OF_RANGE          0x11
 #define CMD_CYCLE_OVERTIME        0x20
@@ -154,7 +154,7 @@ void cn_command_controlconf_smooth(sword* smooth);
 void cn_command_controlconf_max_rotation_accel(uword* maxRot);
 void cn_command_controlconf_controller_commit();
 void cn_command_controlconf_dead_band(uword* dead_band);
-void cn_command_controlconf_max_error_int(uword* max_error);	
+void cn_command_controlconf_max_error_int(uword* max_error);
 void cn_command_controlconf_rot_err_w(uword* weight);
 void cn_command_controlconf_rot_err_accel_w(uword* weight);
 void cn_command_controlconf_rot_err_velo_w(uword* weight);

@@ -27,7 +27,7 @@ namespace alica
         getBallFlag = true;
         haveBallCount = 0;
         haveBallWaitingDuration = 0;
-//		correctRotationCount = 0;
+//      correctRotationCount = 0;
         collectDataWaitingDuration = 0;
         orthoDriveFactor = 0;
         minHaveBallIter = 0;
@@ -54,7 +54,7 @@ namespace alica
         RobotMovement rm;
 
         // if ball is in kicker
-//		if (wm->rawSensorData->getLightBarrier(0) && (moveCount < speedIter))
+//      if (wm->rawSensorData->getLightBarrier(0) && (moveCount < speedIter))
         if ((moveCount < speedIter))
         {
             getBallFlag = true;
@@ -214,7 +214,7 @@ namespace alica
     {
         supplementary::SystemConfig* sc = supplementary::SystemConfig::getInstance();
 
-//		orthoDriveFactor = dcc.readConfigParameter("Dribble.OrthoDriveFactor");
+//      orthoDriveFactor = dcc.readConfigParameter("Dribble.OrthoDriveFactor");
         startTrans = (*sc)["DribbleCalibration"]->get<double>("DribbleCalibration.DribbleOrthogonal.StartTranslation",
                                                               NULL);
         endTrans = (*sc)["DribbleCalibration"]->get<double>("DribbleCalibration.DribbleOrthogonal.EndTranslation",

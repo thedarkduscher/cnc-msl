@@ -7,40 +7,40 @@
 
 enum Error
 {
-	none, bypass, temperature, voltage, programming
+    none, bypass, temperature, voltage, programming
 };
 
 enum Direction
 {
-	left = 0, right = 1
+    left = 0, right = 1
 };
 
 enum BH_Pin
 {
-	dir, rst, ff1, ff2
+    dir, rst, ff1, ff2
 };
 
 class Motor
 {
 public:
-	Motor(BeaglePWM::PwmPin pwm_name, const char *pin_names[], int period);
-	~Motor();
+    Motor(BeaglePWM::PwmPin pwm_name, const char *pin_names[], int period);
+    ~Motor();
 
-	void setSpeed(int speed);
+    void setSpeed(int speed);
 
-	Error getError();
+    Error getError();
 
 private:
-	BeagleGPIO *gpio;
-	BeaglePins *pins;
-	BeaglePWM *pwm;
-	BeaglePWM::PwmPin pwm_pin;
+    BeagleGPIO *gpio;
+    BeaglePins *pins;
+    BeaglePWM *pwm;
+    BeaglePWM::PwmPin pwm_pin;
 
-	int maxSpeed;
+    int maxSpeed;
 
-	Direction direction;
+    Direction direction;
 
-	void setDirection(Direction desiredDirection);
+    void setDirection(Direction desiredDirection);
 };
 
 

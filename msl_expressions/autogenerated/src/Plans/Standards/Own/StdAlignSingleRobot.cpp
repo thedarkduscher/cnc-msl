@@ -61,8 +61,8 @@ namespace alica
         }
         shared_ptr < geometry::CNPoint2D > egoTarget;
         egoTarget = (alloBall + (alloBall - aimPoint)->normalize() * this->executerDistanceToBall)->alloToEgo(*ownPos);
-//		egoTarget = (alloBall + ((alloBall - receiverPos)->normalize() * this->executerDistanceToBall))->alloToEgo(
-//				*ownPos);
+//      egoTarget = (alloBall + ((alloBall - receiverPos)->normalize() * this->executerDistanceToBall))->alloToEgo(
+//              *ownPos);
 
         MotionControl mc;
         RobotMovement rm;

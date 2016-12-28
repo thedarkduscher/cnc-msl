@@ -121,7 +121,7 @@ namespace BlackLib
                                 GPIO_4=4,       GPIO_3=3,
                                 GPIO_2=2,
 
-								GPIO_112=112,	GPIO_115=115
+                                GPIO_112=112,   GPIO_115=115
                             };
 
 
@@ -320,7 +320,7 @@ namespace BlackLib
      */
     enum i2cName            {   I2C_0                   = 0,
                                 I2C_1                   = 1,
-								I2C_2					= 2
+                                I2C_2                   = 2
                             };
 
     /*!

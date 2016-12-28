@@ -18,37 +18,37 @@ namespace msl
 {
 
 
-	class Rules
-	{
-	public:
+    class Rules
+    {
+    public:
 
-		static Rules* getInstance();
-		double getBallRadius();
-		double getRobotRadius();
-		unsigned long getStandbyTime();
-		double getStayAwayRadius();
-		double getStayAwayRadiusOpp();
-		double getStayAwayRadiusDropBall();
-		double getPushDistance();
-		double getKickDistance();
-		unsigned long getPenaltyTimeForShot();
+        static Rules* getInstance();
+        double getBallRadius();
+        double getRobotRadius();
+        unsigned long getStandbyTime();
+        double getStayAwayRadius();
+        double getStayAwayRadiusOpp();
+        double getStayAwayRadiusDropBall();
+        double getPushDistance();
+        double getKickDistance();
+        unsigned long getPenaltyTimeForShot();
 
-	private:
-		SystemConfig* sc;
+    private:
+        SystemConfig* sc;
 
-		double ballRadius;
-		double robotRadius;
-		unsigned long standbyTime;
-		double stayAwayRadius;
-		double stayAwayRadiusOpp;
-		double stayAwayRadiusDropBall;
-		double pushDistance;
-		double kickDistance;
-		unsigned long penaltyTimeForShot;
+        double ballRadius;
+        double robotRadius;
+        unsigned long standbyTime;
+        double stayAwayRadius;
+        double stayAwayRadiusOpp;
+        double stayAwayRadiusDropBall;
+        double pushDistance;
+        double kickDistance;
+        unsigned long penaltyTimeForShot;
 
-		Rules();
-		virtual ~Rules();
-	};
+        Rules();
+        virtual ~Rules();
+    };
 
 } /* namespace msl */
 

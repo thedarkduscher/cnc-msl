@@ -26,7 +26,7 @@ namespace alica
     void ActuatorPassTest::run(void* msg)
     {
         /*PROTECTED REGION ID(run1467309160739) ENABLED START*/ //Add additional options here
-//		auto egoBallPos = wm->ball->getEgoBallPosition();
+//      auto egoBallPos = wm->ball->getEgoBallPosition();
         shared_ptr < geometry::CNPoint2D > egoBallPos = this->wm->ball->getEgoBallPosition();
         msl_actuator_msgs::MotionControl mc;
         mc.motion.rotation = egoBallPos->rotate(M_PI)->angleTo() * 4;

@@ -3,7 +3,7 @@
 //@{
 /// \file ais_astring.h
 ///
-/// \brief 	Functions for dealing with ais Strings.
+/// \brief  Functions for dealing with ais Strings.
 ///
 /// ais Strings are not 0 terminated, that way 0 can also be part of String.
 /// First Byte in the ais String contains length of String.\n

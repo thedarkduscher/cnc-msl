@@ -33,23 +33,23 @@
 BallIntegrator * BallIntegrator::instance_ = NULL;
 
 BallIntegrator * BallIntegrator::getInstance(){
-	if(instance_ == NULL)
-		instance_ = new BallIntegrator();
-	return instance_;
+    if(instance_ == NULL)
+        instance_ = new BallIntegrator();
+    return instance_;
 }
 
 BallIntegrator::BallIntegrator(){
-	points.clear();
-	containers.clear();
+    points.clear();
+    containers.clear();
 
-	currContainer = NULL;
+    currContainer = NULL;
 
-	init();
+    init();
 }
 
 
 BallIntegrator::~BallIntegrator(){
-	cleanup();
+    cleanup();
 }
 
 
@@ -61,179 +61,179 @@ void BallIntegrator::cleanup(){
 }
 
 void BallIntegrator::decreaseDirtyPointCertainty() {
-	int listLength = (int) points.size();
-	for (int i = listLength - 1; i >= 0; i--) {
-		if(points[i].dirty) points[i].certainty = decreaseCertainty(points[i].certainty);
-	}
+    int listLength = (int) points.size();
+    for (int i = listLength - 1; i >= 0; i--) {
+        if(points[i].dirty) points[i].certainty = decreaseCertainty(points[i].certainty);
+    }
 
-	for (int i = listLength - 1; i >= 0; i--) {
-		points[i].dirty = true;
-	}
+    for (int i = listLength - 1; i >= 0; i--) {
+        points[i].dirty = true;
+    }
 
-	double sumOfCertainties = 0.0;
-	double maxCertainty = -1.0;
-	unsigned int maxIndex = 0;	
-	for(unsigned int i = 0; i < points.size(); i++){
-		sumOfCertainties += points[i].certainty;
-		if(points[i].certainty > maxCertainty){
-			maxCertainty = points[i].certainty;
-			maxIndex = i;
-		}
-	}
+    double sumOfCertainties = 0.0;
+    double maxCertainty = -1.0;
+    unsigned int maxIndex = 0;
+    for(unsigned int i = 0; i < points.size(); i++){
+        sumOfCertainties += points[i].certainty;
+        if(points[i].certainty > maxCertainty){
+            maxCertainty = points[i].certainty;
+            maxIndex = i;
+        }
+    }
 
-	if(maxCertainty >= 0.35 && sumOfCertainties >= 0.35){
+    if(maxCertainty >= 0.35 && sumOfCertainties >= 0.35){
 
-		currPoint = points[maxIndex].point;
-//		currPoint.confidence = points[maxIndex].point.confidence*(maxCertainty*maxCertainty/sumOfCertainties);
-		currPoint.confidence = points[maxIndex].point.confidence*sqrt(1.0/listLength);
-		currPoint.valid = true;
+        currPoint = points[maxIndex].point;
+//      currPoint.confidence = points[maxIndex].point.confidence*(maxCertainty*maxCertainty/sumOfCertainties);
+        currPoint.confidence = points[maxIndex].point.confidence*sqrt(1.0/listLength);
+        currPoint.valid = true;
 
-		currContainer = containers[maxIndex];
-	}
-	else {
-		currPoint.valid = false;
-		currPoint.x = 0.0;
-		currPoint.y = 0.0;
-		currPoint.z = 0.0;
-		currPoint.confidence = 0.0;
+        currContainer = containers[maxIndex];
+    }
+    else {
+        currPoint.valid = false;
+        currPoint.x = 0.0;
+        currPoint.y = 0.0;
+        currPoint.z = 0.0;
+        currPoint.confidence = 0.0;
 
-		currContainer = NULL;		
-	}
+        currContainer = NULL;
+    }
 }
 
 
 void BallIntegrator::integratePoint(ObservedPoint p_, double threshold){
-	bool found = false;
-	ObservedPoint p = p_;
-	geometry::CNPoint2D egoPoint;
-	egoPoint.x = p_.x;
-	egoPoint.y = p_.y;
-	auto posPtr = msl::MSLWorldModel::get()->rawSensorData->getOwnPositionVision(); //In a time far far away this was from the motionbuffer!?
-	geometry::CNPosition integrationPos;
-	if(posPtr!=nullptr) {
-		integrationPos = *posPtr;
-	}
-			//RawOdometryHelper::getInstance()->getPositionData(p.timestamp);
-	geometry::CNPoint2D alloPoint = *egoPoint.egoToAllo(integrationPos);
+    bool found = false;
+    ObservedPoint p = p_;
+    geometry::CNPoint2D egoPoint;
+    egoPoint.x = p_.x;
+    egoPoint.y = p_.y;
+    auto posPtr = msl::MSLWorldModel::get()->rawSensorData->getOwnPositionVision(); //In a time far far away this was from the motionbuffer!?
+    geometry::CNPosition integrationPos;
+    if(posPtr!=nullptr) {
+        integrationPos = *posPtr;
+    }
+            //RawOdometryHelper::getInstance()->getPositionData(p.timestamp);
+    geometry::CNPoint2D alloPoint = *egoPoint.egoToAllo(integrationPos);
 
-	p.x = alloPoint.x;
-	p.y = alloPoint.y;
-	if (p.valid) {
-		
-		for (unsigned int i = 0; i < points.size(); i++) {
+    p.x = alloPoint.x;
+    p.y = alloPoint.y;
+    if (p.valid) {
 
-			double dist = sqrt((points[i].point.x - p.x)*(points[i].point.x - p.x) + (points[i].point.y - p.y)*(points[i].point.y - p.y));
+        for (unsigned int i = 0; i < points.size(); i++) {
 
-			if (dist < threshold) {
-				found = true;
-				points[i].certainty = increaseCertainty(points[i].certainty);
-				containers[i]->integratePoint(p);
-				points[i].point = p;
-				containers[i]->integratePoint(p);
-				points[i].dirty = false;
+            double dist = sqrt((points[i].point.x - p.x)*(points[i].point.x - p.x) + (points[i].point.y - p.y)*(points[i].point.y - p.y));
 
-			} else {
-				//points[i].certainty = decreaseCertainty(points[i].certainty);
-			}
-		}
-	
-		if (!found) {
-			PointHypothesis newPoint;
-			newPoint.certainty = 0.5;
-			newPoint.point = p;
-			newPoint.dirty = false;
-			ObjectContainer * newContainer = new ObjectContainer(1200);
-			newContainer->integratePoint(p);
-			containers.push_back(newContainer);
-			points.push_back(newPoint);
-		}
-				
-		double maxCertainty = -1.0;
-		unsigned int maxIndex = 0;
-	
-		for (unsigned int i = 0; i < points.size(); i++) {
-			if (points[i].certainty > maxCertainty) {
-				maxCertainty = points[i].certainty;
-				maxIndex = i;
-			}
-		}
-		
-		int listLength = (int) points.size();
-	
-		for (int i = listLength - 1; i >= 0; i--) {
-			double dist = sqrt((points[i].point.x - p.x)*(points[i].point.x - p.x) + (points[i].point.y - p.y)*(points[i].point.y - p.y));
+            if (dist < threshold) {
+                found = true;
+                points[i].certainty = increaseCertainty(points[i].certainty);
+                containers[i]->integratePoint(p);
+                points[i].point = p;
+                containers[i]->integratePoint(p);
+                points[i].dirty = false;
 
-			if ((points[i].certainty < 0.35) ||
-				((maxIndex != i) && (dist < threshold)))
-			{
+            } else {
+                //points[i].certainty = decreaseCertainty(points[i].certainty);
+            }
+        }
 
-				std::vector<PointHypothesis>::iterator itRemove = points.begin() + i;
-				points.erase(itRemove);
+        if (!found) {
+            PointHypothesis newPoint;
+            newPoint.certainty = 0.5;
+            newPoint.point = p;
+            newPoint.dirty = false;
+            ObjectContainer * newContainer = new ObjectContainer(1200);
+            newContainer->integratePoint(p);
+            containers.push_back(newContainer);
+            points.push_back(newPoint);
+        }
 
-				ObjectContainer * removeContainer = containers[i];
-				delete removeContainer;
+        double maxCertainty = -1.0;
+        unsigned int maxIndex = 0;
 
-				std::vector<ObjectContainer * >::iterator itRemoveCont = containers.begin() + i;
-				containers.erase(itRemoveCont);
+        for (unsigned int i = 0; i < points.size(); i++) {
+            if (points[i].certainty > maxCertainty) {
+                maxCertainty = points[i].certainty;
+                maxIndex = i;
+            }
+        }
 
-			}
-		}
+        int listLength = (int) points.size();
 
-	} else {
-		int listLength = (int) points.size();
-		for (int i = listLength - 1; i >= 0; i--) {
-			//points[i].certainty = decreaseCertainty(points[i].certainty);
-			points[i].dirty = true;
-			if (points[i].certainty < 0.35) {
-				std::vector<PointHypothesis>::iterator itRemove = points.begin() + i;
-				points.erase(itRemove);
+        for (int i = listLength - 1; i >= 0; i--) {
+            double dist = sqrt((points[i].point.x - p.x)*(points[i].point.x - p.x) + (points[i].point.y - p.y)*(points[i].point.y - p.y));
 
-				ObjectContainer * removeContainer = containers[i];
-				delete removeContainer;
+            if ((points[i].certainty < 0.35) ||
+                ((maxIndex != i) && (dist < threshold)))
+            {
 
-				std::vector<ObjectContainer * >::iterator itRemoveCont = containers.begin() + i;
-				containers.erase(itRemoveCont);
+                std::vector<PointHypothesis>::iterator itRemove = points.begin() + i;
+                points.erase(itRemove);
 
-			}
-		}
-	}
+                ObjectContainer * removeContainer = containers[i];
+                delete removeContainer;
+
+                std::vector<ObjectContainer * >::iterator itRemoveCont = containers.begin() + i;
+                containers.erase(itRemoveCont);
+
+            }
+        }
+
+    } else {
+        int listLength = (int) points.size();
+        for (int i = listLength - 1; i >= 0; i--) {
+            //points[i].certainty = decreaseCertainty(points[i].certainty);
+            points[i].dirty = true;
+            if (points[i].certainty < 0.35) {
+                std::vector<PointHypothesis>::iterator itRemove = points.begin() + i;
+                points.erase(itRemove);
+
+                ObjectContainer * removeContainer = containers[i];
+                delete removeContainer;
+
+                std::vector<ObjectContainer * >::iterator itRemoveCont = containers.begin() + i;
+                containers.erase(itRemoveCont);
+
+            }
+        }
+    }
 }
 
 
 ObservedPoint BallIntegrator::getPoint(){
-	return currPoint;
+    return currPoint;
 }
 
 ObjectContainer * BallIntegrator::getContainer(){
-	return currContainer;
+    return currContainer;
 }
 
 
 double BallIntegrator::increaseCertainty(double certainty){
-	double retCertainty = certainty + 0.05;
+    double retCertainty = certainty + 0.05;
 
-	if(retCertainty > 1.0)
-		retCertainty = 1.0;
+    if(retCertainty > 1.0)
+        retCertainty = 1.0;
 
-	return retCertainty;
+    return retCertainty;
 }
 
 
 double BallIntegrator::decreaseCertainty(double certainty){
-	double retCertainty = certainty - 0.05;
+    double retCertainty = certainty - 0.05;
 
-	if(retCertainty < 0.0)
-		retCertainty = 0.0;
+    if(retCertainty < 0.0)
+        retCertainty = 0.0;
 
-	return retCertainty;
+    return retCertainty;
 }
 
 void BallIntegrator::setRefPosition(Position pos){
-	refPos = pos;
+    refPos = pos;
 }
 
 
 Position BallIntegrator::getRefPosition(){
-	return refPos;
+    return refPos;
 }
 

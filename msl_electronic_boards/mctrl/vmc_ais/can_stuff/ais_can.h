@@ -1,5 +1,5 @@
 /** \file
- // * $Id: $       
+ // * $Id: $
  */
 #ifndef  __CAN_STUFF__
 #define  __CAN_STUFF__
@@ -8,7 +8,7 @@
 
 extern unsigned char cansend_data[8];
 
- 
+
 
 
 #include <reg167.h>
@@ -61,10 +61,10 @@ typedef struct {
 
 struct Can_Receive {
 
-			unsigned char finished;		// -1 = done
-			unsigned char occupied;		// 0 = empty
-			messageobject can_buf;
-			};
+            unsigned char finished;     // -1 = done
+            unsigned char occupied;     // 0 = empty
+            messageobject can_buf;
+            };
 
 unsigned char can_receive(void);
 int can_send(char mobj);
@@ -82,79 +82,79 @@ extern unsigned char cansend_data[8];
 // ---------------------------------
 // Accept Adr
 // ---------------------------------
-#define ACCEPT						0x7f0
-#define	COMMAND_MASK				0x07f
+#define ACCEPT                      0x7f0
+#define COMMAND_MASK                0x07f
 
-#define CAN_BaseAdr_TX				0x780 
-#define CAN_BaseAdr_RX				0x700 
+#define CAN_BaseAdr_TX              0x780
+#define CAN_BaseAdr_RX              0x700
 
 // ---------------------------------
 // System Commands
 //
-#define _CMDGRP_SYSTEM_BASIC_IN_		0x10
-#define _CMDGRP_SYSTEM_BASIC_OUT_		0x11
-#define _CMDGRP_SYSTEM_MAINTANANCE_IN_	0x1A
-#define _CMDGRP_SYSTEM_MAINTANANCE_OUT_	0x1B
+#define _CMDGRP_SYSTEM_BASIC_IN_        0x10
+#define _CMDGRP_SYSTEM_BASIC_OUT_       0x11
+#define _CMDGRP_SYSTEM_MAINTANANCE_IN_  0x1A
+#define _CMDGRP_SYSTEM_MAINTANANCE_OUT_ 0x1B
 
 
 // ---------------------------------
 // Motor Control Groups
-#define _CMDGRP_MOTOR_CONFIN_		0x50
-#define _CMDGRP_MOTOR_CONFOUT_		0x51
-#define _CMDGRP_MOTOR_CTRL_			0x52
+#define _CMDGRP_MOTOR_CONFIN_       0x50
+#define _CMDGRP_MOTOR_CONFOUT_      0x51
+#define _CMDGRP_MOTOR_CTRL_         0x52
 
-#define _CMDGRP_MOTOR_STATUSIN_		0x54
-#define _CMDGRP_MOTOR_STATUSOUT_	0x55
-#define _CMDGRP_CONTROLLER_PARIN_	0x56
-#define _CMDGRP_CONTROLLER_PAROUT_	0x57
+#define _CMDGRP_MOTOR_STATUSIN_     0x54
+#define _CMDGRP_MOTOR_STATUSOUT_    0x55
+#define _CMDGRP_CONTROLLER_PARIN_   0x56
+#define _CMDGRP_CONTROLLER_PAROUT_  0x57
 
-#define _CMDGRP_MOTOR_ERR_			0x59
-#define _CMDGRP_MOTOR_MASK_			0x50
+#define _CMDGRP_MOTOR_ERR_          0x59
+#define _CMDGRP_MOTOR_MASK_         0x50
 // ---------------------------------
 
 /** \defgroup CANIds CAN identifiers used by KURT2's firmware
  */
 /*@{*/
-#define CAN_CMDGRP_SYSTEM_BASIC_IN_			CAN_BaseAdr_RX | (_CMDGRP_SYSTEM_BASIC_IN_ & COMMAND_MASK ) 		// RX
-#define CAN_CMDGRP_SYSTEM_BASIC_OUT_			CAN_BaseAdr_TX | (_CMDGRP_SYSTEM_BASIC_OUT_ & COMMAND_MASK ) 		// TX
-#define CAN_CMDGRP_SYSTEM_MAINTANANCE_IN_	CAN_BaseAdr_RX | (_CMDGRP_SYSTEM_MAINTANANCE_IN_ & COMMAND_MASK ) 		// RX
-#define CAN_CMDGRP_SYSTEM_MAINTANANCE_OUT_		CAN_BaseAdr_TX | (_CMDGRP_SYSTEM_MAINTANANCE_OUT_ & COMMAND_MASK ) 		// TX
+#define CAN_CMDGRP_SYSTEM_BASIC_IN_         CAN_BaseAdr_RX | (_CMDGRP_SYSTEM_BASIC_IN_ & COMMAND_MASK )         // RX
+#define CAN_CMDGRP_SYSTEM_BASIC_OUT_            CAN_BaseAdr_TX | (_CMDGRP_SYSTEM_BASIC_OUT_ & COMMAND_MASK )        // TX
+#define CAN_CMDGRP_SYSTEM_MAINTANANCE_IN_   CAN_BaseAdr_RX | (_CMDGRP_SYSTEM_MAINTANANCE_IN_ & COMMAND_MASK )       // RX
+#define CAN_CMDGRP_SYSTEM_MAINTANANCE_OUT_      CAN_BaseAdr_TX | (_CMDGRP_SYSTEM_MAINTANANCE_OUT_ & COMMAND_MASK )      // TX
 
-#define CAN_CMDGRP_MOTOR_CONFIN_   		CAN_BaseAdr_RX | (_CMDGRP_MOTOR_CONFIN_ & COMMAND_MASK ) 		// RX
-#define CAN_CMDGRP_MOTOR_CONFOUT_ 			CAN_BaseAdr_TX | (_CMDGRP_MOTOR_CONFOUT_ & COMMAND_MASK )		    // TX
-#define CAN_CMDGRP_MOTOR_CTRL_			CAN_BaseAdr_RX | (_CMDGRP_MOTOR_CTRL_ & COMMAND_MASK ) 		// RX
-#define CAN_dummy      					0xffff							// NOT used
-#define CAN_CMDGRP_MOTOR_STATUSIN_      CAN_BaseAdr_RX | (_CMDGRP_MOTOR_STATUSIN_ & COMMAND_MASK ) 	// RX
-#define CAN_CMDGRP_MOTOR_STATUSOUT_  		CAN_BaseAdr_TX | (_CMDGRP_MOTOR_STATUSOUT_ & COMMAND_MASK ) 		// TX
-#define CAN_CMDGRP_CONTROLLER_PARIN_  	CAN_BaseAdr_RX | (_CMDGRP_CONTROLLER_PARIN_ & COMMAND_MASK )  	// RX
-#define CAN_CMDGRP_CONTROLLER_PAROUT_  		CAN_BaseAdr_TX | (_CMDGRP_CONTROLLER_PAROUT_  & COMMAND_MASK )	// TX
-#define CAN_dummy2				  		0xffff							// NOT used
-#define CAN_CMDGRP_MOTOR_ERR_   			CAN_BaseAdr_TX | (_CMDGRP_MOTOR_ERR_ &COMMAND_MASK ) 				// TX 
+#define CAN_CMDGRP_MOTOR_CONFIN_        CAN_BaseAdr_RX | (_CMDGRP_MOTOR_CONFIN_ & COMMAND_MASK )        // RX
+#define CAN_CMDGRP_MOTOR_CONFOUT_           CAN_BaseAdr_TX | (_CMDGRP_MOTOR_CONFOUT_ & COMMAND_MASK )           // TX
+#define CAN_CMDGRP_MOTOR_CTRL_          CAN_BaseAdr_RX | (_CMDGRP_MOTOR_CTRL_ & COMMAND_MASK )      // RX
+#define CAN_dummy                       0xffff                          // NOT used
+#define CAN_CMDGRP_MOTOR_STATUSIN_      CAN_BaseAdr_RX | (_CMDGRP_MOTOR_STATUSIN_ & COMMAND_MASK )  // RX
+#define CAN_CMDGRP_MOTOR_STATUSOUT_         CAN_BaseAdr_TX | (_CMDGRP_MOTOR_STATUSOUT_ & COMMAND_MASK )         // TX
+#define CAN_CMDGRP_CONTROLLER_PARIN_    CAN_BaseAdr_RX | (_CMDGRP_CONTROLLER_PARIN_ & COMMAND_MASK )    // RX
+#define CAN_CMDGRP_CONTROLLER_PAROUT_       CAN_BaseAdr_TX | (_CMDGRP_CONTROLLER_PAROUT_  & COMMAND_MASK )  // TX
+#define CAN_dummy2                      0xffff                          // NOT used
+#define CAN_CMDGRP_MOTOR_ERR_               CAN_BaseAdr_TX | (_CMDGRP_MOTOR_ERR_ &COMMAND_MASK )                // TX
 
-#define CAN_STDERR						0x666
+#define CAN_STDERR                      0x666
 /*@}*/
 
 /** \defgroup CANmobjs Mapping of CAN identifiers to C167 message objects
  */
 /*@{*/
-#define MSG_CMDGRP_MOTOR_CONFIN_    	 1 /**< Control message.*/
+#define MSG_CMDGRP_MOTOR_CONFIN_         1 /**< Control message.*/
 #define MSG_CMDGRP_MOTOR_CONFOUT_        2 /**< Firmware information.*/
-#define MSG_CMDGRP_MOTOR_CTRL_       	 3 /**< Firmware information.*/
-#define MSG_DUMMY       				   /**< Firmware information.*/
-#define MSG_CMDGRP_MOTOR_STATUSIN_   	 5 /**< Analog input channels 0 - 3.*/
-#define MSG_CMDGRP_MOTOR_STATUSOUT_   	 6 /**< Analog input channels 4 - 7.*/
+#define MSG_CMDGRP_MOTOR_CTRL_           3 /**< Firmware information.*/
+#define MSG_DUMMY                          /**< Firmware information.*/
+#define MSG_CMDGRP_MOTOR_STATUSIN_       5 /**< Analog input channels 0 - 3.*/
+#define MSG_CMDGRP_MOTOR_STATUSOUT_      6 /**< Analog input channels 4 - 7.*/
 #define MSG_CMDGRP_CONTROLLER_PARIN_     7 /**< Analog input channels 8 - 11.*/
 #define MSG_CMDGRP_CONTROLLER_PAROUT_    8 /**< Analog input channels 12 - 14, Temp.*/
-#define MSG_ENCODER     				   /**< 2 motor encoders.*/ 
-#define MSG__CMDGRP_MOTOR_ERR_    		10 /**< 6 bumpers, 8 remote control buttons.*/
+#define MSG_ENCODER                        /**< 2 motor encoders.*/
+#define MSG__CMDGRP_MOTOR_ERR_          10 /**< 6 bumpers, 8 remote control buttons.*/
 
-#define MSG_CMDGRP_SYSTEM_BASIC_IN_			4
-#define MSG_CMDGRP_SYSTEM_BASIC_OUT_		9
-#define MSG_CMDGRP_SYSTEM_MAINTANANCE_IN_	11
-#define MSG_CMDGRP_SYSTEM_MAINTANANCE_OUT_	12
+#define MSG_CMDGRP_SYSTEM_BASIC_IN_         4
+#define MSG_CMDGRP_SYSTEM_BASIC_OUT_        9
+#define MSG_CMDGRP_SYSTEM_MAINTANANCE_IN_   11
+#define MSG_CMDGRP_SYSTEM_MAINTANANCE_OUT_  12
 
-#define MSG_STDERR							14
-#define MSG_ANSWER							15
+#define MSG_STDERR                          14
+#define MSG_ANSWER                          15
 /*@}*/
 
 /**

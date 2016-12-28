@@ -45,10 +45,10 @@ namespace alica
         }
 
         //Constant ball handle wheel speed
-//		BallHandleCmd bhc;
-//		bhc.leftMotor = (int8_t)this->wheelSpeed;
-//		bhc.rightMotor = (int8_t)this->wheelSpeed;
-//		send(bhc);
+//      BallHandleCmd bhc;
+//      bhc.leftMotor = (int8_t)this->wheelSpeed;
+//      bhc.rightMotor = (int8_t)this->wheelSpeed;
+//      send(bhc);
         // Create ego-centric 2D target...
         shared_ptr < geometry::CNPoint2D > egoTarget = nullptr;
         // Create target point next to left/right opp goal post
@@ -189,7 +189,7 @@ namespace alica
         ballDiameter = (*this->sc)["Rules"]->get<double>("Rules.BallRadius", NULL) * 2;
         goalLineLength = wm->field->getGoalWidth();
         robotRadius = (*this->sc)["Rules"]->get<double>("Rules.RobotRadius", NULL);
-//		wheelSpeed = (*this->sc)["Penalty"]->get<double>("Penalty.WheelSpeed", NULL);
+//      wheelSpeed = (*this->sc)["Penalty"]->get<double>("Penalty.WheelSpeed", NULL);
         kickPower = (*this->sc)["Penalty"]->get<double>("Penalty.KickPower", NULL);
     }
 /*PROTECTED REGION END*/

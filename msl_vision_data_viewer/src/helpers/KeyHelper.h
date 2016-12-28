@@ -2,12 +2,12 @@
 #define KEYHELPER_H
 
 class KeyHelper {
-	
-public:
-	static int checkKeyPress();
-	static bool checkKey(unsigned char k);
 
-	//static unsigned char key;
+public:
+    static int checkKeyPress();
+    static bool checkKey(unsigned char k);
+
+    //static unsigned char key;
 
 };
 

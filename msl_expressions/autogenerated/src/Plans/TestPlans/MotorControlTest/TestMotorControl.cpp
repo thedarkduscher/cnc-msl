@@ -101,7 +101,7 @@ namespace alica
             motorMsg.motion.rotation = testSpeed * 2 * sin(relGoalRot / 2)
                     / sqrt(relGoalX * relGoalX + relGoalY * relGoalY);
         }
-	cout<<"TestMotorControl::run motor msg angle: "<<motorMsg.motion.angle<<" rotation: "<<motorMsg.motion.rotation << endl;
+    cout<<"TestMotorControl::run motor msg angle: "<<motorMsg.motion.angle<<" rotation: "<<motorMsg.motion.rotation << endl;
         send(motorMsg);
 
         /*PROTECTED REGION END*/
