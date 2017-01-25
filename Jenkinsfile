@@ -7,7 +7,7 @@ node {
         echo "We are currently working on branch: ${env.BRANCH_NAME}"
 
         if(env.BRANCH_NAME == 'master') {
-            sh 'source /home/doxygen_renderer/bin/activate'
+            sh 'pip3 install pystache'
             sh 'doxygen'
             sh 'doxygen_renderer docs/xml docs/public'
             sh 'cd docs/public'
