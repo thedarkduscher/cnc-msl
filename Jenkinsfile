@@ -8,7 +8,8 @@ node {
 
         if(env.BRANCH_NAME == 'master') {
             sh 'pip3 install pystache'
-            sh 'git checkout -bf gh-pages'
+            sh 'git branch -f gh-pages'
+            sh 'git checkout gh-pages'
             sh 'doxygen'
             sh 'doxygen_renderer docs/xml docs/public'
             sh 'git add docs/public'
