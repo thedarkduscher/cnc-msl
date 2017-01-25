@@ -7,6 +7,7 @@ node {
         echo "We are currently working on branch: ${env.BRANCH_NAME}"
 
         if(env.BRANCH_NAME == 'master') {
+            sh 'echo $USER'
             sh 'doxygen'
             sh 'python3 /usr/local/bin/doxygen_renderer docs/xml docs/public'
             sh 'cd docs/public'
