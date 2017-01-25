@@ -12,7 +12,7 @@ node {
             sh 'doxygen_renderer docs/xml docs/public'
             sh 'git add docs/public'
             sh 'git commit -m "Build reference"'
-            sh 'git filter-branch --prune-empty --subdirectory-filter docs/public'
+            sh 'git filter-branch -f --prune-empty --subdirectory-filter docs/public'
             sh 'git push -f origin HEAD:gh-pages'
         }
     }
