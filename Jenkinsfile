@@ -13,7 +13,7 @@ node {
             sh 'git add docs/public'
             sh 'git commit -m "Build reference"'
             sh 'git filter-branch --prune-empty --subdirectory-filter docs/public'
-            sh 'git push -f origin master:gh-pages'
+            sh 'git push -f origin HEAD:gh-pages'
         }
     }
 }
